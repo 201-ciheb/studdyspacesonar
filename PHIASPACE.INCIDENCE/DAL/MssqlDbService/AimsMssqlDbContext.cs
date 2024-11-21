@@ -20,8 +20,6 @@ public partial class AimsMssqlDbContext : DbContext
     public DbSet<AimsCountry> AimsCountries { get; set; }
     public DbSet<AimsCounty> AimsCountys { get; set; }
     public DbSet<AimsZone> AimsZones { get; set; }
-    public DbSet<RtdmsIssueType> RtdmsIssueTypes { get; set; }
-    public DbSet<RtdmsIssueStatus> RtdmsIssueStatuses { get; set; }
     public DbSet<AimsPerson> AimsPersons { get; set; }
     public DbSet<AimsLookup> AimsLookups { get; set; }
     public DbSet<AimsLnkTeamPerson> AimsLnkTeamPersons { get; set; }
