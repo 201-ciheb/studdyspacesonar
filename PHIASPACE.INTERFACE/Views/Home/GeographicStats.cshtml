@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Target Facilities";
+}
+<h1>@ViewData["Title"]</h1>
+
+@model  List<PHIASPACE.INTERFACE.DAL.Model.Data.TargetLabs>;
+@{  
+    ViewBag.Title = "Home Page";  
+}  
+
+<div class="row">  
+    <div class="col-md-12 map">  
+        <div id="_map_counties"></div>  
+    </div>  
+</div> 
+
+@section Styles
+{
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        #map_counties{
+            height: 100%;
+            width:610px;
+        }
+    </style>
+}
+ 
+@section Styles{
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+     <script type="text/javascript" src="~/js/kenya_counties.js"></script> 
+
+    <script type='text/javascript'>
+          $(document).ready(function(){
+              alert('here');
+          }
+    
+    </script>  
+}

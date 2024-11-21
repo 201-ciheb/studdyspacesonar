@@ -1,0 +1,361 @@
+﻿@using Newtonsoft.Json
+@using System.Data.SqlClient;
+@using System.Data
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Page header -->
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+
+            <div class="row">
+
+                <div class="col-lg-10">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title">
+
+                                <strong style="color:#7986CB" id="header">
+
+
+                                </strong>
+
+                            </h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list" id="person_header"></ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding:0px">
+                            <div style="height:0px; border-top:1px solid #cccccc">
+
+                            </div>
+                            <div class="panel-group panel-group-control content-group-lg">
+
+                                <div id="hh_qs"></div>
+
+
+
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="tb_data">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-2">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title">DM Tickets</h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+
+                                    <li><a href="#" id="li_tickets" style="display:none"><i class="icon-add" data-toggle="modal" data-target="#myModal"></i></a></li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding:0px">
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="tb_issues">
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+<div id="myModal" class="modal fade" role="dialog">
+    <form class="form-horizontal" method="post" action="@Url.Action("Post","Issue")">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="form_title">New DM Ticket</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Title</label>
+                        <div class="col-lg-10">
+                            <input type="text" value="" name="title" id="title" class="form-control">
+                        </div>
+
+                    </div>
+
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-2">Household ID</label>
+                            <div class="col-lg-10">
+                                <input type="text" value="" name="household_id" class="form-control">
+                            </div>
+
+                        </div>*@
+                    <input type="hidden" id="is_new" name="is_new" value="1" />
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Type</label>
+                        <div class="col-lg-10">
+
+                            @Html.DropDownList("issue_type_id", ViewBag.IssueTypes as SelectList, null, new { @class = "form-control", @id = "issue_type_id" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Status</label>
+                        <div class="col-lg-10">
+                            @Html.DropDownList("status_id", ViewBag.IssueStatuses as SelectList, null, new { @class = "form-control", @id = "status_id" })
+                        </div>
+
+                    </div>
+                    <input type="hidden" id="id" name="id" />
+                    <input type="hidden" id="ea_id" name="ea_id" value="@ViewBag.ea_id" />
+                    <input type="hidden" id="household_id" name="household_id" value="@ViewBag.hh_id" />
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Content</label>
+                        <div class="col-lg-10">
+                            <textarea name="issue_content" id="issue_content" rows="3" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn" class="btn btn-primary">Add Query</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <style>
+        th {
+            font-weight: bold
+        }
+
+        #tb > tbody > tr:nth-of-type(odd) {
+            border-color: #03A9F4;
+        }
+
+        .table > tbody > tr > td, .table > thead > tr > th {
+            padding: 6px;
+        }
+
+        tr.selected {
+            background-color: #FFCF8B !important
+        }
+    </style>
+}
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script>
+            const baseUrl = '@Url.Content("~/")';
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $("tr").click(function () {
+                $(this).addClass("selected").siblings().removeClass("selected");
+            });
+
+
+            load_hh_form(@ViewBag.ea_id,@ViewBag.hh_id);
+
+            //$.jstree.reference("#tree").open_node("#1_NCZ", function () { ; }, false);
+            //$("#0").removeClass("jstree-closed");
+            //$("#0").addClass("jstree-open");
+            $(function () {
+
+
+
+
+
+                // Basic datatable
+                $('.datatable-basic').DataTable(
+                    {
+                        autoWidth: false,
+                        columnDefs: [{
+                            orderable: false,
+                            width: '100px'
+                        }],
+                        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+                        language: {
+                            search: '<span>Filter:</span> _INPUT_',
+                            searchPlaceholder: 'Type to filter...',
+                            lengthMenu: '<span>Show:</span> _MENU_',
+                            paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+                        },
+                        drawCallback: function () {
+                            $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+                        },
+                        preDrawCallback: function () {
+                            $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+                        }
+                    }
+                );
+
+
+
+
+            });
+        });
+
+        function load_hh_form(ea_id, hh_id) {
+            $("#ea_id").val(ea_id);
+            $("#hh_id").val(hh_id);
+            $("#household_id").val(hh_id);
+            $(this).closest("tr").addClass("selected").siblings().removeClass("selected");
+
+            $.get(baseUrl + "dashapi/GetHHSummary/" + ea_id + "_" + hh_id, function (data) {
+                //$(".table-responsive").html(data);
+                $("#header").empty();
+                $("#header").append(data.header);
+                $("#person_header").empty();
+                $("#person_header").append(data.person_header);
+                $("#hh_qs").empty();
+                $("#hh_qs").append(data.hh_qs);
+                $("#tb_data > thead").empty();
+                $("#tb_data > thead").html(data.table_header);
+                $("#tb_data > tbody").empty();
+                $("#tb_data > tbody").html(data.table_content);
+
+                $("#li_tickets").show();
+                //load the issues
+                try {
+                    var issues = JSON.parse(data.issues);
+
+                    var tbody = "";
+                    for (var i = 0; i < issues.length; i++) {
+                        var issue = issues[i];
+
+                        var status = "Open";
+                        if (issue.status_id == 2) {
+                            status = "Closed";
+                        } else if (issue.status_id == 3) {
+                            status = "Discarded";
+                        }
+
+                        tbody += "<tr>";
+                        tbody += "<td> <strong>" + issue.title + "</strong><span class='pull-right>" + issue.date_created + "</span></td></tr>";
+                        tbody += "<tr><td>" + issue.issue_content + "</td></tr>";
+                        tbody += " <tr><td><a href='#' data-toggle='modal' data-target='#myModal' onclick=get_issue('" + issue.id + "') ><i class='icon-pen'></i></a><span class='label bg-orange pull-right'>" + status + "</span></td>";
+                        tbody += "</tr>";
+                    }
+
+
+                    $("#tb_issues > tbody").empty();
+                    $("#tb_issues > tbody").append(tbody);
+                }
+                catch (err) {
+                    console.log(err);
+                }
+
+            });
+        }
+
+        function mark_as_completed(ea, hh) {
+    const baseUrl = '@Url.Content("~/")';
+
+    const data = { ea_id: ea, hh_id: hh };
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "dashapi/MarkCompleted",
+        contentType: "application/json", // Explicitly set the content type to JSON
+        data: JSON.stringify(data), // Ensure the data is sent as a JSON string
+        success: function (response) {
+            console.log("MarkCompleted Response:", response);
+            $("#tp_" + ea + "_" + hh).html('<i class="icon-check" style="color:green"></i>');
+        },
+        error: function (xhr, status, error) {
+            console.error("Error in MarkCompleted:", error);
+            console.error("Response Text:", xhr.responseText);
+        }
+    });
+}
+
+
+
+        (function (document) {
+            'use strict';
+
+            var LightTableFilter = (function (Arr) {
+
+                var _input;
+
+                function _onInputEvent(e) {
+                    _input = e.target;
+                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                    Arr.forEach.call(tables, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, _filter);
+                        });
+                    });
+                }
+
+                function _filter(row) {
+                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    init: function () {
+                        var inputs = document.getElementsByClassName('light-table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = _onInputEvent;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function () {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
+
+        })(document);
+    </script>
+}
+

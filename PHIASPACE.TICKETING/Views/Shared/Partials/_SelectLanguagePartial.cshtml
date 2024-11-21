@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using PHIASPACE.TICKETING
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResources> localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+
+<div class="dropdown d-inline-block language-switch">
+    <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @* <img src="~/public/assets/images/flags/us.jpg" alt="Header Language" height="16"> *@
+        <span class="badge badge-warning">@requestCulture.RequestCulture.UICulture.EnglishName</span>
+    </button>
+    <div class="dropdown-menu dropdown-menu-end">
+        @foreach (var item in cultureItems)
+        {
+            <a asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString.Value" asp-route-culture="@item.Value" class="dropdown-item notify-item language" data-lang="eng">
+                @* <img src="~/public/assets/images/flags/us.jpg" alt="user-image" class="me-1" height="12">  *@
+                <span class="align-middle">@item.Text</span>
+            </a>
+        }
+    </div>
+</div>

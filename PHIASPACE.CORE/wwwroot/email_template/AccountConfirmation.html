@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Account Confirmation</h1>
+        <p>Dear {UserName},</p>
+        <p>An account was created for you on STUDYSPACE.</p>
+        <p>STUDYSPACE is a study management rich platform that allows you access to study data in real-time. You will get access to areas of the studies that have been assigned to you.</p>
+        
+        <div class="password-box"></div>
+            <p><strong>Your temporary password is: {TemporaryPassword}</strong></p>
+            <p>Please change this password immediately after your first login.</p>
+        </div>
+        
+        <p>To confirm your account and set up your password, please click the following link:</p>
+        <p><a href="{ConfirmationLink}" class="button">Confirm Account</a></p>
+        <br>
+        <p>If the button above doesn't work, you can copy and paste this link into your browser:</p>
+        <p><a href="{ConfirmationLink}">{ConfirmationLink}</a></p>
+        <p>Best regards,<br>STUDYSPACE Team</p>
+    </div>
+</body>
+</html>

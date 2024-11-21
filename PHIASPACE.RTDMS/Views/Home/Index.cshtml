@@ -1,0 +1,238 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+            <div class="row">
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon green" type="button"
+                            onclick="location.href='@Url.Action("Dashboard", "Dashboard")'">
+                        <i class="icon-chart"></i>
+                        <span>Dashboard</span>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon blue" type="button"
+                            onclick="openNav('myDash')">
+                        <i class="icon-stats-dots"></i>
+                        <span>Reports</span>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon orange" type="button"
+                            onclick="location.href='@Url.Action("Index", "WallBoard")'">
+                        <i class="icon-chart"></i>
+                        <span>Wallboards</span>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon red" type="button"
+                            onclick="openNav('dmNav')">
+                        <i class="icon-make-group"></i>
+                        <span>RTDMS</span>
+                    </button>
+                </div>
+                @if (User.IsInRole("Super Admin"))
+                {
+                    <div class="col-sm-2">
+                        <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon teal" type="button"
+                                onclick="openNav('lkNav')">
+                            <i class="icon-users"></i>
+                            <span>Linkage to care</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon purple" type="button"
+                                onclick="openNav('incNav')">
+                            <i class="icon-exclamation"></i>
+                            <span>Incidence Reporting</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon blue" type="button"
+                                onclick="openNav('fieldchecktables')">
+                            <i class="icon-stats-dots"></i>
+                            <span>FieldCheck Tables</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon pink" type="button"
+                                onclick="openNav('incNav')">
+                            <i class="icon-exclamation"></i>
+                            <span>Spotcheck Tables</span>
+                        </button>
+                    </div>
+                }
+            </div>
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('myNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("Index", "Item")">Non-Lab Supplies</a>
+        <a href="@Url.Action("Index", "Commodity")">Lab Supplies</a>
+
+    </div>
+
+</div>
+
+<div id="myDash" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('myDash')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a asp-controller="Dashboard" asp-action="MonitorEA">Monitor EA</a>
+        <a asp-controller="Dashboard" asp-action="TeamSummary">Team Summary</a>
+        <a href="@Url.Action("ResponseRate", "Dashboard")">Response Rate Summary</a>
+        <a href="@Url.Action("Summary", "Dashboard")">Region Summary</a>
+        <a href="@Url.Action("Linkage", "Dashboard")">Linkage to Care</a>
+        <a href="@Url.Action("StateTrend", "Dashboard")">Household completion Trend</a>
+        <a href="@Url.Action("IndAnalytic", "Dashboard")">Indicator Summary</a>
+    </div>
+
+</div>
+
+<div id="fieldchecktables" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('myDash')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a asp-controller="FieldCheck" asp-action="HomeRural">FC-1R: Household completion rate (rural)</a>
+        <a asp-controller="FieldCheck" asp-action="HomeUrban">FC-1U: Household completion rate (urban)</a>
+        <a asp-controller="FieldCheck" asp-action="AgeHeaping">FC-2: Age heaping in the household roster</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleWomen">FC-3: Eligible women per household</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleChildren">FC-3C: Eligible children per household</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleMen">FC-4: Eligible men per household</a>
+        <a asp-controller="FieldCheck" asp-action="AgeDisplacementMen">FC-5A: Age displacement: men</a>
+        <a asp-controller="FieldCheck" asp-action="AgeDisplacementWomen">FC-5B: Age displacement: women</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleWomenRateRural">FC-9R: Eligible women completion rate (rural)</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleWomenRateUrban">FC-9U: Eligible women completion rate (urban)</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleChildrenCompletion">FC-9C: Eligible child completion rate</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleMenRateRural">FC-10R: Eligible men completion rate (rural)</a>
+        <a asp-controller="FieldCheck" asp-action="EligibleMenRateUrban">FC-10U: Eligible men completion rate (urban)</a>
+        <a asp-controller="FieldCheck" asp-action="HivBloodMen">FC-13M: HIV blood collection: men</a>
+        <a asp-controller="FieldCheck" asp-action="HivBloodWomen">FC-13W: HIV blood collection: women</a>
+        <a asp-controller="FieldCheck" asp-action="HivBloodChildren">FC-13C: HIV blood collection: child</a>
+        <a asp-controller="FieldCheck" asp-action="VariableMissingData">FC-14: Key variables for missing data</a>
+        <a asp-controller="FieldCheck" asp-action="LengthInterviews">FC-15: Length of interviews (in minutes)</a>
+    </div>
+
+
+</div>
+
+
+<div id="dmNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('dmNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        @*<a href="@Url.Action("DataMonitor", "DMDash")">Data Monitor</a>*@
+        <a href="@Url.Action("MonitorProcess", "DMDashboard")">Process Monitor</a>
+        <a href="@Url.Action("LineListing", "DMDashboard")">Line Listing</a>
+    </div>
+</div>
+
+<div id="dmLab" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('dmLab')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("LabMonitor", "Dashboard")">Specimen Handling Dashboard</a>
+        <a href="@Url.Action("Index", "LabData")">Lab Data Uploads</a>
+        @* @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "DLM" }))
+        {
+        <a href="@Url.Action("Index","TestOrder")">Test Orders</a>
+        <!-- <a href="@Url.Action("Index", "Discrepancy")">Discrepancies</a>-->
+        <a href="https://track.naiis.ng/lab/discrepancies/?p=@User.Identity.Name">Discrepancies</a>
+        } *@
+        <a href="https://track.naiis.ng/lab">Line List</a>
+        <a href="@Url.Action("Index", "Stream")">Quality Control</a>
+
+
+    </div>
+
+</div>
+
+<div id="lkNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('lkNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("Dashboard", "LinkageToCare")">Dashboard</a>
+        <a href="@Url.Action("Index", "LinkageToCare/ReturnOfResult")">Return of Result (Central Lab)</a>
+        <a href="@Url.Action("Index", "HealthFacility")">Health Facility</a>
+        <a href="@Url.Action("Index", "CBO")">CBO</a>
+        <a href="@Url.Action("ParticipantsLinked", "LinkageToCare")">Reports</a>
+    </div>
+</div>
+<div id="incNav" class="overlay">
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('lkNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("Dashboard", "IncidenceReport")">Dashboard</a>
+        <a href="@Url.Action("ParticipantsLinked", "IncidenceReport")">Reports</a>
+    </div>
+</div>
+
+@section styles {
+    <link href="~/assets/css/color_aims.css" rel="stylesheet" type="text/css">
+    <link href="~/css/overlay.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .col-sm-2 {
+            margin-bottom: 20px !important
+        }
+    </style>
+}
+
+@section scripts {
+    <script>
+        jQuery(document).ready(function ($) {
+            var modbtn = $('.module-icon');
+            $('.module-icon').css({ 'border': 'none' });
+            $('.module-icon i').css({ 'font-size': '8em' });
+            $('.module-icon span').css({
+                'font-size': '2em'
+            });
+            $(modbtn).height($(modbtn[0]).width());
+        });
+
+        /* Open when someone clicks on the span element */
+        function openNav(id) {
+            document.getElementById(id).style.width = "100%";
+        }
+
+        /* Close when someone clicks on the "x" symbol inside the overlay */
+        function closeNav(id) {
+            document.getElementById(id).style.width = "0%";
+        }
+    </script>
+
+}

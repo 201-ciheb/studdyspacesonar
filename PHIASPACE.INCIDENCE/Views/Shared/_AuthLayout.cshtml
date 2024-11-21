@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="author" content="201 CIHEB">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Laboratory Diagnostic Network Adaptive System">
+    <title>@ViewData["Title"] - INCIDENCE</title>
+    <link rel="shortcut icon" href="./images/favicon.png">
+    <link rel="stylesheet" href="~/assets/css/style.css?v1.0.0">
+</head>
+
+<body class="nk-body" data-sidebar-collapse="lg" data-navbar-collapse="lg">
+    <!-- Root  -->
+    <div class="nk-app-root">
+        <!-- main  -->
+        <div class="nk-main">
+            <div class="nk-wrap align-items-center justify-content-center">
+                <div class="container p-2 p-sm-4">
+                    <div class="card overflow-hidden card-gutter-lg rounded-4 card-auth card-auth-mh">
+                        @RenderBody()
+                    </div><!-- .card -->
+                </div><!-- .container -->
+            </div>
+        </div> <!-- .nk-main -->
+    </div> <!-- .nk-app-root -->
+</body>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</html>

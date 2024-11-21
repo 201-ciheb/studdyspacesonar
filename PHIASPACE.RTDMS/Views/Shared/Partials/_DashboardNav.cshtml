@@ -1,0 +1,40 @@
+@if(ViewContext.RouteData.Values["Controller"].ToString() == "Dashboard") {
+    <ul class="nav navbar-nav">
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MonitorEA" ? "active" : "")">
+            <a asp-controller="Dashboard" asp-action="MonitorEA">
+                <i class="icon-display4 position-left"></i>
+                Monitor EA
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "TeamSummary" ? "active" : "")">
+            <a asp-controller="Dashboard" asp-action="TeamSummary">
+                <i class="icon-list position-left"></i> 
+                Team Summary
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ResponseRate" ? "active" : "")">
+            <a asp-controller="Dashboard" asp-action="ResponseRate">
+                <i class="icon-list position-left"></i> 
+                Response Rate
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Summary" ? "active" : "")">
+            <a asp-controller="Dashboard" asp-action="Summary">
+                <i class="icon-list position-left"></i> 
+                Region Summary
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "StateTrend" ? "active" : "")">
+            <a asp-controller="Dashboard" asp-action="StateTrend">
+                <i class="icon-chart position-left"></i> 
+                Household Completion Trend
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IndAnalytic" ? "active" : "")">
+            <a asp-controller="Dashboard" asp-action="IndAnalytic">
+                <i class="icon-chart position-left"></i> 
+                Indicator Summary
+            </a>
+        </li>
+    </ul>
+}

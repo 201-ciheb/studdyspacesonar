@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Role";
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a asp-controller="Role" asp-action="Index">Role</a></li>
+            <li class="breadcrumb-item active">All Roles</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="search-box me-2 d-inline-block">
+                            <div class="position-relative">
+                                <h4 class="card-title">Role</h4>
+                                <p class="card-title-desc">List of all roles</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-sm-end">
+                            <a asp-controller="Role" asp-action="Add" class="btn btn-primary btn-rounded waves-effect waves-light me-2"><i class="mdi mdi-plus me-1"></i> Add a new Role</a>
+                        </div>
+                    </div><!-- end col-->
+                </div>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <div id="role_list"></div>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/public/assets/libs/gridjs/theme/mermaid.min.css">
+}
+
+@section Scripts{
+    <script src="~/public/assets/libs/gridjs/gridjs.umd.js"></script>
+    <script src="public/assets/libs/alertifyjs/build/alertify.min.js"></script>
+    <script>
+        const grid = new gridjs.Grid({
+            columns: ['Name'
+                ,{
+                    name: 'Action',
+                    formatter: (_, row) =>
+                    {
+                        return gridjs.html(`<a href="Role/Edit/${row.cells[1].data}" class="btn btn-sm btn-info">Edit</a>
+                        <a href="Role/Delete/${row.cells[1].data}" class="btn btn-sm btn-info" onclick="if(!confirm('Are You sure you want to delete this Role?')) return false;">Delete</a>`) 
+                    }
+                }
+            ],  
+            pagination: {
+                enabled: true,
+                limit: 10,
+                server: {
+                    url: (prev, page, limit) => {
+                        if(prev.includes("?"))
+                            return `${prev}&limit=${limit}&offset=${page * limit}`;
+                        else
+                            return `${prev}?limit=${limit}&offset=${page * limit}`
+                    } 
+                }
+            },
+            sort: {
+                multiColumn: false,
+                server: {
+                    url: (prev, columns) => {
+                        if (!columns.length) return prev;                    
+                        const col = columns[0];
+                        const dir = col.direction === 1 ? 'asc' : 'desc';
+                        let colName = ['Module'][col.index];
+                        if(prev.includes("?"))
+                            return `${prev}&order=${colName}&direction=${dir}`;
+                        else
+                            return `${prev}?order=${colName}&direction=${dir}`;
+                    }
+                }
+            },
+            search: {
+                server: {
+                    url: (prev, keyword) => `${prev}?search=${keyword}`
+                }
+            },       
+            resizable: true,
+            server: {
+                url: '/Role/GetRoles',
+                then: data => data.records.map(card => [card.name, card.id])
+            } 
+        }).render(document.getElementById('role_list'));
+    </script>
+}

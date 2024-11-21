@@ -1,0 +1,800 @@
+@using Newtonsoft.Json
+@using System.Data.SqlClient;
+@using System.Data;
+@using PHIASPACE.RTDMS.Utility;
+@using PHIASPACE.RTDMS.Helpers;
+
+@{
+    ViewBag.Title = "Index";
+
+    var hh_data = (DataTable)ViewBag.hh_data;
+
+    var person = (AimsPerson)ViewBag.person;
+    @* var form_links = (List<AimsLnkFormAge>)ViewBag.FormLinks;
+    var issues = new List<RtdmsIssue>(); *@
+    int currentPage = ViewBag.page;
+    int totalPages = ViewBag.pages;
+
+    if (ViewBag.issues != null)
+    {
+        @* issues = (List<RtdmsIssue>)ViewBag.issues; *@
+    }
+
+    int rows = 0;
+    int pages = 0;
+
+    if (hh_data != null && hh_data.Rows.Count > 0)
+    {
+        rows = hh_data.Rows.Count;
+        pages = (int)Math.Ceiling((double)rows / 20); 
+    }
+}
+
+
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+
+            <div class="row">
+                <div class="col-lg-2">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px">
+                            <h5 class="panel-title">Locations</h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list"></ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="height:600px;padding:0px; max-height:680px; width:100%; overflow-x: scroll; overflow-y: auto;">
+
+                            <ul id="tree" style="padding:0px !important"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title">Households</h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+                                    <li>
+                                        <input type="text" class="form-control light-table-filter" id="txt_search" data-table="table-bordered" style="width:150px;padding:0px;height:22px" placeholder="search" />
+                                    </li>
+                                    <li>
+                                        <i class="icon-database-export"></i>
+                                    </li>
+                                    <li>
+                                        <i class="icon-database-refresh"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding:0px"></div>
+
+                        <div class="form-inline">
+                            <label for="pageSize">Rows per page:</label>
+                            <select id="pageSize" class="form-control" onchange="changePageSize()">
+                                @if (ViewBag.pageSize == 10)
+                                {
+                                    <option value="10" selected>10</option>
+                                }
+                                else
+                                {
+                                    <option value="10">10</option>
+                                }
+                                @if (ViewBag.pageSize == 20)
+                                {
+                                    <option value="20" selected>20</option>
+                                }
+                                else
+                                {
+                                    <option value="20">20</option>
+                                }
+                                @if (ViewBag.pageSize == 30)
+                                {
+                                    <option value="30" selected>30</option>
+                                }
+                                else
+                                {
+                                    <option value="30">30</option>
+                                }
+                            </select>
+                        </div>
+
+
+
+                        <!-- Add the table rendering logic as before -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped tablesorter" id="tb_line">
+                                <thead>
+                                    <tr>
+                                        <th>Team</th>
+                                        <th>Zone</th>
+                                        <th>County</th>
+                                        <th>Cluster</th>
+                                        <th>HH_No</th>
+                                        <th>HH.Qstn</th>
+                                        <th>QC</th>
+                                        <th>DM</th>
+                                        <th>Uploaded</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.hh_data != null && ViewBag.hh_data.Rows.Count > 0)
+                                    {
+                                        foreach (DataRow row in ViewBag.hh_data.Rows)
+                                        {
+                                            var bg_color = "yellow";
+                                            var values = row.ItemArray;
+                                            var ped = Convert.ToInt32(values[9]);
+                                            var hep = Convert.ToInt32(values[10]);
+
+                                            <tr>
+                                                <td>@values[7]</td>
+                                                <td>@values[5]</td>
+                                                <td>@values[6]</td>
+                                                <td>@Convert.ToInt32(values[0]).ToString("D4")</td>
+                                                <td style="background-color:@bg_color">
+                                                    <a href="#" onclick="load_hh_form(@values[0], @values[1])">
+                                                        @Convert.ToInt32(values[1]).ToString("D4")
+                                                        @if (hep == 1)
+                                                        {
+                                                            <i class="icon-page-break" style="color:green"></i>
+                                                        }
+                                                        @if (ped == 1)
+                                                        {
+                                                            <i class="icon-person" style="color:green"></i>
+                                                        }
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @if (values[3].ToString() == "Completed")
+                                                    {
+                                                        <span class="label bg-green" data-toggle="tooltip" title="@values[3].ToString()"><i class="icon-check"></i></span>
+                                                    }
+                                                    else if (values[3].ToString() == "Refused")
+                                                    {
+                                                        <span class="label bg-danger" data-toggle="tooltip" title="@values[3].ToString()"><i class="icon-cancel-circle2"></i></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="label bg-grey-400" data-toggle="tooltip" title="@values[3].ToString()"><i class="icon-notebook"></i></span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a href="#" style="text-decoration:none" class="text-warning-400" onclick="run_qc('@values[0]','@values[1]')" data-toggle="modal" data-target="#qModal"><i class="icon-task"></i></a>
+                                                </td>
+                                                <td>
+                                                    <span data-toggle="tooltip" title="@values[4].ToString()" id="tp_@values[0]_@values[1]">
+                                                        @if (values[4].ToString() == "Processed")
+                                                        {
+                                                            <i class="icon-check" style="color:green"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="icon-cancel-circle2" style="color:palevioletred"></i>
+                                                        }
+                                                    </span>
+                                                </td>
+                                                <td>@Utils.RelativeDate(values[8].ToString())</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="9">No household data available.</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <!-- Pagination Controls -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    @if (ViewBag.page > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("LineListing", "DMDashboard", new { page = ViewBag.page - 1, pageSize = ViewBag.pageSize, location_id = ViewBag.location_id })">Previous</a>
+                                        </li>
+                                    }
+
+                                    @for (var i = 1; i <= ViewBag.pages; i++)
+                                    {
+                                        <li class="page-item @(i == ViewBag.page ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("LineListing", "DMDashboard", new { page = i, pageSize = ViewBag.pageSize, location_id = ViewBag.location_id })">@i</a>
+                                        </li>
+                                    }
+
+                                    @if (ViewBag.page < ViewBag.pages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@Url.Action("LineListing", "DMDashboard", new { page = ViewBag.page + 1, pageSize = ViewBag.pageSize, location_id = ViewBag.location_id })">Next</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-lg-4">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title">
+
+                                <strong style="color:#7986CB" id="header">
+
+
+                                </strong>
+
+                            </h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list" id="person_header"></ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding:0px">
+                            <div style="height:0px; border-top:1px solid #cccccc">
+
+                            </div>
+                            <div class="panel-group panel-group-control content-group-lg">
+
+                                <div id="hh_qs"></div>
+
+
+
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="tb_data">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-2">
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title">DM Tickets</h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+
+                                    <li><a href="#" id="li_tickets" style="display:none"><i onclick="clear_ticket()" class="icon-add" data-toggle="modal" data-target="#myModal"></i></a></li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding:0px">
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="tb_issues">
+                                <tbody>
+                                    @*@if (issues.Any())
+                                        {
+                                            foreach (var issue in issues)
+                                            {
+                                                <tr>
+                                                    <td> <strong>@issue.title</strong> <span class="pull-right">@issue.date_created.ToString("yyyy-MM-dd HH:mm tt")</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@issue.issue_content</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" data-toggle="modal" data-target="#myModal" onclick="get_issue(@issue.id)"><i class="icon-pen"></i></a><span class="label bg-orange pull-right">@issue.rtdms_issue_status.Name</span>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }*@
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+
+
+<div id="qModal" class="modal fade" role="dialog">
+    <form class="form-horizontal" method="post" action="#">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="form_title">Quality Check</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="~/loader/1.gif" style="margin-left: auto;margin-right: auto;" id="qc_img" />
+                    <ul class="media-list chat-list content-group" id="ls_discussions"></ul>
+
+                </div>
+                <div class="modal-footer">
+
+
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <form class="form-horizontal" method="post" action="@Url.Action("Post","AIssue")">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="form_title">New DM Ticket</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Title -->
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <input type="text" value="" required name="Title" id="title" placeholder="Title of the ticket" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- EA ID, Household ID, Team ID -->
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                            <input type="text" value="" placeholder="EA ID" name="EaId" id="ea_id" class="form-control">
+                        </div>
+
+                        <div class="col-lg-4">
+                            <input type="text" value="" name="HouseholdId" id="household_id" placeholder="Household ID" class="form-control">
+                        </div>
+
+                        <div class="col-lg-4">
+                            <input type="text" value="" name="TeamId" id="team_id" placeholder="Team ID" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Lab and County -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Lab</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("LabId", (SelectList)ViewBag.Labs, "-- Select lab --", new { @class = "form-control", @id = "lab_id" })
+                        </div>
+
+                        <label class="control-label col-lg-2">County</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("CountyId", (SelectList)ViewBag.States, "-- Select County --", new { @class = "form-control", @id = "county_id" })
+                        </div>
+                    </div>
+
+                    <!-- Issue Type and Status -->
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Type</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("IssueTypeId", (SelectList)ViewBag.IssueTypes, null, new { @class = "form-control", @id = "issue_type_id", @required = "required" })
+                        </div>
+
+                        <label class="control-label col-lg-2">Status</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("StatusId", (SelectList)ViewBag.Statuses, "-- Select Status --", new { @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+
+                    <!-- Issue Content -->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <textarea name="IssueContent" id="issue_content" placeholder="Description of the issue" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Impact -->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <textarea name="Impact" id="impact" placeholder="Impact summary" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Resolution -->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <textarea name="Resolution" id="resolution" placeholder="Final resolution and rationale" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Priority (hidden input for ID) -->
+                    <input type="hidden" name="Priority" id="priority" value="1" /> <!-- Default priority -->
+                    <!-- Persons (Multiple Selection) -->
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <select multiple="multiple" name="persons" class="select"></select>
+                        </div>
+                    </div>
+
+                    <!-- Is New -->
+                    <input type="hidden" id="is_new" name="is_new" value="1" />
+                </div>
+
+                <div class="modal-footer">
+                    @if (User.IsInRole("DMA") || PHIASPACE.RTDMS.Helper.HtmlHelper.IsDebug())
+                    {
+                        <button type="submit" id="btn" class="btn btn-primary">Add Query</button>
+                    }
+
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section styles{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <link href="~/assets/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.default.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <link href="~/Content/tb_sort/style.css" />
+    <style>
+        th {
+            font-weight: bold
+        }
+
+        #tb > tbody > tr:nth-of-type(odd) {
+            border-color: #03A9F4;
+        }
+
+        .table > tbody > tr > td, .table > thead > tr > th {
+            padding: 6px;
+        }
+
+        tr.selected {
+            background-color: #FFCF8B !important
+        }
+    </style>
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="~/js/fn/ui_tree.js"></script>
+    <script src="~/js/fn/base.js"></script>
+    <script src="~/js/fn/fn_load_form.js"></script>
+    <script src="~/js/fn/fn_issue.js"></script>
+    <script src="~/js/fn/table_sorter.js"></script>
+    <script src="~/assets/js/table_filter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script type="text/javascript">function myFunction() {
+            WshShell = new ActiveXObject("Wscript.Shell"); //Create WScript Object
+            WshShell.run("C://Program Files (x86)/CSPro 7.0/CSEntry.exe"); // Please change the path and file name with your relevant available path in client system. This code can be used to execute .exe file as well
+            //C://Program Files (x86)/CSPro 7.0/CSEntry.exe
+        }</script>
+
+
+    <script>
+
+    function changePageSize() {
+        var pageSize = document.getElementById("pageSize").value;
+        window.location.href = "@Url.Action("LineListing", "DMDashboard", new { page = ViewBag.page, location_id = ViewBag.location_id })&pageSize=" + pageSize;
+    }
+
+        function load_hh_form(ea_id, hh_id, ctrl) {
+            // Construct the API URL
+            var apiUrl = "/DashApi/GetHHSummary/" + ea_id + "_" + hh_id;
+
+            // Set form values
+            $("#ea_id").val(ea_id);
+            $("#hh_id").val(hh_id);
+            $("#household_id").val(hh_id);
+
+            // Highlight the selected row
+            $(ctrl).closest("tr").addClass("selected").siblings().removeClass("selected");
+
+            // Fetch data from the API
+            $.get(apiUrl, function (data) {
+                // console.log("Response Data from Backend:", data);
+
+                // Update UI elements with the fetched data
+                $("#header").html(data.header);
+                $("#person_header").html(data.person_header);
+                $("#hh_qs").html(data.hh_qs);
+                $("#tb_data > thead").html(data.table_header);
+                $("#tb_data > tbody").html(data.table_content);
+
+                // Show the tickets link if available
+                $("#li_tickets").show();
+
+                // Process issues if present
+                if (data.issues && data.issues.length > 0) {
+                    try {
+                        var issues = typeof data.issues === 'string' ? JSON.parse(data.issues) : data.issues;
+
+                        var tbody = "";
+                        for (var i = 0; i < issues.length; i++) {
+                            var issue = issues[i];
+
+                            var status = "Open";
+                            if (issue.status_id == 2) {
+                                status = "Closed";
+                            } else if (issue.status_id == 3) {
+                                status = "Discarded";
+                            }
+
+                            tbody += "<tr>";
+                            tbody += "<td><strong>" + issue.title + "</strong><span class='pull-right'>" + issue.date_created + "</span></td></tr>";
+                            tbody += "<tr><td>" + issue.issue_content + "</td></tr>";
+                            tbody += "<tr><td><a href='#' data-toggle='modal' data-target='#myModal' onclick='get_issue(\"" + issue.id + "\")'><i class='icon-pen'></i></a><span class='label bg-orange pull-right'>" + status + "</span></td>";
+                            tbody += "</tr>";
+                        }
+
+                        // Update the issues table
+                        $("#tb_issues > tbody").empty().append(tbody);
+                    } catch (err) {
+                        console.error("Error parsing issues:", err);
+                    }
+                } else {
+                    console.log("No issues found in the response.");
+                }
+            });
+        }
+
+
+        function clear_ticket() {
+            $("#form_title").text("New DM Ticket");
+            $("#is_new").val("1");
+            $("#title").val('');
+            $("#status_id").val('');
+            $("#issue_type_id").val('');
+            $("#id").val('');
+            //$("#ea_id").val(data.ea_id);
+            //$("#household_id").val(data.household_id);
+            //$("#ea_id").val(data.ea_id);
+            $("#issue_content").val('');
+            $("#btn").text("Add Ticket");
+        }
+        function run_qc(ea, hh) {
+            // Define the API URL for QC process
+            var apiUrl = "/DashApi/RunHHQC";
+
+            // Create the data object to be sent with POST
+            var data = {
+                ea_id: ea,
+                hh_id: hh
+            };
+
+            // Clear and show loader
+            $("#qc_img").show();
+            $("#ls_discussions").empty();
+
+            // Send POST request
+            $.ajax({
+                type: "POST",
+                url: apiUrl,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    @* console.log("QC Response Data from Backend:", response); *@
+
+                    // Hide loader
+                    $("#qc_img").hide();
+
+                    // Iterate through the received data
+                    for (var i = 0; i < response.length; i++) {
+                        var even = "";
+                        var li = "<li class='media " + even + "'>";
+                        li += '<div class="media-body"><div class="media-content" style="background-color:#EF5350;color: #fff">' + response[i];
+                        li += '</div></div></li>';
+
+                        // Append discussion to list
+                        $("#ls_discussions").append(li);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error in QC process:", xhr.responseText);
+                }
+            });
+        }
+
+
+        function mark_as_completed(ea, hh) {
+            var apiUrl = "/DashApi/MarkCompleted"; // Ensure this endpoint exists
+            var data = { ea_id: ea, hh_id: hh }; // Data being sent in the request
+
+            $.ajax({
+                type: "POST",
+                url: apiUrl,
+                contentType: "application/json",
+                data: JSON.stringify(data), // Send data as JSON
+                success: function (response) {
+                    @* console.log("Mark Completed Response from Backend:", response); *@
+
+                    // Update the UI to indicate the item is marked as completed
+                    $("#tp_" + ea + "_" + hh).html('<i class="icon-check" style="color:green"></i>');
+                },
+                error: function (xhr, status, error) {
+                    @* console.error("Error in Mark Completed:", xhr.responseText); *@
+                }
+            });
+        }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Handle row click to highlight selected rows
+        $("tr").click(function () {
+            $(this).addClass("selected").siblings().removeClass("selected");
+        });
+
+        // Initialize tablesorter
+        $("#tb_line").tablesorter({ widthFixed: true, widgets: ['zebra'] });
+
+        // Log tree data to the console
+        var treeData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.tree_data));
+         console.log("Tree Data:", treeData); 
+
+        // Initialize jstree with the tree data from the server
+        $('#tree').jstree({
+            'core': {
+                'data': treeData  // Pass tree data here
+            }
+        }).on('changed.jstree', function (e, data) {
+            // When a node is selected, handle loading data from the tree
+            var id = data.node.id;
+            load_from_tree(id);  // Your custom logic for loading data from the selected tree node
+        });
+
+        // Initialize select2 for searching people
+        $('.select').select2({
+            placeholder: 'Search person...',
+            ajax: {
+                url: function (params) {
+                    return "/api/personapi/getsearch/" + params.term; // Construct URL with the search term
+                },
+                dataType: 'json',
+                delay: 250, // Optional delay for better performance
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.id, text: obj.name }; // Return formatted results
+                        })
+                    };
+                }
+            }
+        });
+
+
+        // Initialize DataTable
+        $('.datatable-basic').DataTable({
+            autoWidth: false,
+            columnDefs: [{ orderable: false, width: '100px' }],
+            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+            language: {
+                search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: 'Type to filter...',
+                lengthMenu: '<span>Show:</span> _MENU_',
+                paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            },
+            drawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+            },
+            preDrawCallback: function () {
+                $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+            }
+        });
+    });
+
+    (function (document) {
+    'use strict';
+
+    var LightTableFilter = (function (Arr) {
+
+    var _input;
+
+    function _onInputEvent(e) {
+    _input = e.target;
+    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+    Arr.forEach.call(tables, function (table) {
+    Arr.forEach.call(table.tBodies, function (tbody) {
+    Arr.forEach.call(tbody.rows, _filter);
+    });
+    });
+    }
+
+
+    function _filter(row) {
+    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+
+    return {
+    init: function () {
+    var inputs = document.getElementsByClassName('light-table-filter');
+    Arr.forEach.call(inputs, function (input) {
+    input.oninput = _onInputEvent;
+    });
+    }
+    };
+    })(Array.prototype);
+
+    document.addEventListener('readystatechange', function () {
+    if (document.readyState === 'complete') {
+    LightTableFilter.init();
+    }
+    });
+
+    })(document);
+    </script>
+
+
+    <script src="~/js/fn/jquery.signalR-2.2.3.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    @* <script src="~/signalr/hubs"></script> *@
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>//$(function () {
+        //    // Reference the auto-generated proxy for the hub.
+        //    var chat = $.connection.interviewHub;
+        //    // Create a function that the hub can call back to display messages.
+        //    chat.client.SendHouseHold = function (name, message) {
+        //        // Add the message to the page.
+        //        $('#discussion').append('<li><strong>' + htmlEncode(name)
+        //            + '</strong>: ' + htmlEncode(message) + '</li>');
+        //    };
+        //    // Get the user name and store it to prepend to messages.
+        //    //$('#displayname').val(prompt('Enter your name:', ''));
+        //    // Set initial focus to message input box.
+        //    $('#message').focus();
+        //    // Start the connection.
+        //    $.connection.hub.start().done(function () {
+        //        $('#sendmessage').click(function () {
+        //            // Call the Send method on the hub.
+        //            chat.server.send($('#displayname').val(), $('#message').val());
+        //            // Clear text box and reset focus for next comment.
+        //            $('#message').val('').focus();
+        //        });
+        //    });
+        //});
+        //// This optional function html-encodes messages for display in the page.
+        //function htmlEncode(value) {
+        //    var encodedValue = $('<div />').text(value).html();
+        //    return encodedValue;
+        //}</script>
+}

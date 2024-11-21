@@ -1,0 +1,214 @@
+﻿@model ParticipantModel;
+@{
+    ViewData["Title"] = "Training Facilitators";
+    List<FacilitatorModel> facilitors = ViewBag.Facilitators;
+}
+@* <%- contentFor('breadcrumb') %> *@
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Training Facilitators</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Training</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Facilitators</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<!-- end page title -->
+<div class="card">
+  <div class="card-header">
+      <p class="h6 mt-3">@facilitors.Count() Facilitators Added</p>
+  </div>
+  <div class="card-body">
+      <div class="row">
+          <div class="col-xs-12">
+           <ul class="nav justify-content-between mb-3">
+          <li class="nav-item w-25">
+              <div>
+                  <select class="form-control" aria-label="Default select example" id="personSelect"></select>
+                 
+              </div>
+              
+            
+          </li>
+           <li class="nav-item w-5 float-left">
+             
+          </li> 
+         
+          <li class="nav-item">
+             <a href="#" class="btn btn-outline-danger">Upload From File</a>
+             <a href="#" class="btn btn-outline-danger">Download Template</a>
+          </li>
+        </ul>
+          </div>
+               @*   <div>
+                       <select class="form-select" id="personSelect"></select>
+                       <button class="btn btn-outline-danger" type="button"> Add </button>
+                  </div>
+                  <div>
+                        <a href="#" class="btn btn-outline-danger">Upload From File</a>
+                        <a href="#" class="btn btn-outline-danger">Download Template</a>
+                  </div>
+                </nav>
+          </div>
+          @* <div class="col-xs-12 float-end"> 
+                 <a href="#" class="btn btn-outline-danger">Upload From File</a>
+                 <a href="#" class="btn btn-outline-danger">Download Template</a>
+           </div>
+
+               <div class="col-sm-12">
+                <h5 class="card-title">Search Participants</h5>
+
+                <div class="row">
+                    <div class="col-xs-12 mb-2 mt-1">
+                          <select class="form-select" id="personSelect"></select>
+                    </div>
+                    <div class="col-xs-12 mb-2 mt-1">
+                      
+                        <button class="btn btn-outline-danger" type="button"> Add </button>
+                    </div>
+                    <div class="col-xs-12 mb-2"> 
+                        <p class="h5">Or</p>
+                    </div>
+                  
+                </div>
+                
+          </div>*@
+          <div class="col-sm-12">
+               <h5 class="card-title">Added Facilitators</h5>
+               <table class="table table-striped table-hover" id="participants_table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Id Code</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Other</th>
+                      <th scope="col">Province</th>
+                      <th scope="col">District</th>
+                      <th scope="col">Facility</th>
+                     
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+               </table>
+          </div>
+      </div>
+   </div>
+  <div class="card-footer text-muted">
+     <a href="/training/addparticipant" class="btn btn-primary float-start"><i class="mdi mdi-arrow-left-bold-outline text-white font-size-16"></i>Previous</a>
+     
+     <button type="submit" onclick="" class="btn btn-primary float-end">Review  <i class="mdi mdi-arrow-right-bold-outline text-white font-size-16"></i></button>
+  </div>
+</div>
+@section styles{
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet"/>
+    <style>
+        .select2-drop-active {
+            margin-top: -25px;
+        }
+
+        .columnHeaders {
+            display: flex;
+            flex-direction: row;
+        }
+
+            .columnHeaders:before, .columnHeaders:after {
+                content: "";
+                flex: 1 1;
+                border-bottom: 1px solid;
+                margin: auto;
+            }
+
+            .columnHeaders:before {
+                margin-right: 10px
+            }
+
+            .columnHeaders:after {
+                margin-left: 10px
+            }
+    </style>
+}
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+         jQuery(document).ready(function () {
+             //$("#participants_table").DataTable();
+
+             $("#personSelect").select2({
+                //placeholder:  "select",
+                //theme: "bootstrap",
+                allowClear: true,
+                ajax: {
+                    url: "/Person/Search",
+                    contentType: "application/json; charset=utf-8",
+                    data: function (params) {
+                        var query =
+                        {
+                            term: params.term,
+                        };
+                        return query;
+                    },
+                    processResults: function (result) {
+                        //console.log(result)
+                        return {
+                            results: $.map(result, function (item) {
+                                return {
+                                    id: item.identificationCode,
+                                    text: item.lastName
+                                };
+                            }),
+                        };
+                    }
+                }
+
+            });
+
+             $("#personSelect").change(function() {
+                 var id = this.value;
+
+                 if(id = ''){
+                     return;
+                 }
+                 var confirm = window.confirm("Are you sure you want to add this person");
+                 var _table =  $("#participants_table tbody");
+
+                 if (confirm = true) { 
+                     var model = { IdentificationCode : this.value};
+
+                     $.ajax({
+                         url: "/Training/AddParticipant",
+                         type: 'POST',
+                         dataType: "json",
+                         data: JSON.stringify(model),
+                         contentType: 'application/json',
+                         success: function(data) {
+                             console.log(data);
+                           $('#participants_table tbody').append('<tr><td>*</td><td>'+ data.identificationCode+'</td><td>'+ data.lastName+'</td><td>'+ data.firstName+'</td><td>'+ data.otherName+'</td></tr>');
+                         },
+                         error: function(e) {
+
+                         }
+                     });
+                 }else {
+                
+                 }
+
+                $("#personSelect").val('');
+
+            });
+
+         });
+    </script>
+}

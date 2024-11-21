@@ -1,0 +1,194 @@
+<!-- include Header  -->
+<div class="nk-header nk-header-fixed">
+    <div class="container-fluid">
+        <div class="nk-header-wrap">
+            <div class="nk-header-logo ms-n1">
+                <div class="nk-sidebar-toggle">
+                    <button class="btn btn-sm btn-icon btn-zoom sidebar-toggle d-sm-none"><em class="icon ni ni-menu"></em></button>
+                    <button class="btn btn-md btn-icon btn-zoom sidebar-toggle d-none d-sm-inline-flex"><em class="icon ni ni-menu"></em></button>
+                </div>
+                <div class="nk-navbar-toggle me-2">
+                    <button class="btn btn-sm btn-icon btn-zoom navbar-toggle d-sm-none"><em class="icon ni ni-menu-right"></em></button>
+                    <button class="btn btn-md btn-icon btn-zoom navbar-toggle d-none d-sm-inline-flex"><em class="icon ni ni-menu-right"></em></button>
+                </div>
+                <a href="/" class="logo-link">
+                    <div class="logo-wrap">
+                        <img class="logo-img logo-light" src="~/assets/images/kenphia2.jpg"
+                            srcset="~/assets/images/kenphia2.jpg 2x" alt="KENPHIA Linkage to care"
+                            title="KENPHIA Linkage to care">
+                        <img class="logo-img logo-dark" src="~/assets/images/kenphia2.jpg"
+                            srcset="~/assets/images/kenphia2.jpg 2x" alt="KENPHIA Linkage to care"
+                            title="KENPHIA Linkage to care">
+                        <img class="logo-img logo-icon" src="~/assets/images/kenphia2.jpg"
+                            srcset="~/assets/images/kenphia2.jpg 2x" alt="KENPHIA Linkage to care"
+                            title="KENPHIA Linkage to care">
+                    </div>
+                </a>
+            </div>
+            <nav class="nk-header-menu nk-navbar">
+                @if(User.IsInRole("Super Admin") || User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("BBS.Stakeholder") || User.IsInRole("BBS.Partner")){
+                    <ul class="nk-nav">
+                        <li class="nk-nav-item has-sub">
+                            <a href="#" class="nk-nav-link nk-nav-toggle">
+                                <span class="nk-nav-text">Dashboards</span>
+                            </a>
+                            <ul class="nk-nav-sub nk-nav-sub-lg">
+                                <li class="nk-nav-item">
+                                    <a asp-action="Upload" asp-controller="Dashboard" class="nk-nav-link bg-primary-soft-hover">
+                                        <div class="media-group flex-grow-1">
+                                            <div class="media media-md media-middle media-border text-bg-primary-soft-outline">
+                                                <em class="icon ni ni-dashboard-fill"></em>
+                                            </div>
+                                            <div class="media-text flex-grow-1">
+                                                <span class="title">Uploads</span>
+                                            </div>
+                                        </div><!-- .media-group -->
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nk-nav-item has-sub">
+                            <a href="#" class="nk-nav-link nk-nav-toggle">
+                                <span class="nk-nav-text">Modules</span>
+                            </a>
+                            <ul class="nk-nav-sub">
+                                <li class="nk-nav-item has-sub">
+                                    <a href="#" class="nk-nav-link nk-nav-toggle"> Applications </a>
+                                    <ul class="nk-nav-sub">
+                                        @* <li class="nk-nav-item">
+                                            <a href="#" class="nk-nav-link"> Inventory </a>
+                                        </li>
+                                        <li class="nk-nav-item has-sub">
+                                            <a href="#" class="nk-nav-link nk-nav-toggle"> Evaluation </a>
+                                            <ul class="nk-nav-sub">
+                                                <li class="nk-nav-item">
+                                                    <a href="#" class="nk-nav-link"> List </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nk-nav-item has-sub">
+                                            <a href="#" class="nk-nav-link nk-nav-toggle"> Porficiency Testing </a>
+                                            <ul class="nk-nav-sub">
+                                                <li class="nk-nav-item">
+                                                    <a href="#" class="nk-nav-link"> List </a>
+                                                </li>
+                                            </ul>
+                                        </li> *@
+                                    </ul>
+                                </li>
+                                @* <li class="nk-nav-item has-sub">
+                                    <a href="#" class="nk-nav-link nk-nav-toggle"> Data Import </a>
+                                    <ul class="nk-nav-sub">
+                                        <li class="nk-nav-item">
+                                            <a href="#" class="nk-nav-link"> LDMS </a>
+                                        </li>
+                                        <li class="nk-nav-item">
+                                            <a href="#" class="nk-nav-link"> Field </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nk-nav-item has-sub">
+                                    <a href="#" class="nk-nav-link nk-nav-toggle"> Result Entry </a>
+                                    <ul class="nk-nav-sub">
+                                        <li class="nk-nav-item">
+                                            <a href="#" class="nk-nav-link"> Gonorrhea </a>
+                                        </li>
+                                    </ul>
+                                </li> *@
+                            </ul>
+                        </li>
+                        @* <li class="nk-nav-item has-sub">
+                            <a href="#" class="nk-nav-link nk-nav-toggle">
+                                <span class="nk-nav-text">Configuration</span>
+                            </a>
+                            <div class="nk-nav-sub">
+                                <div class="nk-nav-mega nk-nav-mega-lg">
+                                    <div class="nk-nav-col">
+                                        <h6 class="nk-nav-heading">Modules</h6>
+                                        <ul class="link-list link-list-md link-list-hover-bg-primary">
+                                            <li>
+                                                <a asp-action="Index" asp-controller="Module">All</a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- .nk-nav-col -->
+                                    <div class="nk-nav-col">
+                                        <h6 class="nk-nav-heading">System</h6>
+                                        <ul class="link-list link-list-md link-list-hover-bg-primary">
+                                            <li>
+                                                <a href="#">All</a>
+                                            </li>
+                                        </ul>
+                                        <h6 class="nk-nav-heading">User</h6>
+                                        <ul class="link-list link-list-md link-list-hover-bg-primary">
+                                            <li>
+                                                <a href="#">All</a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- .nk-nav-col -->
+                                </div><!-- .nk-nav-mega -->
+                            </div>
+                        </li> *@
+                    </ul>
+                }
+            </nav>
+            <div class="nk-header-tools">
+                <ul class="nk-quick-nav ms-2">
+                    <li>
+                        <button class="btn btn-icon btn-sm btn-zoom d-sm-none" data-bs-toggle="offcanvas" data-bs-target="#notificationOffcanvas"><em class="icon ni ni-bell"></em></button>
+                        <button class="btn btn-icon btn-md btn-zoom d-none d-sm-inline-flex" data-bs-toggle="offcanvas" data-bs-target="#notificationOffcanvas"><em class="icon ni ni-bell"></em></button>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-bs-toggle="dropdown">
+                            <div class="d-sm-none">
+                                <div class="media media-md">
+                                    <div class="img-thumbnail" style="border-radius:inherit;">
+                                        <b style="padding:0.47rem;display:inline-block; background-color:#bcbcbc; color:#43486c;">@User.GetFullNameInitials().Trim()</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-none d-sm-block">
+                                <div class="media-rounded">
+                                    <div class="img-thumbnail" style="border-radius:inherit;">
+                                        <b style="padding:0.47rem;display:inline-block; background-color:#bcbcbc; color:#43486c;">@User.GetFullNameInitials().Trim()</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-md">
+                            <div class="dropdown-content dropdown-content-x-lg py-3 border-bottom border-light">
+                                <div class="media-group">
+                                    <div class="media media-xl media-middle">
+                                        <div class="img-thumbnail" style="border-radius:inherit;">
+                                            <b style="padding:0.47rem;display:inline-block; background-color:#bcbcbc;">@User.GetFullNameInitials().Trim()</b>
+                                        </div>
+                                    </div>
+                                    <div class="media-text">
+                                        <div class="lead-text">@User.GetFullName()</div>
+                                        <span class="sub-text">@User.GetEmailAddress()</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-content dropdown-content-x-lg py-3 border-bottom border-light">
+                                <ul class="link-list">
+                                    @* <li><a asp-area="Identity" asp-page="/Account/Manage/Index"><em class="icon ni ni-user"></em> <span>My Profile</span></a></li>
+                                    <li><a href="#"><em class="icon ni ni-contact"></em> <span>My Contacts</span></a></li>
+                                    <li><a href="#"><em class="icon ni ni-setting-alt"></em> <span>Account Settings</span></a></li> *@
+                                    @* @if (User.IsImpersonating())
+                                    {
+                                        <li><a asp-controller="User" asp-action="StopImpersonation"><em class="icon ni ni-user-alt"></em> <span>Stop Impersonation</span></a></li>
+                                    } *@
+                                </ul>
+                            </div>
+                            <div class="dropdown-content dropdown-content-x-lg py-3">
+                                <ul class="link-list">
+                                    <li><a asp-controller="Account" asp-action="Logout"><em class="icon ni ni-signout"></em> <span>Log Out</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- .nk-header-tools -->
+        </div><!-- .nk-header-wrap -->
+    </div><!-- .container-fliud -->
+</div>
+<!-- header -->

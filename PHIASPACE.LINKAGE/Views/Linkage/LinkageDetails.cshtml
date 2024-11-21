@@ -1,0 +1,116 @@
+@model linkage_to_care_view_model
+@{
+    ViewData["Title"] = "Link Participant";
+}
+<div class="nk-content">
+    <div class="container">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block">
+                    <div class="card mb-2">
+                        <div class="card-header bg-secondary">
+                            <h5 class="text-white">Participant's Result Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12 row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <i class="form-label">Participant Firstname</i>
+                                        <div class="form-control-wrap">
+                                            <label class="form-control">@Model.first_name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <i class="form-label">Participant Family name</i>
+                                        <div class="form-control-wrap">
+                                            <label class="form-control">@Model.family_name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <i class="form-label">Participant Nickname</i>
+                                        <div class="form-control-wrap">
+                                            <label class="form-control">@Model.nick_name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <i class="form-label">Participant ID</i>
+                                        <div class="form-control-wrap">
+                                            <label class="form-control">@Model.lptid</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <i class="form-label">Participant Age</i>
+                                        <div class="form-control-wrap">
+                                            <label class="form-control">@Model.lbagey</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <i class="form-label">Participant Sex</i>
+                                        <div class="form-control-wrap">
+                                            <label class="form-control">@Model.lsex</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <h4>Facility details</h4>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <i class="form-label">Facility name</i>
+                                            <div class="form-control-wrap">
+                                                <label class="form-control">@Model.preffered_facility_name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <h4>Test results</h4>
+                                    <table class="table table-responsive table-striped">
+                                        <thead class="bg-secondary text-white">
+                                            <tr>
+                                                <th>Test Date</th>
+                                                <th>Test Result</th>
+                                                <th>Test Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Model.test_date</td>
+                                                <td>@Model.hiv_result</td>
+                                                <td>HIV</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Model.cd4_test_date</td>
+                                                <td>@Model.cd4_test_result</td>
+                                                <td>CD4</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <button type="submit" class="btn btn-primary" style="float: right;">Link to care</button>
+                                </div>
+                            </div>
+                        </div><!-- .card-body -->
+                    </div><!-- .card -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- .nk-content -->
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+    
+    </script>
+}

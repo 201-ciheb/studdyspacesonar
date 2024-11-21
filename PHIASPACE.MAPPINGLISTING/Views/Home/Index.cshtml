@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5 col-md-6 mb-2">
+        <div class="card bg-info" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            title="Number of Households mapped">
+            <div class="card-body pt-2 px-2">
+                <span class="text-white" style="font-size:1em">Households Mapped</span>
+                <span class="text-white" style="float: right; font-size: 1.3em"><i class="mdi mdi-home m-3"></i></span>
+                <div class="mt-3">
+                    <h2 class="text-white" style="font-size: 4.4rem;">
+                        17
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* <div class="col-lg-7">
+        <div class="card border border-success">
+            <h5 class="my-0 text-info text-uppercase"><i class="mdi mdi-map m-3"></i>EA REPORTED (EAS NEEDED)</h5>
+            <div class="card-body">
+                <h1 class="text-dark" style="font-size: 4rem;">116 <span class="text-info">(404)</span></h1>
+                <div class="progress m-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 28%" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <a href="javascript: void(0);" style="float: right;" class="btn btn-primary">EA Summary</a>
+            </div>
+        </div>
+    </div><!-- end col -->    *@
+    <div class="col-lg-7 col-md-6 mb-2">
+        <div class="card border-primary bg-info bg-opacity-25" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">
+            <div class="card-body pt-2 px-2">
+                    <span style="float:right;font-size:1em;">EA REPORTED (EAS NEEDED)</span>
+                <div class="mt-3">
+                    <h2 class="text-info" style="font-size: 4.1rem;">950 <span class="h3">[0.0]%</span></h2>
+                    <br />
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" data-progress="0.00%" style="width: 0.0%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>         
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="search-box me-2 d-inline-block">
+                            <div class="position-relative">
+                                <h4 class="card-title">EA Summary</h4>
+                                <p class="card-title-desc">List of EA's and progress</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <div id="ea_summary"></div>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/public/assets/libs/gridjs/theme/mermaid.min.css">
+}
+
+@section Scripts{
+    <script src="~/public/assets/libs/gridjs/gridjs.umd.js"></script>
+    @* <script src="public/assets/libs/alertifyjs/build/alertify.min.js"></script> *@
+    <script>
+        new gridjs.Grid({
+            columns: ["Record Number", "Region", "State", "District", "City", "Date", "Expected Household",
+            @* {
+                name:"EA Info",
+                formatter : (_, row) =>
+                    {
+                        if(row.cells[5].data == "1")
+                            return gridjs.html(`<span class="badge bg-success"><i class="mdi mdi-check"></i></span>`);
+                        else
+                            return gridjs.html(`<span class="badge bg-danger"><i class="mdi mdi-cancel"></i></span>`);
+                    }
+            },  *@
+            {
+                name: 'Household Record',
+                    formatter: (_, row) =>
+                        gridjs.html(`<span class="badge bg-success" style="font-size:16px;">${_}<i class="mdi mdi-check"></i></span>`)
+            }, 
+            {
+                name: '"Action"',
+                    formatter: (_, row) =>
+                        gridjs.html(`<span class="badge bg-info" style="font-size:16px;">View Record</span>`)
+            }],
+            pagination: {
+                limit: 50
+            },
+            sort: true,
+            search: true,
+            data: [
+                ["1", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240327", "25", "0"],
+                ["2", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240327", "25", "0"],
+                ["3", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240327", "25", "0"],
+                ["4", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240327", "25", "0"],
+                ["5", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240327", "25", "0"],
+                ["6", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240327", "25", "0"],
+                ["7", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240328", "25", "0"],
+                ["8", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240328", "25", "0"],
+                ["9", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240328", "25", "0"],
+                ["10", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240329", "25", "0"],
+                ["11", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240329", "25", "0"],
+                ["12", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240329", "25", "0"],
+                ["13", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240401", "25", "0"],
+                ["14", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240401", "25", "0"],
+                ["15", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240402", "25", "0"],
+                ["16", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240402", "25", "0"],
+                ["17", "MOMBASA", "CHANGAMWE", "KWA HOLA", "KWA HOLA", "20240402", "25", "0"]
+            ]
+
+        }).render(document.getElementById("ea_summary"));
+    </script>
+}

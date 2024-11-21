@@ -1,0 +1,55 @@
+@model UiModel
+<div class="offcanvas offcanvas-start" tabindex="-1" id="countryCanvas" aria-labelledby="countryCanvasLabel" aria-hidden="true" style="visibility: hidden;">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="countryCanvasLabel">PHIA Projects</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            Click to select a project
+        </div>
+        <div class="dropdown mt-3">
+            @if(Model.projects.Count > 0){
+                @foreach (var item in Model.projects)
+                {
+                    <div class="card border-success country_card" style="cursor: pointer;" onclick="changeCountry('@item.Abbreviation')">
+                        @if(Context.Request.Cookies["PHIASpace.Project"] == item.Abbreviation){
+                            <span class="position-absolute top-0 translate-middle badge rounded-pill bg-success" style="left: 90%;">Active</span>
+                            <div class="row g-0 align-items-center" style="border: solid 1px #003032; border-radius:5px;">                       
+                                <div class="col-md-4">
+                                    <img class="card-img img-fluid" src="~/public/assets/images/small/img-2.jpg" alt="Card image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h4 class="card-title abbrev">@item.Abbreviation</h4>
+                                        <p class="card-text">@item.Name</p>
+                                        <p class="card-text"><small class="text-muted">started @item.StartDate</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else{
+                            <div class="row g-0 align-items-center">                       
+                                <div class="col-md-4">
+                                    <img class="card-img img-fluid" src="~/public/assets/images/small/img-2.jpg" alt="Card image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h4 class="card-title abbrev">@item.Abbreviation</h4>
+                                        <p class="card-text">@item.Name</p>
+                                        <p class="card-text"><small class="text-muted">started @item.StartDate</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div> 
+                }
+            }
+            else{
+                <div class="alert alert-warning">
+                    it seems you do not have any project assigned, Don't worry, contact the survey team for assistance, once all is set, it's fun all the way!!!
+                </div>
+            }
+        </div>
+    </div>
+</div>

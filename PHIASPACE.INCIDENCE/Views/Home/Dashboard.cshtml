@@ -1,0 +1,294 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+            <div class="row">
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon blue" type="button"
+                            onclick="openNav('myDash')">
+                        <i class="icon-home"></i>
+                        <span>Dashboard</span>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon blue" type="button"
+                        onclick="openNav('myDash')">
+                        <i class="icon-stats-dots"></i>
+                        <span>Reports</span>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon orange" type="button"
+                        onclick="location.href='@Url.Action("Index", "WallBoard")'">
+                        <i class="icon-chart"></i>
+                        <span>Wallboards</span>
+                    </button>
+                </div>
+                @* @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "DMA" }))
+                {*@
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon red" type="button"
+                        onclick="openNav('dmNav')">
+                        <i class="icon-make-group"></i>
+                        <span>RTDMS</span>
+                    </button>
+                </div>
+                @*
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "PMD" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon yellow black-text"
+                type="button">
+                <i class="icon-codepen"></i>
+                <span>Project Management</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "MEA" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon orange" type="button"
+                onclick="location.href='@Url.Action("Index", "Monitor")'">
+                <i class="icon-car2"></i>
+                <span>AIMS Monitor</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "HVL" }))
+                {*@
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon teal" type="button"
+                        onclick="openNav('lkNav')">
+                        <i class="icon-users"></i>
+                        <span>Linkage to care</span>
+                    </button>
+                </div>
+                @*
+                }
+                @if (Html.IsDebug())
+                {*@
+                <div class="col-sm-2">
+                    <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon purple" type="button"
+                        onclick="openNav('incNav')">
+                        <i class="icon-exclamation"></i>
+                        <span>Incidence Reporting</span>
+                    </button>
+                </div>
+                @*
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "CMD" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon pink" type="button"
+                onclick="location.href='@Url.Action("Index", "CommunityMobilization")'">
+                <i class="icon-paperplane"></i>
+                <span>Community Mobilization</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "SDS" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon purple" type="button">
+                <i class="icon-mobile"></i>
+                <span>Device Management</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "DLM", "LTL" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon cyan" type="button"
+                onclick="openNav('dmLab')">
+                <i class="icon-microscope"></i>
+                <span>Lab Systems</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "DFA" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon grey" type="button"
+                onclick="location.href='@Url.Action("Index", "Person")'">
+                <i class="icon-people"></i>
+                <span>Admin and Finance</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "SCM", "SCO", "STS", "LAS", "CES", "STL" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon blue" type="button"
+                onclick="openNav('myNav')">
+                <i class="icon-laptop"></i>
+                <span>Commodity Mgt.</span>
+                </button>
+                </div>
+
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "GSP" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon black" type="button"
+                onclick="location.href='@Url.Action("Index", "SctoListing")'">
+                <i class="icon-comment-discussion"></i>
+                <span>Mapping &amp; Listing</span>
+                </button>
+                </div>
+                }
+                @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "ADO" }))
+                {
+                <div class="col-sm-2">
+                <button class="btn bg-warning-400 btn-block btn-float btn-float-lg module-icon black" type="button"
+                onclick="location.href='@Url.Action("Index", "Ticket")'">
+                <i class="icon-info22"></i>
+                <span>Help Desk</span>
+                </button>
+                </div>
+                } *@
+            </div>
+
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('myNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("Index", "Item")">Non-Lab Supplies</a>
+        <a href="@Url.Action("Index", "Commodity")">Lab Supplies</a>
+
+    </div>
+
+</div>
+
+<div id="myDash" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('myDash')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a asp-controller="Dashboard" asp-action="MonitorEA">Monitor EA</a>
+        <a asp-controller="Dashboard" asp-action="TeamSummary">Team Summary</a>
+        <a href="@Url.Action("ResponseRate", "Dashboard")">Response Rate Summary</a>
+        <a href="@Url.Action("Summary", "Dashboard")">Region Summary</a>
+        <a href="@Url.Action("Linkage", "Dashboard")">Linkage to Care</a>
+        <a href="@Url.Action("StateTrend", "Dashboard")">Household completion Trend</a>
+        <a href="@Url.Action("IndAnalytic", "Dashboard")">Indicator Summary</a>
+    </div>
+
+</div>
+
+
+<div id="dmNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('dmNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        @*<a href="@Url.Action("DataMonitor", "DMDash")">Data Monitor</a>*@
+        <a href="@Url.Action("MonitorProcess", "DMDashboard")">Process Monitor</a>
+        <a href="@Url.Action("LineListing", "DMDashboard")">Line Listing</a>
+    </div>
+</div>
+
+<div id="dmLab" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('dmLab')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("LabMonitor", "Dashboard")">Specimen Handling Dashboard</a>
+        <a href="@Url.Action("Index", "LabData")">Lab Data Uploads</a>
+        @* @if (Html.IsDebug() || UserHelper.UserInRole(new[] { "DLM" }))
+        {
+        <a href="@Url.Action("Index","TestOrder")">Test Orders</a>
+        <!-- <a href="@Url.Action("Index", "Discrepancy")">Discrepancies</a>-->
+        <a href="https://track.naiis.ng/lab/discrepancies/?p=@User.Identity.Name">Discrepancies</a>
+        } *@
+        <a href="https://track.naiis.ng/lab">Line List</a>
+        <a href="@Url.Action("Index", "Stream")">Quality Control</a>
+
+
+    </div>
+
+</div>
+
+<div id="lkNav" class="overlay">
+
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('lkNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("Dashboard", "LinkageToCare")">Dashboard</a>
+        <a href="@Url.Action("Index", "LinkageToCare/ReturnOfResult")">Return of Result (Central Lab)</a>
+        <a href="@Url.Action("Index", "HealthFacility")">Health Facility</a>
+        <a href="@Url.Action("Index", "CBO")">CBO</a>
+        <a href="@Url.Action("ParticipantsLinked", "LinkageToCare")">Reports</a>
+    </div>
+</div>
+<div id="incNav" class="overlay">
+    <!-- Button to close the overlay navigation -->
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('lkNav')">&times;</a>
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+        <a href="@Url.Action("Dashboard", "IncidenceReport")">Dashboard</a>
+        <a href="@Url.Action("ParticipantsLinked", "IncidenceReport")">Reports</a>
+    </div>
+</div>
+
+@section styles {
+    <link href="~/assets/css/color_aims.css" rel="stylesheet" type="text/css">
+    <link href="~/css/overlay.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .col-sm-2 {
+            margin-bottom: 20px !important
+        }
+    </style>
+}
+
+@section scripts {
+    <script>
+        jQuery(document).ready(function ($) {
+            var modbtn = $('.module-icon');
+            $('.module-icon').css({ 'border': 'none' });
+            $('.module-icon i').css({ 'font-size': '8em' });
+            $('.module-icon span').css({
+                'font-size': '2em'
+            });
+            $(modbtn).height($(modbtn[0]).width());
+        });
+
+        /* Open when someone clicks on the span element */
+        function openNav(id) {
+            document.getElementById(id).style.width = "100%";
+        }
+
+        /* Close when someone clicks on the "x" symbol inside the overlay */
+        function closeNav(id) {
+            document.getElementById(id).style.width = "0%";
+        }
+    </script>
+
+}

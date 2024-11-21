@@ -1,0 +1,276 @@
+@using System.Data;
+@using System.Xml.Linq;
+@{
+    ViewBag.Title = "Indicator Analytics";
+
+    var recordSet = (List<AimsRecordSet>)ViewBag.recordSet;
+    var values = (List<AimsValueSet>)ViewBag.values;
+    var distinct_values = values.Select(e => e.Label).Distinct();
+}
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Dashboard</span> - Indicator Summary</h4>
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="/">Home</a></li>
+                <li class="active">Indicator Summary</li>
+            </ul>
+        </div>
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+            <div class="row">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">
+                            Indicator Summary
+                            <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                        </h6>
+                        <div class="heading-elements">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group" style="margin-left:5px">
+                                <select class="form-control input-lg" id="sel_table" onchange="load_colums()">
+                                    @foreach (var record in recordSet)
+                                    {
+                                        if (record.Name == ViewBag.record_name)
+                                        {
+                                            <option selected value="@record.Id-@record.Name">@record.Label</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@record.Id-@record.Name">@record.Label</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <table style="margin-left:5px" class="table table-hover table-bordered" id="col_list">
+                                @foreach (var value in distinct_values)
+                                {
+                                    var value_set = values.FirstOrDefault(e => e.Label == value);
+                                    <tr id="a_@value_set.Id" onclick="load_ind_analytic('@value_set.RecordId')">
+                                        <td>
+                                            <a>@value</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="col-lg-12">
+                                <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div id="pie" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="table-responsive">
+                                    <div class="table-responsive" id="divTable">
+                                        <table class="table table-striped table-bordered table-hover" style="border-top:1px solid #ccc" id="table">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="A1QCLUST" id="pk" />
+            <input type="hidden" value="" id="label" />
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+@section styles{
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+    <link href=" https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" />
+
+    <style>
+        th {
+            font-weight: bold;
+            font-size: 1.2em;
+            border-color: #03A9F4 !important;
+        }
+
+        table {
+            border: 1px;
+            border-color: #03A9F4 !important;
+        }
+
+        td {
+            border-color: #03A9F4 !important;
+        }
+
+        .table > tbody > tr > td, .table > thead > tr > th {
+            padding: 6px 10px;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: #F0F8FF;
+        }
+
+        tr.selected {
+            background-color: #FFCF8B !important
+        }
+
+        #col_list tbody tr {
+            cursor: pointer;
+        }
+    </style>
+
+}
+@section scripts{
+    @* <script src="~/Scripts/fn/base.js"></script> *@
+    <script src="~/js/util.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="~/js/jsonTable.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("tr").click(function () {
+                $(this).addClass("selected").siblings().removeClass("selected");
+            });
+            $(".se-pre-con").fadeIn("fast");
+            load_ind_analytic(1);
+        });
+
+        function load_ind_analytic(id) {
+            $(".se-pre-con").fadeIn("fast");
+            $.ajax({
+                type: "GET",
+                url: "GetIndAnalyticDynamic/" + id,
+                success: function (res) {
+                    let response = JSON.parse(res);
+
+                    console.log("Response received:", res);
+
+                    var data = response.Table[0];  
+                    var data2 = response.Table1; 
+
+                    console.log("Overall Summary Data:", data);
+                    console.log("Regional Data:", data2);
+
+                    var pie = [];
+
+                    for (var key in data) {
+                        pie.push({
+                            name: key,  
+                            y: data[key]  
+                        });
+                    }
+
+                    console.log("Pie Chart Data:", pie);
+
+                    var seris = [];
+                    for (var k = 0; k < data2.length; k++) {
+                        seris.push({
+                            type: 'column',
+                            name: data2[k].Region,  
+                            data: Object.values(data2[k]).slice(1)  
+                        });
+                    }
+
+                    console.log("Bar Chart Series Data:", seris);
+
+                    plotBarChart('container', 'Indicator Analysis by Region', Object.keys(data), seris);
+                    plotPieChart('pie', 'Overall Indicator Analysis', [], pie);
+
+                    $(".se-pre-con").fadeOut("slow");
+                },
+                error: function (err) {
+                    console.error("Error fetching the data", err);
+                }
+            });
+        }
+
+        function plotBarChart(container, title, categories, series) {
+            Highcharts.chart(container, {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: title
+                },
+                xAxis: {
+                    categories: categories
+                },
+                series: series,  
+                accessibility: {
+                    enabled: false 
+                }
+            });
+        }
+
+        function plotPieChart(container, title, categories, series) {
+            Highcharts.chart(container, {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: title
+                },
+                series: series,  
+                accessibility: {
+                    enabled: false  
+                }
+            });
+        }
+
+        function load_colums() {
+            $(".se-pre-con").fadeIn("fast");
+            var value = $("#sel_table").val();
+            var res = value.split("-");
+
+            $("#pk").val(res[0]);
+
+            $.ajax({
+                type: "GET",
+                url: "GetValueSets/" + res[1],
+                success: function (response) {
+                    $("#col_list").empty();
+                    for (var i = 0; i < response.length; i++) {
+                        var col = '<tr><td>';
+                        col += '<a href="#" id="a_' + response[i].id + '" onclick="load_ind_analytic(' + response[i].id + ')">' + response[i].name + '</a></td></tr>';
+                        $("#col_list").append(col);
+                    }
+
+                    $("tr").click(function () {
+                        $(this).addClass("selected").siblings().removeClass("selected");
+                    });
+
+                    $(".se-pre-con").fadeOut("slow");
+                }
+            });
+        }
+    </script>
+}

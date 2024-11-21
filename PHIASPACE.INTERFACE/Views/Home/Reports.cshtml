@@ -1,0 +1,494 @@
+@{
+    ViewData["Title"] = "Target Facilities";
+}
+@model  List<PHIASPACE.INTERFACE.DAL.Model.Data.TargetLabs>;
+@{  
+    ViewBag.Title = "Home Page";  
+}  
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#lab_progress" role="tab">
+                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-none d-sm-block">Lab Progress</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#team_performance" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                        <span class="d-none d-sm-block">Team Performance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#county_progress" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                        <span class="d-none d-sm-block">County Progress</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#geographic" role="tab">
+                        <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+                        <span class="d-none d-sm-block">Geographic Report</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content p-3 text-muted">
+                <div class="tab-pane active" id="lab_progress" role="tabpanel">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table" id="lab_progress_lab_progress_list">
+                                            <thead>
+                                                <tr>
+                                                    <th>Laboratory Name</th>
+                                                    <th>Laboratory Code</th>
+                                                    <th>Assessment Status</th>
+                                                    <th>Assessment Score</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="team_performance" role="tabpanel">
+                    <div class="row">
+                        <div id="team_progress"></div>
+                    </div>
+                </div>
+                <!-- Messages tab -->
+                <div class="tab-pane" id="county_progress" role="tabpanel">
+                    <!-- Your content starts here -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card border border-primary">
+                                <div class="card-header bg-primary border-primary">
+                                    <h5 class="my-0 text-white"><i class="mdi mdi-block-helper me-3"></i>All</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="dashboard_number text-primary" id="county_all_county">---</h5>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-lg-4">
+                            <div class="card border border-success">
+                                <div class="card-header bg-success border-success">
+                                    <h5 class="my-0 text-white"><i class="mdi mdi-check-all me-3"></i>Assessed</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="dashboard_number text-success" id="county_assessed_county">---</h5>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0" id="county_county_progress_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>County</th>
+                                                    <th>Target Laboratory</th>
+                                                    <th>Assessed</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="geographic" role="tabpanel">
+                    <div class="row">  
+                        <div class="col-md-12 map">  
+                            <div id="map_counties"></div>  
+                        </div>  
+                    </div>  
+                </div>
+            </div>
+        </div><!-- end card-body -->
+    </div><!-- end card -->
+</div><!-- end col -->
+
+@section Styles{
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+     <style>
+        #map_counties{
+            height: 600px;
+            width:100%;
+        }
+
+        #openstrt{
+            filter: grayscale(1);
+        }
+    </style>
+}
+
+@section Scripts {
+
+    
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <!--Maps-->
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+     <script type="text/javascript" src="~/js/kenya_counties.js"></script> 
+     <!--end maps-->
+
+     <!--
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>  
+    -->
+    <script type='text/javascript'>      
+        loadLabScore();
+        $('.nav-link').on('click', function () {
+            const tabId = $(this).attr('href');
+            SwitchTab(tabId);
+        });
+
+        function SwitchTab(tabId) {
+            switch (tabId) {
+                case "#team_performance":
+                    LoadTeamPerformance();
+                    break;
+                case "#county_progress":
+                    GetCountyProgress();
+                    GetCountyProgressTable();
+                    break;
+               case "#geographic":
+                   loadMapScenario();
+                    break;
+                case "lab_progress":
+                    loadLabScore();
+                    break;
+                default:                    
+                    loadLabScore();
+                    break;
+            }
+        }
+        
+        function loadMapScenario() {  
+
+            var greenIcon = new L.Icon({
+              iconUrl: '/images/green.png',
+             
+              iconSize: [12, 20],
+              iconAnchor: [6, 21],
+              popupAnchor: [1, -34],
+              shadowSize: [10, 10]
+            });
+
+            var redIcon = new L.Icon({
+              iconUrl: '/images/red.png',
+             
+              iconSize: [12, 20],
+              iconAnchor: [6, 21],
+              popupAnchor: [1, -34],
+              shadowSize: [10, 10]
+            });
+
+            var blueIcon = new L.Icon({
+              iconUrl: '/images/blue.png',
+             
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+              shadowSize: [41, 41]
+            });
+
+            //Get facilities
+             $.ajax({
+                url: "GetLabsGeoInfo",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                   //get map ready
+                   var map = L.map('map_counties', {
+                        minZoom: 1,
+                        maxZoom: 10,
+                   }).setView([0.5713709525833788, 35.31148798340643], 6.41);
+
+                   var openstrt = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                       
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                       
+                        filter: 'grayscale(100)'
+                   }).addTo(map);
+
+                   L.geoJSON(counties, {
+                        style: function(feature) {
+                            return {
+                               // color: "#ff0000"
+                            };
+                            switch (feature.properties.COUNTY_COD) {
+                                case '12': return {color: "#ff0000"};
+                                case '22':   return {color: "#0000ff"};
+                                case '13': return {color: "#ff0000"};
+                                case '40':   return {color: "#0000ff"};
+                            }
+                        }
+                    }).addTo(map);
+
+                    data = data.filter(function( obj ) {
+                        return obj.finalGeoLat !== null && obj.finalGeoLat !== "NULL" && obj.finalGeoLat !== "0";
+                    });
+
+                    data.forEach((element) => {
+                        var myicon = redIcon;
+
+                        if (element.status === 1) {
+                            myicon = greenIcon;
+                        }
+                       
+                       if(element.finalGeoLat != undefined || element.finalGeoLat != null || element.finalGeoLon != undefined || element.finalGeoLon != null){
+                           var marker = L.marker([element.finalGeoLat, element.finalGeoLon], {icon: myicon}).addTo(map);
+                            marker.bindPopup("<b>"+element.facility+"</b><br>KMFL: "+element.kmfl+"<br>Region: "+element.county);
+                       }
+                    });
+                     
+                    /*
+                    const categories = [...new Set(data.map(item => item.team))];
+                    const series = ['target', 'assessed', 'today'].map(metric => {
+                        return {
+                            name: metric.charAt(0).toUpperCase() + metric.slice(1), // Capitalize first letter
+                            data: categories.map(category => {
+                                const matchingItem = data.find(item => item.team === category);
+                                return matchingItem ? matchingItem[metric] : 0;
+                            })
+                        };
+                    });
+                    PlotTeamPerformance(categories,series);
+                    */
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+            /*
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
+                credentials: 'ArRUHvsDSMHOwOItyh8Hg7nP0wfozztnUimNAjFkOA5xxyvgbsRyNCJYQvKIjuxo',  
+                mapTypeId: Microsoft.Maps.MapTypeId.road,  
+                zoom: 7
+            });  
+    
+            // Create the infobox for the pushpin  
+            var infobox = null;  
+    
+            //declare addMarker function  
+            function addMarker(latitude, longitude, title, description, pid)  
+            {  
+                var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: 'green' });  
+    
+                infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {  
+                    visible : false  
+                });  
+    
+                marker.metadata = {  
+                    id: pid,  
+                    title: title,  
+                    description: description  
+                };  
+    
+                Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);  
+                Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);  
+    
+                infobox.setMap(map);  
+                map.entities.push(marker);  
+                marker.setOptions({ enableHoverStyle: true });  
+            };  
+    
+            function showInfobox(e) {  
+                if (e.target.metadata) {  
+                    infobox.setOptions({  
+                        location: e.target.getLocation(),  
+                        title: e.target.metadata.title,  
+                        description: e.target.metadata.description,  
+                        visible: true  
+                    });  
+                }  
+            }  
+    
+            function hideInfobox(e) {  
+                infobox.setOptions({ visible: false });  
+            }  
+    
+            //add markers to map  
+            @*
+            @if (Model != null)  
+            {  
+                foreach (var item in Model.ToList())  
+                {
+                    @:addMarker('@item.GeoLat', '@item.GeoLon', '@item.LabName', '@item.County', '@item.kmfl');  
+                }  
+            } 
+            *@
+            */
+        }  
+        
+        function LoadTeamPerformance(){
+            $.ajax({
+                url: "GetTeamPerformance",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    const categories = [...new Set(data.map(item => item.team))];
+                    const series = ['target', 'offTarget', 'assessed', 'today'].map(metric => {
+                        const seriesObject = {
+                            name: metric.charAt(0).toUpperCase() + metric.slice(1),
+                            data: categories.map(category => {
+                                const matchingItem = data.find(item => item.team === category);
+                                return matchingItem ? matchingItem[metric] : 0;
+                            }),
+                            stack: metric.charAt(0).toUpperCase() + metric.slice(1)
+                        };
+
+                        if (metric === 'assessed' || metric === 'offTarget') {
+                            seriesObject.stack = 'Assessed';
+                        }
+
+                        return seriesObject;
+                    });
+                    PlotTeamPerformance(categories,series);
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+        }
+
+        function PlotTeamPerformance(category, series){
+            colors = ['#BD5733', '#FF5733', '#33aF57', '#5733FF', '#33FF57', '#ede039', '#5ded39'];
+            Highcharts.chart('team_progress', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Team Target and Progress',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '',
+                    align: 'left'
+                },
+                xAxis: {
+                    categories: category,
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' '
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0,
+                        stacking: 'normal'
+                    }
+                },
+                series:series,
+                colors: colors
+            });
+        }
+    
+        function GetCountyProgress(){
+            $.ajax({
+                url: "GetCountyPerformance",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $("#county_all_county").text(data.allCounty);
+                    $("#county_assessed_county").text(data.assessed);
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+        }
+
+        function GetCountyProgressTable(){
+            $.ajax({
+                url: "GetCountyProgress",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    const tbody = $('#county_county_progress_table tbody');
+
+                    tbody.empty();
+
+                    data.forEach(item => {
+                        const row = $('<tr>');
+                        row.append($('<td>').text(item.county));
+                        row.append($('<td>').text(item.laboratory));
+                        row.append($('<td>').text(item.assessed));
+                        tbody.append(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+        }
+
+        function loadLabScore(){
+            $.ajax({
+                url: "GetLabsScores",
+                method: "GET",
+                dataType: "json",
+                success: function(data) {
+                    const tbody = $('#lab_progress_lab_progress_list tbody');
+
+                    tbody.empty();
+
+                    data.forEach(item => {
+                        const row = $('<tr>');
+                        row.append($('<td>').text(item.laboratory));
+                        row.append($('<td>').text(item.kmfl));
+                        row.append($('<td>').text(item.status == 1 ? "Yes" : "No"));
+                        row.append($('<td>').text(item.score));
+                        tbody.append(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", status, error);
+                }
+            });  
+        }
+    </script>
+}

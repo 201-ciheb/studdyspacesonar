@@ -1,0 +1,81 @@
+@model PhiaApp
+@{
+    ViewData["Title"] = "Projects";
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a asp-controller="App" asp-action="Index">Apps</a></li>
+            <li class="breadcrumb-item active">Add App</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="search-box me-2 d-inline-block">
+                            <div class="position-relative">
+                                <h4 class="card-title">App</h4>
+                                <p class="card-title-desc">Add a new app</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="mb-3 row">
+                        <label asp-for="AppName" class="col-md-2 col-form-label">Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" asp-for="AppName" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="AppDescription" class="col-md-2 col-form-label">Description</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="search" asp-for="AppDescription">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="AppUrl" class="col-md-2 col-form-label">Url</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="url" asp-for="AppUrl" required>
+                        </div>
+                    </div>                
+                    <div class="mb-3 row">
+                        <label asp-for="AppIconPath" class="col-md-2 col-form-label">App Logo</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="file" asp-for="AppIconPath" accept=".png,.jpg,.jpeg,.apng,.avif,.gif,.jfif,.pjpeg,.pjp,.svg,.webp">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="ProjectId" class="col-md-2 col-form-label">Project</label>
+                        <div class="col-md-10">
+                            <select asp-for="ProjectId" class="form-select" asp-items="ViewBag.Projects" required>
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary w-md">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@section Styles{
+    
+}
+
+@section Scripts{
+    
+}

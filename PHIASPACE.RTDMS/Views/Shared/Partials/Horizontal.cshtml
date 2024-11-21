@@ -1,0 +1,92 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+
+<div class="navbar navbar-default" id="navbar-second">
+    <ul class="nav navbar-nav no-border ">
+        
+        @*<li><a href="@Url.Action("ProjectCompletion", "DMDash")">Completion</a></li>*@
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
+            <ul class="nav navbar-nav">
+                @if (currentController == "Dashboard")
+                {
+                    <partial name="./Partials/_DashboardNav" />
+                    }
+                    else if (currentController == "DMDashboard" || currentController == "AIssue")
+                    {
+                    <partial name="./Partials/_DMDashboardNav" />
+                }
+                @* @{
+                    if (Context.Request.Path.StartsWith("/commodity", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/distributionorder", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/purchaseorder", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/stock", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_logistics_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/item", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/staff", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_inventory_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/person", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/team", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_aims_manage_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/dmdash", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_rtdms_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/labdata", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_lab_data_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/Monitor", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_monitor_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/CommunityMobilization", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_community_mobilization_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/Stream", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_stream_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/Discrepancy", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_discrepancy_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/LinkageToCare", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/HealthFacility", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/CBO", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.StartsWith("/PointOfContact", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_linkageToCare_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/sctolisting", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_scto_listing_nav")
+                    }
+                    else if (Context.Request.Path.StartsWith("/ticket", StringComparison.OrdinalIgnoreCase))
+                    {
+                        @Html.Partial("_ticket_nav")
+                    }
+
+                } *@
+
+            </ul>
+@* For Drop downs use *@
+        @*<ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-cog3"></i>
+                    <span class="visible-xs-inline-block position-right">Share</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+                    <li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+                    <li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+                </ul>
+            </li>
+        </ul>*@
+        </div>
+    </ul>
+</div>
+ 

@@ -1,0 +1,202 @@
+﻿@using System.Data;
+
+@{
+    ViewBag.Title = "PData";
+    var dataset = (DataSet)ViewBag.hh_data;
+    int count = 1;
+
+    var table_labels = new Dictionary<int, string>();
+    table_labels.Add(1, "Household Identification,Household eligibility,Household characterisitcs,Household members list,Household schedule,Household individual assignment");
+    table_labels.Add(2, "Individual Identification,Auxiliary,Consent by parent/Guardian 10-17,Consent agreement Adult/Adolescent,Start and end date for adult or adolescent,Eligibilty by age,Respondent background Adult,Marriage,Reproduction,Children,Male Circumcision,Sexual Activity,HIV Testing,HIV Status Care and Treatment,Tuberculosis and other health issues,Gender Norms,Nsum");
+    table_labels.Add(3, "Individual Identification,Auxiliary,Consent by parent/Guardian 10-17,Consent agreement Adult/Adolescent,Start and end date for adult or adolescent,Eligibilty by age,Socio-demographic characteristics,HIV prevention interventions,Sexual behavior,Social norms intention to abstain self-efficacy and assertiveness,HIV risk perception,HIV knowledge,HIV testing,HIV stigma,Alcohol and drugs,Parental support");
+    table_labels.Add(16, "Individual identification,Participant In,Consent,Post test,Consent for contact information post test,D Participant Locator,Auxiliary");
+    table_labels.Add(17, "Consent,Biomarker identification,Age 0 - 17 Month,Age >= 18 months,CD4 count for 18 months and above,CD4 Hepatitis B and C for 15 to 64 years,Auxiliary");
+    var form_id = Convert.ToInt32(ViewBag.form_id);
+
+    string[] labels = table_labels[form_id].ToString().Split(',');
+    var label_index = 0;
+
+
+}
+
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Home</span> - RTDMS</h4>
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">RTDMS</a></li>
+                <li><a href="#">LineListing</a></li>
+                <li class="active">Form Data</li>
+            </ul>
+        </div>
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    @*@foreach (DataTable table in dataset.Tables)
+                                {
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                @foreach (DataColumn col in table.Columns)
+                                        {
+                                            <th>@col.Caption</th>
+                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (DataRow row in table.Rows)
+                                    {
+
+                                        <tr>
+                                            @foreach (var cell in row.ItemArray)
+                                    {
+
+                                        <td>@cell.ToString()</td>
+
+
+                            }
+                                        </tr>
+                            }
+
+                                        </tbody>
+                                    </table>
+                        }*@
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">Basic tabs</h6>
+
+                        </div>
+                        <div class="panel-body">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs">
+
+
+                                    @foreach (DataTable table in dataset.Tables)
+                                    {
+                                        <li id="li_@count">
+                                            <a href="#basic-tab-@count" data-toggle="tab">
+                                                @*@table.TableName*@
+                                                @labels[label_index]
+                                            </a>
+                                        </li>
+                                        count = count + 1;
+                                        label_index = label_index + 1;
+                                    }
+
+                                </ul>
+                                <div class="tab-content">
+                                    @*<div class="tab-pane active" id="basic-tab1">
+                                            Basic tabs example using <code>.nav-tabs</code> class. Also requires base <code>.nav</code> class.
+                                        </div>
+                                        <div class="tab-pane" id="basic-tab2">
+                                            Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid laeggin.
+                                        </div>*@
+
+                                    @{
+                                        count = 1;
+                                        foreach (DataTable tb in dataset.Tables)
+                                        {
+                                            var utils = ViewBag.Utils;
+                                            var table = PHIASPACE.RTDMS.Utility.Utils.Transpose(tb); 
+                                            <div class="tab-pane" id="basic-tab-@count">
+                                                <div class="table-responsive" style="max-height:680px">
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        @*<thead>
+                                                                                                        <tr>
+                                                                                                            @foreach (DataColumn col in table.Columns)
+                                                                            {
+                                                                                            <th>@col.Caption</th>
+                                                            }
+                                                                                                        </tr>
+                                                                                                    </thead>*@
+                                                        <tbody>
+                                                            @foreach (DataRow row in table.Rows)
+                                                            {
+
+                                                                <tr>
+                                                                    @foreach (var cell in row.ItemArray)
+                                                                    {
+
+                                                                        if (cell.ToString() == "-1")
+                                                                        {
+                                                                            <td></td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>@cell.ToString()</td>
+                                                                        }
+
+
+                                                                    }
+                                                                </tr>
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            count = count + 1;
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+@section styles{
+    <style>
+        table > *:first-child:not(thead) td:first-child {
+            font-weight: bold;
+        }
+    </style>
+}
+
+@section scripts{
+    <script>$(document).ready(function () {
+
+
+
+            $("#li_1").addClass("active");
+            $("#basic-tab-1").addClass("active");
+
+
+        });</script>
+
+}
+

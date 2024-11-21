@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="author" content="201 CIHEB">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Laboratory Diagnostic Network Adaptive System">
+    <title>@ViewData["Title"] - LINKAGE</title>
+    <link rel="shortcut icon" href="./favicon.ico">
+    
+    <link rel="stylesheet" href="~/assets/css/style.css?v1.0.0">
+    
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="nk-body" data-sidebar-collapse="lg" data-navbar-collapse="lg">
+    <!-- Root -->
+    <div class="nk-app-root">
+        <!-- main  -->
+        <div class="nk-main">
+
+            <partial name="./Partials/Sidebar" />
+            <!-- wrap -->
+            <div class="nk-wrap">
+                <partial name="./Partials/Header" />
+                <!-- content -->
+                <div class="nk-content">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div> <!-- .nk-content -->
+                <partial name="./Partials/Footer" />
+            </div> <!-- .nk-wrap -->
+        </div> <!-- .nk-main -->
+    </div> <!-- .nk-app-root -->
+</body>
+<!-- JavaScript -->
+
+<script src="~/assets/js/bundle.js"></script>
+<script src="~/assets/js/scripts.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+</html>

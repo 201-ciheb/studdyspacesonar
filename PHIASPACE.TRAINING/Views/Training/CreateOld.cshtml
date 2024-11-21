@@ -1,0 +1,168 @@
+﻿@model TrainingModel;
+@{
+    ViewData["Title"] = "Training";
+    SelectList courses = ViewBag.Courses;
+    SelectList venues = ViewBag.Venues;
+}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Facilities</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Training</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Create</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="search-box me-2 d-inline-block">
+                            <div class="position-relative">
+                                <h4 class="card-title">Training</h4>
+                                <p class="card-title-desc">Create a new training</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form asp-action="create" name="trainingCreateForm" method="post">
+                    <div class="row">
+                        <input type="text" class="form-control d-none" asp-for="TrainingId" id="TrainingId">
+                        
+                        <div class="col-sm-12 col-md-6 mb-2">
+                            <div class="form-group">
+                            <label asp-for="VenueId">Venue</label>
+                            @Html.DropDownList("VenueId", venues, "Choose", new { @class = "form-select", id="VenueId" })
+                            <span asp-validation-for="VenueId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 mb-2">
+                        <div class="form-group">
+                            <label id="ThematicAreas">Thematic Areas</label>                    
+                            <select id="ThematicAreas" class="form-select" name="ThematicAreaIds">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 mb-2">
+                        <div class="form-group">
+                            <label id="Funding">Funding Type</label>                    
+                            <select id="Funding" class="form-select" name="FundingType" asp-items="ViewBag.FundingType">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 mb-2">
+                        <div class="form-group">
+                            <label asp-for="CourseId">Course</label>
+                            @Html.DropDownList("CourseId", courses, "Choose", new { @class = "form-select", id="CourseId" })
+                            <span asp-validation-for="CourseId" class="text-danger"></span>
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 mb-2">
+                            <div class="form-group">
+                            <label asp-for="StartDate"></label>
+                            <input type="date" class="form-control" asp-for="StartDate" id="StartDate" aria-describedby="startDateHelp">
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 mb-2">
+                            <div class="form-group">
+                            <label asp-for="EndDate"></label>
+                            <input type="date" class="form-control" asp-for="EndDate" id="EndDate" aria-describedby="endDateHelp">
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@* <div class="card">
+    <div class="card-header text-center">
+      Create Training
+    </div>
+    <div class="card-body">
+        <form asp-action="create" name="trainingCreateForm" method="post">
+            <div class="row">
+                <input type="text" class="form-control d-none" asp-for="TrainingId" id="TrainingId">
+                
+                <div class="col-sm-12 col-md-6 mb-2">
+                      <div class="form-group">
+                      <label asp-for="VenueId">Venue</label>
+                      @Html.DropDownList("VenueId", venues, "Choose", new { @class = "form-select", id="VenueId" })
+                      <span asp-validation-for="VenueId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label id="ThematicAreas">Thematic Areas</label>                    
+                    <select id="ThematicAreas" class="form-select" name="ThematicAreaIds">
+                        <option value="">Select</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label id="Funding">Funding Type</label>                    
+                    <select id="Funding" class="form-select" name="FundingType" asp-items="ViewBag.FundingType">
+                        <option value="">Select</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-2">
+                  <div class="form-group">
+                    <label asp-for="CourseId">Course</label>
+                    @Html.DropDownList("CourseId", courses, "Choose", new { @class = "form-select", id="CourseId" })
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-2">
+                    <div class="form-group">
+                      <label asp-for="StartDate"></label>
+                      <input type="date" class="form-control" asp-for="StartDate" id="StartDate" aria-describedby="startDateHelp">
+                      <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mb-2">
+                     <div class="form-group">
+                      <label asp-for="EndDate"></label>
+                      <input type="date" class="form-control" asp-for="EndDate" id="EndDate" aria-describedby="endDateHelp">
+                      <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+          <a href="/training/" class="btn btn-primary float-start"> <i class="mdi mdi-arrow-left-bold-outline text-white font-size-16"></i>Cancel</a>
+         <button type="submit" onclick="submitForm()" class="btn btn-primary float-end">Next  <i class="mdi mdi-arrow-right-bold-outline text-white font-size-16"></i></button>
+    </div>
+</div> *@
+@section Scripts
+{
+    <script>
+         jQuery(document).ready(function () {
+            
+         });
+
+         function submitForm(){
+            document.trainingCreateForm.submit();
+         }
+    </script>
+}

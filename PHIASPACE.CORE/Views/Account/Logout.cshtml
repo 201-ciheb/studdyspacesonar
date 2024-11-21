@@ -1,0 +1,37 @@
+﻿@model LogoutViewModel
+@{
+    Layout = "_AuthLayout";
+}
+
+<div class="logout-page">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card">
+                <div class="card-header">
+                    <h2>STUDYSPACE Account Logout</h2>
+                </div>
+                <div class="card-body">
+                    <div class="p-4">
+                        <h4>Would you like to logut of STUDYSPACE? click Yes to proceed</h4>
+                        <i class="badge badge-soft-primary font-size-15">Note that this action will log you out of most STUDYSPACE authentication supported applications</i>
+                        <br/>
+                    </div>
+                    @* <form asp-action="Logout">
+                        <input type="hidden" name="logoutId" value="@Model.LogoutId"  />
+                        <div>
+                            <button class="col-4 btn btn-warning" style="float:left;">Yes</button>
+                            <a href="/" class="col-4 btn btn-primary" style="float:right;">No</a>
+                        </div>
+                    </form> *@
+                    <form asp-action="Logout">
+                        <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+                        <div class="form-group d-flex justify-content-between">
+                            <button class="col-3 btn btn-warning" type="submit">Yes</button>
+                            <a href="@Model.PreviousUrl" class="col-3 btn btn-primary">No</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

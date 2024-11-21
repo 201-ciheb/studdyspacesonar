@@ -1,0 +1,13 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "PHIASPACEDbConnection": "Server=mssql_server;Initial Catalog=PHIASpace;Persist Security Info=False;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=500;",
+    "PHIASPACEMasterDbConnection": "Server=mssql_server;Initial Catalog=master;Persist Security Info=False;User ID=sa;Password=P@ssw0rd;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=500;"
+  }
+}

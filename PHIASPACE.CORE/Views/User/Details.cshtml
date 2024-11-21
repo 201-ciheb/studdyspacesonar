@@ -1,0 +1,326 @@
+@model UserDetails
+@{
+    ViewData["Title"] = "User Details";
+    var count = 0;
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Users</a></li>
+            <li class="breadcrumb-item active">@Model.PhiaSpaceUser.FullName's Details</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#details" role="tab" aria-selected="true">
+                        <i class="bx bx-user-circle font-size-20"></i>
+                        <span class="d-none d-sm-block">Details</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#project" role="tab" aria-selected="false">
+                        <i class="bx bx-layer font-size-20"></i>
+                        <span class="d-none d-sm-block">Project</span>
+                    </a>
+                </li>
+                @if(User.IsInRole("Super Admin")){
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#roles" role="tab" aria-selected="false">
+                            <i class="bx bx-clipboard font-size-20"></i>
+                            <span class="d-none d-sm-block">Roles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#permissions" role="tab" aria-selected="false">
+                            <i class="bx bx-clipboard font-size-20"></i>
+                            <span class="d-none d-sm-block">Permissions</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+            <!-- Tab content -->
+            <div class="tab-content p-4">
+                <div class="tab-pane active" id="details" role="tabpanel">
+                    <div>
+                        <div>
+                            <h5 class="font-size-16 mb-4">User Details</h5>
+                            <table class="table table-responsive">
+                                <tr>
+                                    <th>Fullname</th>
+                                    <td>@Model.PhiaSpaceUser.FullName</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>@Model.PhiaSpaceUser.Email</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>@Model.PhiaSpaceUser.PhoneNumber</td>
+                                </tr>
+                                <tr>
+                                    <th>Sex</th>
+                                    <td>@Model.PhiaSpaceUser.Gender</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>@Model.PhiaSpaceUser.Address</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>              
+                <div class="tab-pane" id="project" role="tabpanel">
+                    <div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="me-2 d-inline-block">
+                                    <div class="position-relative">
+                                        <h4 class="card-title">Project</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="text-sm-end">
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light me-1" data-bs-toggle="modal" data-bs-target="#projectModal"><i class="mdi mdi-plus me-1"></i> Add New Project to @Model.PhiaSpaceUser.FullName</button>
+                                </div>
+                            </div><!-- end col-->
+                            <div id="projectModal" class="modal fade" tabindex="-1" aria-labelledby="projectModalLabel" data-bs-scroll="true" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="projectModalLabel">Add Project</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form asp-controller="User" asp-action="AddUserProject">
+                                            <input type="hidden" name="UserId" value="@Model.PhiaSpaceUser.Id">
+                                            <div class="modal-body">
+                                                <div class="mb-3 row">
+                                                    <label for="ProjectId" class="col-md-4 col-form-label">Project</label>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control" type="text" name="ProjectId" asp-items="ViewBag.ActiveProjects">
+                                                            <option>~Select Project</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="ProjectId" class="col-md-4 col-form-label">Default Project ?</label>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control" type="text" name="Default">
+                                                            <option>~Select~</option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-nowrap table-centered">
+                                <tbody>
+                                    @{count = 0;}
+                                    @foreach (var item in Model.PhiaUserProject)
+                                    {
+                                        count = count + 1;
+                                        <tr>
+                                            <th>@(count)</th>
+                                            <td>
+                                                @item.Project.ProjectName
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-soft-danger btn-sm"><i class="bx bx-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    }                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @if(User.IsInRole("Super Admin")){
+                    <div class="tab-pane" id="roles" role="tabpanel">
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="me-2 d-inline-block">
+                                        <div class="position-relative">
+                                            <h4 class="card-title">Role</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="text-sm-end">
+                                        <a class="btn btn-primary btn-sm btn-rounded waves-effect waves-light me-1" data-bs-toggle="modal" data-bs-target="#roleModal"><i class="mdi mdi-plus me-1"></i> Add New Role to @Model.PhiaSpaceUser.FullName</a>
+                                    </div>
+                                </div><!-- end col-->
+                                <div id="roleModal" class="modal fade" tabindex="-1" aria-labelledby="roleModalLabel" data-bs-scroll="true" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="roleModalLabel">Add Role</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form asp-controller="User" asp-action="AddUserRole">
+                                                <input type="hidden" name="UserId" value="@Model.PhiaSpaceUser.Id">
+                                                <div class="modal-body">
+                                                    <div class="mb-3 row">
+                                                        <label for="RoleId" class="col-md-2 col-form-label">Role</label>
+                                                        <div class="col-md-10">
+                                                            <select class="form-control" type="text" name="RoleId" asp-items="ViewBag.Roles">
+                                                                <option>~Select Role</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-nowrap table-centered">
+                                    <tbody>
+                                    @{count = 0;}
+                                        @foreach (var item in Model.Roles)
+                                        {
+                                            count = count + 1;
+                                            <tr>
+                                                <th>@(count)</th>
+                                                <td>
+                                                    @item
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-soft-danger btn-sm"><i class="bx bx-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        }                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="permissions" role="tabpanel">
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="me-2 d-inline-block">
+                                        <div class="position-relative">
+                                            <h4 class="card-title">Permissions</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="text-sm-end">
+                                        <a class="btn btn-primary btn-sm btn-rounded waves-effect waves-light me-1" data-bs-toggle="modal" data-bs-target="#permissionModal"><i class="mdi mdi-plus me-1"></i> Edit Permission for @Model.PhiaSpaceUser.FullName</a>
+                                    </div>
+                                </div><!-- end col-->
+                                <div id="permissionModal" class="modal fade" tabindex="-1" aria-labelledby="permissionModalLabel" data-bs-scroll="true" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="permissionModalLabel">Edit Permission</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form asp-controller="User" asp-action="AddUserPermission">
+                                                <input type="hidden" name="UserId" value="@Model.PhiaSpaceUser.Id">
+                                                <div class="modal-body">
+                                                    <div class="mb-3 row">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>Create</td>
+                                                                <td>Edit</td>
+                                                                <td>View</td>
+                                                                <td>Delete</td>
+                                                            </tr>
+                                                            @foreach (var item in ViewBag.Permissions)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.Permission <span class="badge bg-soft-info text-primary font-size-10">@(item.Client != null ? $"[{item.Client}]" : "")</span></td>
+                                                                    <td>
+                                                                        <div class="square-switch">
+                                                                            <input type="checkbox" id="@(item.Permission + "CREATE")" name="Permission"
+                                                                            value="@("PERMISSION." + item.Permission + ".CREATE")" 
+                                                                            switch="none" @(Model.Permission.Any(m => m.Permission == "PERMISSION." + item.Permission + ".CREATE") ? "checked" : "")>
+                                                                            <label for="@(item.Permission + "CREATE")" data-on-label="Yes" data-off-label="No"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="square-switch">
+                                                                            <input type="checkbox" id="@(item.Permission + "EDIT")" name="Permission"
+                                                                            value="@("PERMISSION." + item.Permission + ".EDIT")" 
+                                                                            switch="none" @(Model.Permission.Any(m => m.Permission == "PERMISSION." + item.Permission + ".EDIT") ? "checked" : "")>
+                                                                            <label for="@(item.Permission + "EDIT")" data-on-label="Yes" data-off-label="No"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="square-switch">
+                                                                            <input type="checkbox" id="@(item.Permission + "VIEW")" name="Permission"
+                                                                            value="@("PERMISSION." + item.Permission + ".VIEW")" 
+                                                                            switch="none" @(Model.Permission.Any(m => m.Permission == "PERMISSION." + item.Permission + ".VIEW") ? "checked" : "")>
+                                                                            <label for="@(item.Permission + "VIEW")" data-on-label="Yes" data-off-label="No"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="square-switch">
+                                                                            <input type="checkbox" id="@(item.Permission + "DELETE")" name="Permission" 
+                                                                            value="@("PERMISSION." + item.Permission + ".DELETE")" 
+                                                                            switch="none" @(Model.Permission.Any(m => m.Permission == "PERMISSION." + item.Permission + ".DELETE") ? "checked" : "")>
+                                                                            <label for="@(item.Permission + "DELETE")" data-on-label="Yes" data-off-label="No"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-nowrap table-centered">
+                                    <tbody>
+                                    @{count = 0;}
+                                        @foreach (var item in Model.Permission)
+                                        {
+                                            count = count + 1;
+                                            <tr>
+                                                <th>@(count)</th>
+                                                <td>
+                                                    @item.Permission.Replace("PERMISSION.","")
+                                                </td>
+                                            </tr>
+                                        }                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }  
+            </div>
+        </div>
+    </div>
+</div>

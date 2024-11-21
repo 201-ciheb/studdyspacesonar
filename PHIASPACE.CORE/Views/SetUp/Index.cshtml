@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Setup Page";
+    Layout = "_Layout";
+}
+<h2>@ViewData["Title"]</h2>
+<p>We noticed you are running the study application for the first time, if this is not your first time, make sure to check the connection to the database and be sure it is correct</p>
+<p>Use this page to set up the application and configure basic requirements.</p>
+
+<b style="color: red;">THIS PAGE IS ONLY FOR DEVELOPMENT PURPOSES</b>
+
+<a class="btn btn-primary" asp-controller="Setup" asp-action="StartSetup">Start Setup</a>

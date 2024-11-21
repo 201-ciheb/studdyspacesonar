@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+  phiaspace_core:
+    #container_name: phiaspace_core
+    hostname: phiaspace_core
+    build:
+      context: .
+      dockerfile: ./PHIASPACE.CORE/Dockerfile
+    restart: always
+    ports:
+      - "7280:7280"
+      - "5222:5222"
+    environment:
+      - ASPNETCORE_URLS=https://+:7280;http://*:5222
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=P@ssw0rd
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/soft_dev.certs.pfx
+    depends_on:
+      - mssql_server
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ./PHIASPACE.CORE/appsettings.json:/app/appsettings.json
+    networks:
+      - phiaspace-network
+     
+  phiaspace_training:
+    #container_name: phiaspace_training
+    hostname: phiaspace_training
+    build:
+      context: .
+      dockerfile: ./PHIASPACE.TRAINING/Dockerfile
+    restart: always
+    ports:
+      - "7056:7056"
+      - "5159:5159"
+    environment:
+      - ASPNETCORE_URLS=https://+:7056;http://+:5159
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=P@ssw0rd
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/soft_dev.certs.pfx
+    depends_on:
+      - mssql_server
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ./PHIASPACE.TRAINING/appsettings.json:/app/appsettings.json
+    networks:
+      - phiaspace-network
+
+  # phiaspace_ticketing:
+  #   container_name: phiaspace_ticketing
+  #   hostname: phiaspace_ticketing
+  #   build:
+  #     context: .
+  #     dockerfile: ./PHIASPACE.TICKETING/Dockerfile
+  #   restart: always
+  #   ports:
+  #    - 7191
+  #    - 5093
+  #   environment:
+  #    - ASPNETCORE_URLS=http://+:7191;http://+:5093
+  #    - ASPNETCORE_ENVIRONMENT=Production
+
+  mssql_server:
+    hostname: mssql_server
+    container_name: mssql_server
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=P@ssw0rd
+      - MSSQL_TCP_PORT=1433
+    ports:
+      - "1400:1433"
+    networks:
+      - phiaspace-network
+
+networks:
+  phiaspace-network:
+    external: true
+    driver: bridge
+    name: phiaspace-network

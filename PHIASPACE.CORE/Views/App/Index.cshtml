@@ -1,0 +1,161 @@
+@{
+    ViewData["Title"] = "App";
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a asp-controller="App" asp-action="Index">Apps</a></li>
+            <li class="breadcrumb-item active">All Apps</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="search-box me-2 d-inline-block">
+                            <div class="position-relative">
+                                <h4 class="card-title">Apps</h4>
+                                <p class="card-title-desc">List of all apps</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-sm-end">
+                            <a asp-controller="App" asp-action="Add" class="btn btn-primary btn-rounded waves-effect waves-light me-2"><i class="mdi mdi-plus me-1"></i> Configure New App</a>
+                        </div>
+                    </div><!-- end col-->
+                </div>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <div id="app_list"></div>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/public/assets/libs/gridjs/theme/mermaid.min.css">
+    <style>
+        .truncate-text {
+            max-width: 35em; 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer; 
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/public/assets/libs/gridjs/gridjs.umd.js"></script>
+    <script src="public/assets/libs/alertifyjs/build/alertify.min.js"></script>
+    <script>
+        const grid = new gridjs.Grid({
+            columns: [
+                {
+                    name: 'Name',
+                    label: 'Name',
+                    width: '18%'
+                }, 
+                {
+                    name: 'Description',
+                    width: '35%',
+                    formatter: (_, row) => {
+                        return gridjs.html(`<div class="truncate-text" title="${row.cells[1].data}">${row.cells[1].data}</div>`);
+                    }
+                }, 
+                {
+                    name: 'Status',
+                    formatter: (_, row) =>
+                    {
+                        if(row.cells[2].data == "Active")
+                            return gridjs.html(`<button type="button" class="btn btn-sm alert-primary waves-effect"><i class="spinner-grow text-warning" style="width: 0.5rem; height: 0.5rem;"></i> ${row.cells[2].data}</button>`)
+                        else
+                            return row.cells[2].data
+                    }
+                },
+                {
+                    name: 'Url',
+                    formatter: (_, row) =>
+                        gridjs.html(`<a class="btn btn-sm btn-light" target="_blank" href="${_}">Preview</a>`)
+                },
+                ,{
+                    name: 'Action',
+                    formatter: (_, row) =>
+                    {
+                        if(row.cells[2].data == "Review")
+                            return gridjs.html(`<a href="App/StartApp/${row.cells[4].data}" class="btn btn-sm btn-primary">Start</a>
+                            <a href="App/Edit/${row.cells[4].data}" class="btn btn-sm btn-info">Edit</a>`) ;
+                        else if(row.cells[2].data == "Active")
+                            return gridjs.html(`<a href="App/StopApp/${row.cells[4].data}" class="btn btn-sm btn-danger">Stop</a>
+                            <a href="App/Edit/${row.cells[4].data}" class="btn btn-sm btn-info">Edit</a>`) 
+                        else
+                            return gridjs.html(`<a href="App/StartApp/${row.cells[4].data}" class="btn btn-sm btn-primary">Start</a>
+                            <a href="App/Edit/${row.cells[4].data}" class="btn btn-sm btn-info">Edit</a>`) 
+                    }
+                }
+            ],  
+            pagination: {
+                enabled: true,
+                limit: 10,
+                server: {
+                    url: (prev, page, limit) => {
+                        if(prev.includes("?"))
+                            return `${prev}&limit=${limit}&offset=${page * limit}`;
+                        else
+                            return `${prev}?limit=${limit}&offset=${page * limit}`
+                    } 
+                }
+            },
+            sort: {
+                multiColumn: false,
+                server: {
+                    url: (prev, columns) => {
+                        if (!columns.length) return prev;                    
+                        const col = columns[0];
+                        const dir = col.direction === 1 ? 'asc' : 'desc';
+                        let colName = ['AppName', 'AppDescription', 'AppUrl', 'AppStatus', 'active'][col.index];
+                        if(prev.includes("?"))
+                            return `${prev}&order=${colName}&direction=${dir}`;
+                        else
+                            return `${prev}?order=${colName}&direction=${dir}`;
+                    }
+                }
+            },
+            @* style: {
+                '.description-cell': {
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '200px', 
+                    cursor: 'pointer',
+                    display: 'inline-block',
+                },
+            }, *@
+            search: {
+                server: {
+                    url: (prev, keyword) => `${prev}?search=${keyword}`
+                    @* beforeSend: (query) => {
+                        debugger;
+                        if (query.length < 3) {
+                             return false;
+                        }
+                        return true;
+                    }, *@
+                }
+            },
+            resizable: true,
+            server: {
+                url: '/App/GetApps',
+                then: data => data.records.map(card => [card.appName, card.appDescription, card.appStatus, card.appUrl, [card.id]])
+            } 
+        }).render(document.getElementById('app_list'));
+    </script>
+}

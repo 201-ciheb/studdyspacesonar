@@ -1,0 +1,1224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="* No person found" xml:space="preserve">
+    <value>* Nenhuma pessoa encontrada</value>
+  </data>
+  <data name="Access denied" xml:space="preserve">
+    <value>Acesso negado</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Acção</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="Active and Expired certificates" xml:space="preserve">
+    <value>Certificados ativos e expirados</value>
+  </data>
+  <data name="Active Certificates" xml:space="preserve">
+    <value>CERTIFICADOS ativos</value>
+  </data>
+  <data name="Active Certs" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="Add a new account" xml:space="preserve">
+    <value>Adicionar nova conta</value>
+  </data>
+  <data name="add a new facility" xml:space="preserve">
+    <value>Adicionar Unidade Sanitária nova</value>
+  </data>
+  <data name="Add Course" xml:space="preserve">
+    <value>Adicionar curso</value>
+  </data>
+  <data name="Add District" xml:space="preserve">
+    <value>Adicionar Distrito</value>
+  </data>
+  <data name="Add Facilitator" xml:space="preserve">
+    <value>Adicionar formador</value>
+  </data>
+  <data name="Add Facilitators" xml:space="preserve">
+    <value>Adicionar facilitadores</value>
+  </data>
+  <data name="Add Facility" xml:space="preserve">
+    <value>Adicionar Unidade Sanitária</value>
+  </data>
+  <data name="Add New" xml:space="preserve">
+    <value>Adicionar novo</value>
+  </data>
+  <data name="Add New Course" xml:space="preserve">
+    <value>Adicionar Novo Curso</value>
+  </data>
+  <data name="Add New Facility" xml:space="preserve">
+    <value>Adicionar nova instalação</value>
+  </data>
+  <data name="Add New User" xml:space="preserve">
+    <value>Adicionar novo usuário</value>
+  </data>
+  <data name="Add or remove training resources" xml:space="preserve">
+    <value>Adicionar ou remover recursos de treino</value>
+  </data>
+  <data name="Add Participant" xml:space="preserve">
+    <value>Adicionar participante</value>
+  </data>
+  <data name="add participants" xml:space="preserve">
+    <value>Adicione participantes</value>
+  </data>
+  <data name="Add Person" xml:space="preserve">
+    <value>Adicionar pessoa</value>
+  </data>
+  <data name="Add Profession" xml:space="preserve">
+    <value>Adicionar profissão</value>
+  </data>
+  <data name="Add Province" xml:space="preserve">
+    <value>Adicionar Província</value>
+  </data>
+  <data name="add training facilitators" xml:space="preserve">
+    <value>adicionar facilitadores de treinamento</value>
+  </data>
+  <data name="Add Venue" xml:space="preserve">
+    <value>Adicionar local</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Endereço</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tudo</value>
+  </data>
+  <data name="Annual Distribution of New Personnel - Province" xml:space="preserve">
+    <value>Distribuição Anual de Pessoal Novo - Província</value>
+  </data>
+  <data name="Are you share you want to delete" xml:space="preserve">
+    <value>Você compartilha que deseja excluir?</value>
+  </data>
+  <data name="Are you share you want to submit training information" xml:space="preserve">
+    <value>Você compartilha que deseja enviar informações de treinamento</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Área</value>
+  </data>
+  <data name="Attendance" xml:space="preserve">
+    <value>Participação</value>
+  </data>
+  <data name="Attended" xml:space="preserve">
+    <value>Participou</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>para trás</value>
+  </data>
+  <data name="Back to list" xml:space="preserve">
+    <value>De volta à lista</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Capital" xml:space="preserve">
+    <value>Capital</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="Cert Type" xml:space="preserve">
+    <value>tipo de certificado</value>
+  </data>
+  <data name="Certication name" xml:space="preserve">
+    <value>Nome da certificação</value>
+  </data>
+  <data name="Certificate" xml:space="preserve">
+    <value>Certificado</value>
+  </data>
+  <data name="Certificate Number" xml:space="preserve">
+    <value>Número do certificado</value>
+  </data>
+  <data name="Certificates" xml:space="preserve">
+    <value>Certificados</value>
+  </data>
+  <data name="Certification" xml:space="preserve">
+    <value>Certificação</value>
+  </data>
+  <data name="Certification end date" xml:space="preserve">
+    <value>Data de fim da certificacão</value>
+  </data>
+  <data name="Certification Expiry Trend" xml:space="preserve">
+    <value>Tendência de expiração de certificação</value>
+  </data>
+  <data name="Certification Issuance Trend" xml:space="preserve">
+    <value>Tendência de emissão de certificação</value>
+  </data>
+  <data name="Certification Report" xml:space="preserve">
+    <value>Relatório de Certificação</value>
+  </data>
+  <data name="Certification Reports" xml:space="preserve">
+    <value>Relatórios de Certificação</value>
+  </data>
+  <data name="Certification start date" xml:space="preserve">
+    <value>Data de início da certificacão</value>
+  </data>
+  <data name="Certification Summary" xml:space="preserve">
+    <value>Resumo de Certificacao</value>
+  </data>
+  <data name="Certification1" xml:space="preserve">
+    <value>Certificacão</value>
+  </data>
+  <data name="Certifications" xml:space="preserve">
+    <value>Certificacoes</value>
+  </data>
+  <data name="Certified" xml:space="preserve">
+    <value>Certificado</value>
+  </data>
+  <data name="Certified Persons" xml:space="preserve">
+    <value>Pessoas Certificadas</value>
+  </data>
+  <data name="Certified persons for a certificate" xml:space="preserve">
+    <value>Pessoas certificadas para o certificado</value>
+  </data>
+  <data name="Certified Staff" xml:space="preserve">
+    <value>Equipe Certificada</value>
+  </data>
+  <data name="Certify People" xml:space="preserve">
+    <value>Certificar pessoas</value>
+  </data>
+  <data name="Certify Persons" xml:space="preserve">
+    <value>Certificar pessoas</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Alterar</value>
+  </data>
+  <data name="Change Avatar" xml:space="preserve">
+    <value>Alterar avatar</value>
+  </data>
+  <data name="Change Password" xml:space="preserve">
+    <value>Alterar senha</value>
+  </data>
+  <data name="Choose from existing venues" xml:space="preserve">
+    <value>Escolha um dos locais existentes</value>
+  </data>
+  <data name="Choose venue" xml:space="preserve">
+    <value>Escolha o local</value>
+  </data>
+  <data name="Classification" xml:space="preserve">
+    <value>Classificação</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="Click and drag in the plot area to zoom in" xml:space="preserve">
+    <value>Clique e arraste na area do grafico para aumentar o zoom</value>
+  </data>
+  <data name="Click the columns to view details" xml:space="preserve">
+    <value>Clique nas colunas para ver os detalhes</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
+  <data name="CME Units" xml:space="preserve">
+    <value>Unidades CME</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Completo</value>
+  </data>
+  <data name="Contact name" xml:space="preserve">
+    <value>Nome de contacto</value>
+  </data>
+  <data name="Contact phone" xml:space="preserve">
+    <value>Telefone de contacto</value>
+  </data>
+  <data name="Course" xml:space="preserve">
+    <value>Curso</value>
+  </data>
+  <data name="Course Description" xml:space="preserve">
+    <value>Descricão do curso</value>
+  </data>
+  <data name="Course Duration (Days)" xml:space="preserve">
+    <value>Duração do curso (dias)</value>
+  </data>
+  <data name="Course Name" xml:space="preserve">
+    <value>Nome do curso</value>
+  </data>
+  <data name="Course Report" xml:space="preserve">
+    <value>Relatório de Curso</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Cursos</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="Create a new account" xml:space="preserve">
+    <value>Criar nova conta</value>
+  </data>
+  <data name="Create a new certification" xml:space="preserve">
+    <value>Criar nova certificação</value>
+  </data>
+  <data name="Create a new course" xml:space="preserve">
+    <value>Criar novo curso</value>
+  </data>
+  <data name="Create a new Training" xml:space="preserve">
+    <value>Criar novo treino</value>
+  </data>
+  <data name="Create a new Venue" xml:space="preserve">
+    <value>Criar novo local</value>
+  </data>
+  <data name="Create and manage attendance for training" xml:space="preserve">
+    <value>Criar e gerir participação em treino</value>
+  </data>
+  <data name="Create Course" xml:space="preserve">
+    <value>Criar Curso</value>
+  </data>
+  <data name="Create Facility Type" xml:space="preserve">
+    <value>Criar tipo de instalação</value>
+  </data>
+  <data name="Create New Training" xml:space="preserve">
+    <value>Criar Novo Treinamento</value>
+  </data>
+  <data name="Create Reports" xml:space="preserve">
+    <value>Criar relatórios</value>
+  </data>
+  <data name="Create Training" xml:space="preserve">
+    <value>Criar treinamento</value>
+  </data>
+  <data name="Create Venue" xml:space="preserve">
+    <value>Criar local</value>
+  </data>
+  <data name="Current Password" xml:space="preserve">
+    <value>Senha actual</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="Data Management" xml:space="preserve">
+    <value>Gestão de dados</value>
+  </data>
+  <data name="Data Management1" xml:space="preserve">
+    <value>Gestão de dados</value>
+  </data>
+  <data name="Date of Birth" xml:space="preserve">
+    <value>Data de nascimento</value>
+  </data>
+  <data name="Deactivate" xml:space="preserve">
+    <value>Desactivar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Apagar</value>
+  </data>
+  <data name="Delete Venue" xml:space="preserve">
+    <value>Excluir local</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="Designation" xml:space="preserve">
+    <value>Designação</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+  <data name="Distribution by Province" xml:space="preserve">
+    <value>Distribuicao por Provincia</value>
+  </data>
+  <data name="Distribution of Certification Types" xml:space="preserve">
+    <value>Distribuição de Tipos de Certificação</value>
+  </data>
+  <data name="Distribution of New Graduates Total" xml:space="preserve">
+    <value>Distribução de Novos Graduados Total</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>Distrito</value>
+  </data>
+  <data name="District Admins" xml:space="preserve">
+    <value>Administradores de distrito</value>
+  </data>
+  <data name="Districts" xml:space="preserve">
+    <value>Distritos</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Download Template" xml:space="preserve">
+    <value>Baixar modelo</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duração</value>
+  </data>
+  <data name="Duration (months)" xml:space="preserve">
+    <value>Duração (meses)</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Edit Facility" xml:space="preserve">
+    <value>Editar Unidade Sanitária</value>
+  </data>
+  <data name="Edit Facility Type" xml:space="preserve">
+    <value>Editar tipo de instalação</value>
+  </data>
+  <data name="Edit Province" xml:space="preserve">
+    <value>Editar Província</value>
+  </data>
+  <data name="Edit Venue" xml:space="preserve">
+    <value>Editar local</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="End Date" xml:space="preserve">
+    <value>Data de fim</value>
+  </data>
+  <data name="Enter NUIT to search" xml:space="preserve">
+    <value>Digite NUIT para pesquisar</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expirada</value>
+  </data>
+  <data name="Expired Certificates" xml:space="preserve">
+    <value>CERTIFICADOS EXPIRADOS</value>
+  </data>
+  <data name="Expired Certs" xml:space="preserve">
+    <value>Expirada</value>
+  </data>
+  <data name="Expiry Date" xml:space="preserve">
+    <value>Data de validade</value>
+  </data>
+  <data name="Facilitated" xml:space="preserve">
+    <value>Formou</value>
+  </data>
+  <data name="Facilitator Type" xml:space="preserve">
+    <value>Tipo Facilitadora</value>
+  </data>
+  <data name="Facilitators" xml:space="preserve">
+    <value>Formadores</value>
+  </data>
+  <data name="Facilities" xml:space="preserve">
+    <value>Instalações</value>
+  </data>
+  <data name="Facility" xml:space="preserve">
+    <value>Unidade Sanitaria</value>
+  </data>
+  <data name="Facility Admins" xml:space="preserve">
+    <value>Administradores de instalações</value>
+  </data>
+  <data name="Facility Id" xml:space="preserve">
+    <value>Id de instalação</value>
+  </data>
+  <data name="Facility name" xml:space="preserve">
+    <value>Nome da Unidade Sanitária</value>
+  </data>
+  <data name="Facility type" xml:space="preserve">
+    <value>Tipo de instalação</value>
+  </data>
+  <data name="Facility1" xml:space="preserve">
+    <value>Unidade Sanitária</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Ficheiro</value>
+  </data>
+  <data name="File name" xml:space="preserve">
+    <value>Nome do ficheiro</value>
+  </data>
+  <data name="files" xml:space="preserve">
+    <value>Ficheiros</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Forgot your password?" xml:space="preserve">
+    <value>Esqueceu sua senha?</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>A partir de</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Género</value>
+  </data>
+  <data name="Generate certificates" xml:space="preserve">
+    <value>Gerar certificados</value>
+  </data>
+  <data name="Graduants Certification Expiry Timeline" xml:space="preserve">
+    <value>Cronograma de Expiracao de Certificacao de Graduados</value>
+  </data>
+  <data name="Graduants Certification Issue Timeline" xml:space="preserve">
+    <value>Cronograma de Emissao de Certificacao de Graduados</value>
+  </data>
+  <data name="Head of Laboratories and Provincial Supervisors" xml:space="preserve">
+    <value>Chefe de Laboratóriose e Supervisores Provincial</value>
+  </data>
+  <data name="Head of Laboratory" xml:space="preserve">
+    <value>Chefe de Laboratorio</value>
+  </data>
+  <data name="Health Facilities" xml:space="preserve">
+    <value>Instalações de saúde</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Eu iria</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>importar</value>
+  </data>
+  <data name="Issue Date" xml:space="preserve">
+    <value>Data de emissão</value>
+  </data>
+  <data name="Issued" xml:space="preserve">
+    <value>Emitido</value>
+  </data>
+  <data name="Issued Certificates" xml:space="preserve">
+    <value>Certificados Emitidos</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Língua</value>
+  </data>
+  <data name="Last Login" xml:space="preserve">
+    <value>Último Login</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Apelido</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Nível</value>
+  </data>
+  <data name="LGA" xml:space="preserve">
+    <value>Distrito</value>
+  </data>
+  <data name="Licensed" xml:space="preserve">
+    <value>Licenciado</value>
+  </data>
+  <data name="Load certified people" xml:space="preserve">
+    <value>Carregar pessoas certificadas</value>
+  </data>
+  <data name="Log Out" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Entrar</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Gerir</value>
+  </data>
+  <data name="Manage attendance" xml:space="preserve">
+    <value>Gerir participação</value>
+  </data>
+  <data name="Manage Certifications" xml:space="preserve">
+    <value>Gerir certificações</value>
+  </data>
+  <data name="Manage Courses" xml:space="preserve">
+    <value>Gerir cursos</value>
+  </data>
+  <data name="manage details" xml:space="preserve">
+    <value>gerenciar detalhes</value>
+  </data>
+  <data name="manage details of persons" xml:space="preserve">
+    <value>gerenciar detalhes de pessoas</value>
+  </data>
+  <data name="manage details of system users" xml:space="preserve">
+    <value>gerenciar detalhes de usuários do sistema</value>
+  </data>
+  <data name="manage details of training attendance" xml:space="preserve">
+    <value>Gerir detalhes de participação no treino</value>
+  </data>
+  <data name="manage details of training courses" xml:space="preserve">
+    <value>gerenciar detalhes de cursos de treinamento</value>
+  </data>
+  <data name="manage details of training facilities" xml:space="preserve">
+    <value>gerenciar detalhes das instalações de treinamento</value>
+  </data>
+  <data name="manage details of training venues" xml:space="preserve">
+    <value>Gerir detalhes de locais de treino</value>
+  </data>
+  <data name="manage details of users" xml:space="preserve">
+    <value>Gerir detalhes de usuários</value>
+  </data>
+  <data name="Manage Districts" xml:space="preserve">
+    <value>Gerenciar distritos</value>
+  </data>
+  <data name="Manage Facilitators" xml:space="preserve">
+    <value>Gerir formadores</value>
+  </data>
+  <data name="Manage Facilities" xml:space="preserve">
+    <value>Gerir Unidades Sanitárias</value>
+  </data>
+  <data name="Manage people" xml:space="preserve">
+    <value>Gerir pessoas</value>
+  </data>
+  <data name="Manage Persons" xml:space="preserve">
+    <value>Gerenciar Pessoas</value>
+  </data>
+  <data name="Manage Provinces" xml:space="preserve">
+    <value>Gerenciar Províncias</value>
+  </data>
+  <data name="Manage Reports" xml:space="preserve">
+    <value>Gerenciar relatórios</value>
+  </data>
+  <data name="Manage resources" xml:space="preserve">
+    <value>Gerir recursos</value>
+  </data>
+  <data name="manage system settings" xml:space="preserve">
+    <value>gerenciar configurações do sistema</value>
+  </data>
+  <data name="Manage Trainings" xml:space="preserve">
+    <value>Gerir treinos</value>
+  </data>
+  <data name="Manage Users" xml:space="preserve">
+    <value>Gerir usuários</value>
+  </data>
+  <data name="Manage Venues" xml:space="preserve">
+    <value>Gerir locais</value>
+  </data>
+  <data name="Map code" xml:space="preserve">
+    <value>Código do mapa</value>
+  </data>
+  <data name="Metadata Management" xml:space="preserve">
+    <value>Gestão de Metadados</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Telefone</value>
+  </data>
+  <data name="Mobile No" xml:space="preserve">
+    <value>Telemóvel</value>
+  </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Módulos</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>Mais</value>
+  </data>
+  <data name="My Profile" xml:space="preserve">
+    <value>Meu perfil</value>
+  </data>
+  <data name="My Trainings" xml:space="preserve">
+    <value>Meus treinos</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="National" xml:space="preserve">
+    <value>Nacional</value>
+  </data>
+  <data name="National Admins" xml:space="preserve">
+    <value>Administradores Nacionais</value>
+  </data>
+  <data name="National Summary" xml:space="preserve">
+    <value>Resumo Nacional</value>
+  </data>
+  <data name="New Certification" xml:space="preserve">
+    <value>Nova certificação</value>
+  </data>
+  <data name="New Course" xml:space="preserve">
+    <value>Novo curso</value>
+  </data>
+  <data name="New Facility" xml:space="preserve">
+    <value>Nova Unidade Sanitária</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>Nova senha</value>
+  </data>
+  <data name="New Training" xml:space="preserve">
+    <value>Novo treino</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Próxima</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="No data to display" xml:space="preserve">
+    <value>Sem dados para exibir</value>
+  </data>
+  <data name="No of participants" xml:space="preserve">
+    <value>Número de participantes</value>
+  </data>
+  <data name="No. of Active" xml:space="preserve">
+    <value>Número de ativos</value>
+  </data>
+  <data name="No. of Expired" xml:space="preserve">
+    <value>Número de expirados</value>
+  </data>
+  <data name="No. of People" xml:space="preserve">
+    <value>Número de pessoas</value>
+  </data>
+  <data name="No. of Staff" xml:space="preserve">
+    <value>Numero de funcionarios</value>
+  </data>
+  <data name="No. of Trainings" xml:space="preserve">
+    <value>Número de treinamentos</value>
+  </data>
+  <data name="Non-Certified Staff" xml:space="preserve">
+    <value>Pessoal não certificado</value>
+  </data>
+  <data name="Not Certified" xml:space="preserve">
+    <value>Não certificado</value>
+  </data>
+  <data name="NUIT" xml:space="preserve">
+    <value>NUIT</value>
+  </data>
+  <data name="NUIT or certificate number" xml:space="preserve">
+    <value>NUIT ou número do certificado</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Numero</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Abrir</value>
+  </data>
+  <data name="Other Details" xml:space="preserve">
+    <value>Outros detalhes</value>
+  </data>
+  <data name="Other names" xml:space="preserve">
+    <value>Outros nomes</value>
+  </data>
+  <data name="Other names1" xml:space="preserve">
+    <value>Outros nomes</value>
+  </data>
+  <data name="Overview of staff distribution" xml:space="preserve">
+    <value>Visão geral da distribuição de pessoal</value>
+  </data>
+  <data name="Overview of staff distribution by profession" xml:space="preserve">
+    <value>Visão geral da distribuição de pessoal por profissão</value>
+  </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participantes</value>
+  </data>
+  <data name="Participants and Facilitators" xml:space="preserve">
+    <value>Participantes e Facilitadores</value>
+  </data>
+  <data name="Participants summary" xml:space="preserve">
+    <value>Resumo de participantes</value>
+  </data>
+  <data name="Pass Score" xml:space="preserve">
+    <value>Pontuação de aprovação</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="People" xml:space="preserve">
+    <value>Pessoas</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Percentagem</value>
+  </data>
+  <data name="Person" xml:space="preserve">
+    <value>Pessoa</value>
+  </data>
+  <data name="Personal Info" xml:space="preserve">
+    <value>Informacão pessoal</value>
+  </data>
+  <data name="Personnel and Certification Distribution" xml:space="preserve">
+    <value>Distribuição de pessoal e certificação</value>
+  </data>
+  <data name="Personnel Distribution" xml:space="preserve">
+    <value>Distribuicao de Pessoal</value>
+  </data>
+  <data name="Personnel Distribution - District" xml:space="preserve">
+    <value>Distribuicao de Pessoal - Distrito</value>
+  </data>
+  <data name="Personnel Distribution - Facility" xml:space="preserve">
+    <value>Distribuicao de pessoal - Instalacao</value>
+  </data>
+  <data name="Personnel Distribution - Provincial" xml:space="preserve">
+    <value>Distribuicao de pessoal - Provincial</value>
+  </data>
+  <data name="Personnel Distribution by Designation- Custom Filter" xml:space="preserve">
+    <value>Distribuição de pessoal por designação - filtro personalizado</value>
+  </data>
+  <data name="Personnel Reports" xml:space="preserve">
+    <value>Relatorios de Pessoal</value>
+  </data>
+  <data name="Persons" xml:space="preserve">
+    <value>Pessoas</value>
+  </data>
+  <data name="Persons eligible for retirement - Province" xml:space="preserve">
+    <value>Pessoas elegíveis para a aposentadoria - Província</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>Telefone</value>
+  </data>
+  <data name="Pinch the chart to zoom in" xml:space="preserve">
+    <value>Aperte o grafico para aumentar o zoom</value>
+  </data>
+  <data name="Please check your email to reset your password." xml:space="preserve">
+    <value>Por favor, verifique o seu email para redefinir a senha</value>
+  </data>
+  <data name="Post Test" xml:space="preserve">
+    <value>Pós-teste</value>
+  </data>
+  <data name="Post Training Scores" xml:space="preserve">
+    <value>Pontuações pós-treinamento</value>
+  </data>
+  <data name="post-test score" xml:space="preserve">
+    <value>pontuação pós-teste</value>
+  </data>
+  <data name="Pre Test" xml:space="preserve">
+    <value>Pré-teste</value>
+  </data>
+  <data name="Pre-score" xml:space="preserve">
+    <value>Pré-pontuação</value>
+  </data>
+  <data name="pre-test score" xml:space="preserve">
+    <value>pontuação pré-teste</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="Professions" xml:space="preserve">
+    <value>Profissões</value>
+  </data>
+  <data name="Proffessions" xml:space="preserve">
+    <value>Profissões</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="Profile Settings" xml:space="preserve">
+    <value>Configurações de perfil</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Província</value>
+  </data>
+  <data name="Provinces" xml:space="preserve">
+    <value>Províncias</value>
+  </data>
+  <data name="Provincial" xml:space="preserve">
+    <value>Provincial</value>
+  </data>
+  <data name="Provincial admins" xml:space="preserve">
+    <value>Administradores provinciais</value>
+  </data>
+  <data name="Provincial Supervisor" xml:space="preserve">
+    <value>Supervisor Provincial</value>
+  </data>
+  <data name="Re-type New Password" xml:space="preserve">
+    <value>Re-digite a nova senha</value>
+  </data>
+  <data name="Read Only" xml:space="preserve">
+    <value>Somente leitura</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Região</value>
+  </data>
+  <data name="Registered Staff" xml:space="preserve">
+    <value>Pessoal</value>
+  </data>
+  <data name="Remember me?" xml:space="preserve">
+    <value>Lembre de mim?</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="Remove1" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Relatórios</value>
+  </data>
+  <data name="Reset Password" xml:space="preserve">
+    <value>Redefinir a senha</value>
+  </data>
+  <data name="Retired" xml:space="preserve">
+    <value>Reformado</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Função</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salve </value>
+  </data>
+  <data name="Save changes" xml:space="preserve">
+    <value>Guardar alterações</value>
+  </data>
+  <data name="Save Profile" xml:space="preserve">
+    <value>Salvar perfil</value>
+  </data>
+  <data name="Scores" xml:space="preserve">
+    <value>Pontuações</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Procurar</value>
+  </data>
+  <data name="Search Certificate" xml:space="preserve">
+    <value>Certificado de Pesquisa</value>
+  </data>
+  <data name="Search Certificates" xml:space="preserve">
+    <value>Certificados de busca</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Selecione</value>
+  </data>
+  <data name="Select certification" xml:space="preserve">
+    <value>Seleccionar certificação</value>
+  </data>
+  <data name="Select Course" xml:space="preserve">
+    <value>Selecione o curso</value>
+  </data>
+  <data name="Select District" xml:space="preserve">
+    <value>Selecione o distrito</value>
+  </data>
+  <data name="Select Facility" xml:space="preserve">
+    <value>Selecione a instalação</value>
+  </data>
+  <data name="Select image" xml:space="preserve">
+    <value>Seleccionar imagem</value>
+  </data>
+  <data name="Select person" xml:space="preserve">
+    <value>Seleccionar pessoa</value>
+  </data>
+  <data name="Select person for certification" xml:space="preserve">
+    <value>Seleccionar pessoa para certificação</value>
+  </data>
+  <data name="Select Province" xml:space="preserve">
+    <value>Selecione a província</value>
+  </data>
+  <data name="Select report" xml:space="preserve">
+    <value>Selecione o relatório</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Serviços</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="Staff" xml:space="preserve">
+    <value>Pessoal</value>
+  </data>
+  <data name="Staff Certification" xml:space="preserve">
+    <value>Certificação da equipe</value>
+  </data>
+  <data name="Standard Reports" xml:space="preserve">
+    <value>Relatórios padrão</value>
+  </data>
+  <data name="Start Date" xml:space="preserve">
+    <value>Data de início</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Província</value>
+  </data>
+  <data name="statistics &amp; reports" xml:space="preserve">
+    <value>Estatísticas &amp; relatórios</value>
+  </data>
+  <data name="Student" xml:space="preserve">
+    <value>Estudante</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submeter</value>
+  </data>
+  <data name="Summary of Active and Expired certificates" xml:space="preserve">
+    <value>Resumo de certificados ativos e expirados</value>
+  </data>
+  <data name="Summary of trained staff" xml:space="preserve">
+    <value>Resumo da equipe treinada</value>
+  </data>
+  <data name="System Admin" xml:space="preserve">
+    <value>Administrador do sistema</value>
+  </data>
+  <data name="System Administration" xml:space="preserve">
+    <value>Administracão do sistema</value>
+  </data>
+  <data name="System Config" xml:space="preserve">
+    <value>Configuração do sistema</value>
+  </data>
+  <data name="System User" xml:space="preserve">
+    <value>usuário do sistema</value>
+  </data>
+  <data name="System Users" xml:space="preserve">
+    <value>Usuários do sistema</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="Thematic Area" xml:space="preserve">
+    <value>Área temática</value>
+  </data>
+  <data name="Thematic Area1" xml:space="preserve">
+    <value>Área temática</value>
+  </data>
+  <data name="This action cannot be undone." xml:space="preserve">
+    <value>Essa ação não pode ser desfeita.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>até</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Trained" xml:space="preserve">
+    <value>Treinado/Treinada</value>
+  </data>
+  <data name="Trained and certified" xml:space="preserve">
+    <value>Treinado e certificado</value>
+  </data>
+  <data name="Trained Staff" xml:space="preserve">
+    <value>Equipe treinada</value>
+  </data>
+  <data name="Training" xml:space="preserve">
+    <value>Treino</value>
+  </data>
+  <data name="Training Administration" xml:space="preserve">
+    <value>Administracão de treino</value>
+  </data>
+  <data name="Training Admins" xml:space="preserve">
+    <value>Administradores de treinamento</value>
+  </data>
+  <data name="Training Details" xml:space="preserve">
+    <value>Detalhes de treinamento</value>
+  </data>
+  <data name="Training Facilitators" xml:space="preserve">
+    <value>Facilitadores de treinamento</value>
+  </data>
+  <data name="Training Files" xml:space="preserve">
+    <value>Ficheiros de treino</value>
+  </data>
+  <data name="Training Information" xml:space="preserve">
+    <value>Informacão de treino</value>
+  </data>
+  <data name="Training Management" xml:space="preserve">
+    <value>Gestão de Treinamento</value>
+  </data>
+  <data name="Training Metadata" xml:space="preserve">
+    <value>Metadados de treinamento</value>
+  </data>
+  <data name="Training Participants" xml:space="preserve">
+    <value>Participantes de treinamento</value>
+  </data>
+  <data name="Training Resources" xml:space="preserve">
+    <value>Recursos de treino</value>
+  </data>
+  <data name="Training Summary" xml:space="preserve">
+    <value>Resumo do treinamento</value>
+  </data>
+  <data name="Training Timeline" xml:space="preserve">
+    <value>Cronograma de treino</value>
+  </data>
+  <data name="Trainings" xml:space="preserve">
+    <value>Treinos</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="Update course" xml:space="preserve">
+    <value>Actualizar curso</value>
+  </data>
+  <data name="update facility" xml:space="preserve">
+    <value>Actualizar Unidade Sanitária</value>
+  </data>
+  <data name="Update Person" xml:space="preserve">
+    <value>Actualizar pessoa</value>
+  </data>
+  <data name="Update Training" xml:space="preserve">
+    <value>Actualizar treino</value>
+  </data>
+  <data name="Update Venue" xml:space="preserve">
+    <value>Actualizar local</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Envio</value>
+  </data>
+  <data name="Upload File" xml:space="preserve">
+    <value>Carregar ficheiro</value>
+  </data>
+  <data name="US code" xml:space="preserve">
+    <value>Código dos US</value>
+  </data>
+  <data name="User Account" xml:space="preserve">
+    <value>Conta do usuário</value>
+  </data>
+  <data name="User Management" xml:space="preserve">
+    <value>Gestão de usuários</value>
+  </data>
+  <data name="User Role" xml:space="preserve">
+    <value>Papel do usuário</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nome do usuário</value>
+  </data>
+  <data name="Validity Period (Months)" xml:space="preserve">
+    <value>Período de validade (meses)</value>
+  </data>
+  <data name="Venue" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="Venue Name" xml:space="preserve">
+    <value>Nome do local</value>
+  </data>
+  <data name="Venues" xml:space="preserve">
+    <value>Locais</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>version</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="View Certificates" xml:space="preserve">
+    <value>Ver certificados</value>
+  </data>
+  <data name="View Courses" xml:space="preserve">
+    <value>Ver curso</value>
+  </data>
+  <data name="View Districts" xml:space="preserve">
+    <value>Ver distritos</value>
+  </data>
+  <data name="View Facilities" xml:space="preserve">
+    <value>Ver Instalações</value>
+  </data>
+  <data name="View People" xml:space="preserve">
+    <value>Ver pessoas</value>
+  </data>
+  <data name="View Professions" xml:space="preserve">
+    <value>Ver profissão</value>
+  </data>
+  <data name="View Provinces" xml:space="preserve">
+    <value>Ver Províncias</value>
+  </data>
+  <data name="View Trainings" xml:space="preserve">
+    <value>Ver treinamentos</value>
+  </data>
+  <data name="view user profile" xml:space="preserve">
+    <value>ver perfil de usuário</value>
+  </data>
+  <data name="View Venues" xml:space="preserve">
+    <value>Ver local</value>
+  </data>
+  <data name="Year started" xml:space="preserve">
+    <value>Ano de início</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>sim</value>
+  </data>
+  <data name="You do not have access to this resource" xml:space="preserve">
+    <value>Você não tem acesso a este recurso</value>
+  </data>
+</root>

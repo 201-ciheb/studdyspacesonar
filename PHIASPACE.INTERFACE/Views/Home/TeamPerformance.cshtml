@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Team Performance";
+}
+<div class="row">
+    <div id="team_progress"></div>
+</div>
+
+@section Scripts{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script>
+        colors = ['#BD5733', '#33aF57', '#5733FF', '#FF5733', '#33FF57', '#ede039', '#5ded39'];
+        Highcharts.chart('team_progress', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Team Target and Progress',
+                align: 'left'
+            },
+            subtitle: {
+                text:
+                    '',
+                align: 'left'
+            },
+            xAxis: {
+                categories: ['Team 1', 'Team 2','Team 3', 'Team 4','Team 5'],
+                crosshair: true,
+                accessibility: {
+                    description: 'Target and Progress'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                valueSuffix: ' '
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {
+                    name: 'Target',
+                    data: [50, 50, 50, 50, 40]
+                },
+                {
+                    name: 'Assessed',
+                    data: [2, 2, 0, 1, 1]
+                },
+                {
+                    name: 'Today',
+                    data: [1, 1, 1, 0, 0]
+                }
+            ],
+            colors:colors
+        });
+    </script>
+}

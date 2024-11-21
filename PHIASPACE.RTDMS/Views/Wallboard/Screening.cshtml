@@ -1,0 +1,48 @@
+@{
+    Layout = "~/Views/Shared/_WallBoardLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 row">
+            <div class="col-lg-6 placards purple">
+                <h1 class="white-text placards-text" id="activated">---</h1>
+                <p class="white-text placards-sub-text">ACTIVATED</p>
+            </div>
+            <div class="col-lg-6 placards green">
+                <h1 class="white-text placards-text" id="cleared">---</h1>
+                <p class="white-text placards-sub-text">CLEARED</p>
+            </div>
+        </div>
+        <div class="col-lg-12 row">
+            <div class="col-lg-6 placards orange">
+                <h1 class="white-text placards-text" id="not_screened">---</h1>
+                <p class="white-text placards-sub-text">NOT SCREENED</p>
+            </div>
+            <div class="col-lg-6 placards red">
+                <h1 class="white-text placards-text" id="not_cleared">---</h1>
+                <p class="white-text placards-sub-text">NOT CLEARED</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            get_wallboard_summary_data();
+            setInterval(() => {
+                get_wallboard_summary_data();
+            }, 1000 * 60 * 10);
+        });
+
+        function get_wallboard_summary_data() {
+            $.get(base_api + "datapullapi/get_screening_summary", { project: "BAISV" }, function (data) {
+
+                $("#activated").text(data.activated);
+                $('#cleared').text(data.cleared);
+                $("#not_cleared").text(data.not_cleared);
+                $('#not_screened').text(data.not_screened);
+            });
+        }
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
+    ViewData["Title"] = "Confirm email";
+}
+
+<div class="login-page">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Confirm Email</h2>
+                </div>
+                <div class="card-body">
+                    <partial name="_StatusMessage" model="Model.StatusMessage" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

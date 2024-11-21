@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Privacy Page";
+}
+
+
+<h2>Cookies</h2>
+<dl>
+    @foreach (var cookie in HttpContextAccessor.HttpContext.Request.Cookies)
+    {          
+        <dt>@cookie.Key</dt>
+        <dd>@cookie.Value</dd>
+    }
+</dl>
+
+<h2>Claims</h2>
+
+<dl>
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
+<h2>Properties</h2>
+
+<dl>
+    @foreach (var prop in (await Context.AuthenticateAsync()).Properties.Items)
+    {
+        <dt>@prop.Key</dt>
+        <dd>@prop.Value</dd>
+    }
+</dl>
+
+@* <h2>Roles</h2>
+
+<dl>
+    @foreach (var claim in User.Roles)
+    {
+        <dt>@claim.ID</dt>
+        <dd>@claim.Name</dd>
+    }
+</dl> *@

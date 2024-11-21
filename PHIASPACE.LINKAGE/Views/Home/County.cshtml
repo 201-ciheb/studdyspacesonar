@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="nk-content">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <h1 style="color: chocolate;text-align: center;">Linkage Summary [County X]</h1>
+        </div>
+        <div class="nk-block mt-3">
+            <div class="row g-2">
+                <div class="col-lg-4">
+                    <div class="col-lg-12">
+                        <div class="card border-info bg-success" title="">
+                            <div class="card-body pt-2 px-2">
+                                <div>
+                                    <span style="float:left;">Number of Participants Reffered</span>
+                                    <span class="text-white h1" style="float: right; font-size:52px;">20</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mt-3">
+                        <div class="card border-info bg-success" title="">
+                            <div class="card-body pt-2 px-2">
+                                <div>
+                                    <span style="float:left;">Number of Participants Consented</span>
+                                    <span class="text-white h1" style="float: right; font-size:52px;">20</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mt-3">
+                        <div class="card border-info bg-success" title="">
+                            <div class="card-body pt-2 px-2">
+                                <div>
+                                    <span style="float:left;">Number of Participants Linked</span>
+                                    <span class="text-white h1" style="float: right; font-size:52px;">17</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="col-lg-12 mt-3">
+                        <div class="card border-info bg-success" title="">
+                            <div class="card-body pt-2 px-2">
+                                <div>
+                                    <span style="float:left;">View Temporal IDs</span>
+                                    <span class="text-white h1" style="float: right; font-size:52px;">17</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> *@
+                </div>
+                <div class="col-lg-8">
+                    <form class="row g-4" enctype="multipart/form-data" method="get">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="ParticipantId" name="ParticipantId"
+                                        placeholder="Enter Participant ID"
+                                        title="Ensure you enter the correct participant Id">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" type="button" id="printResultBtn">Print Participant Result</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                @* <div class="nk-block">
+                    <div class="nk-block-head line-on-side text-muted text-center font-small-3 mx-2 my-1">
+                        <span>FSW District Progress</span>
+                    </div>
+                    <div class="row g-2" >
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            <div class="card border-info bg-success bg-opacity-25" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="Number of FSW Participants with at least One sample collected for them in Gaborone">
+                                <div class="card-body pt-2 px-2">
+                                    <div>
+                                        <span class="text-info h1">@GenerateWholeNumber(Model.FirstOrDefault(m => m.KpType == "FSW" && m.District == "GA")?.Number)</span><span class="text-secondary h1">/234</span>
+                                        <span class="h4">[@GeneratePercentage(Model.FirstOrDefault(m => m.KpType == "FSW" && m.District == "GA")?.Number, 234)%]</span>
+                                        <span style="float:right;">Gaborone</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" data-progress="@GeneratePercentage(Model.FirstOrDefault(m => m.KpType == "FSW" && m.District == "GA")?.Number, 234)%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            <div class="card border-info bg-success bg-opacity-25" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="Number of FSW Participants with at least One sample collected for them in Francistown">
+                                <div class="card-body pt-2 px-2">
+                                    <div>
+                                        <span class="text-info h1">@GenerateWholeNumber(Model.FirstOrDefault(m => m.KpType == "FSW" && m.District == "FR")?.Number)</span><span class="text-secondary h1">/345</span>
+                                        <span class="h4">[@GeneratePercentage(Model.FirstOrDefault(m => m.KpType == "FSW" && m.District == "FR")?.Number, 345)]%</span>
+                                        <span style="float:right;">Francistown</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" data-progress="@GeneratePercentage(Model.FirstOrDefault(m => m.KpType == "FSW" && m.District == "FR")?.Number, 345)%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         *@

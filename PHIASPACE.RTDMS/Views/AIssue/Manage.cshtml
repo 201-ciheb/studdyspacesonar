@@ -1,0 +1,658 @@
+﻿
+@using PHIASPACE.RTDMS.DAL.Model;
+@using PHIASPACE.RTDMS.Helpers;
+@using X.PagedList
+@model IPagedList<AimsIssue>
+@inject UserHelper _userHelper
+@inject PHIASPACE.RTDMS.DAL.Service.ZoneService _zoneService
+
+
+@{
+    ViewBag.Title = "Manage";
+    var person = (AimsPerson)ViewBag.person;
+    int currentPage = Model.PageNumber;
+    int totalPages = Model.PageCount;
+}
+
+@{
+    var statesTask = _zoneService.GetCountiesAsync();
+    var states = await statesTask;
+}
+
+
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">AIMS</span> - Issues</h4>
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="#">Home</a></li>
+
+                <li class="active">Issues</li>
+            </ul>
+        </div>
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title text-slate-400" style="font-weight:bold">
+                                AIMS Issues Tracker
+                            </h5>
+                            <div class="heading-elements">
+                                <form action="@Url.Action(" Manage","AIssue")">
+                                    <ul class="icons-list">
+                                        <li>
+                                            <div class="col-lg-4">
+                                                @Html.DropDownList("StatusId", (SelectList)ViewBag.Statuses, "-- Select Status --", new { @class = "form-control", @id = "status_id", @required = "required" })
+                                            </div>
+
+                                        </li>
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                @Html.DropDownList("category_id", new SelectList(await _zoneService.GetIssueTypes(), "Id", "Name", null), "-- Select category --", new { @class = "form-control", @id = "category_id" })
+                                            </div>
+
+                                        </li>
+
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                                <input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015">
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <input type="text" name="search" class="form-control" />
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <button type="submit" class="btn border-success-400 text-success-400 btn-flat btn-rounded btn-icon btn-xs"><i class="icon-search4"></i></button>
+
+
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <button onclick="new_issue()" type="button" id="btn_field_report" class="btn border-slate-400 text-slate-400 btn-flat btn-rounded btn-icon btn-xs"><i class="icon-add-to-list"></i></button>
+
+
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel-body"></div>
+                        <div class="form-inline">
+                            <label for="pageSize">Rows per page:</label>
+                            <select id="pageSize" class="form-control" onchange="changePageSize()">
+                                @if (ViewBag.pageSize == 5)
+                                {
+                                    <option value="5" selected>5</option>
+                                }
+                                else
+                                {
+                                    <option value="5">5</option>
+                                }
+                                @if (ViewBag.pageSize == 10)
+                                {
+                                    <option value="10" selected>10</option>
+                                }
+                                else
+                                {
+                                    <option value="10">10</option>
+                                }
+                                @if (ViewBag.pageSize == 20)
+                                {
+                                    <option value="20" selected>20</option>
+                                }
+                                else
+                                {
+                                    <option value="20">20</option>
+                                }
+                                @if (ViewBag.pageSize == 30)
+                                {
+                                    <option value="30" selected>30</option>
+                                }
+                                else
+                                {
+                                    <option value="30">30</option>
+                                }
+                            </select>
+                        </div>
+
+
+                        <div class="table-responsive">
+
+                            <table class="table table-striped table-bordered" id="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Content</th>
+                                        <th>Impact</th>
+                                        <th>Resolution</th>
+                                        <th>Household</th>
+                                        <th>EA</th>
+                                        <th>Team</th>
+                                        <th>Lab</th>
+                                        <th>County</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Any())
+                                    {
+                                        foreach (var issue in Model)
+                                        {
+                                            var style = "bg-orange-300";
+                                            if (issue.StatusId == 2)
+                                            {
+                                                style = "bg-green-400";
+                                            }
+                                            else if (issue.StatusId == 3)
+                                            {
+                                                style = "bg-slate-400";
+                                            }
+
+                                            var time_color = "bg-blue-400";
+                                            if (DateTime.Now > issue.DateCreated.AddHours(24))
+                                            {
+                                                time_color = "bg-danger-400";
+                                            }
+
+                                            var pr_color = "bg-brown-400";
+                                            if (issue.Priority == 48)
+                                            {
+                                                pr_color = "bg-teal-400";
+                                            }
+                                            else if (issue.Priority == 49)
+                                            {
+                                                pr_color = "bg-violet-400";
+                                            }
+
+                                            <tr class="bg">
+                                                <td>
+                                                    <div class="media-left media-middle">
+                                                        <a href="#" class="btn @pr_color btn-rounded btn-icon btn-xs">
+                                                            <span class="letter-icon">
+                                                                @if (issue.PriorityNavigation?.LookupName != null)
+                                                                {
+                                                                    @issue.PriorityNavigation.LookupName.Substring(0, 1)
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>N/A</span> <!-- Or any default value you prefer -->
+                                                                }
+                                                            </span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="media-body">
+                                                        <div class="media-heading">
+                                                            <a href="#" onclick="ld_issue(@issue.Id)" style="font-weight:bold"> @issue.Title</a>
+                                                        </div>
+                                                        <div class="text-muted text-size-small">
+                                                            @issue.PriorityNavigation?.LookupName ?? "No Priority" <!-- Handle null value -->
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>@issue.IssueType?.Name ?? "No Issue Type"</td> <!-- Handle null value -->
+                                                <td>@issue.IssueContent ?? "No Content"</td> <!-- Handle null value -->
+                                                <td>@issue.Impact ?? "No Impact"</td> <!-- Handle null value -->
+                                                <td>@issue.Resolution ?? "No Resolution"</td> <!-- Handle null value -->
+                                                <td>@issue.HouseholdId ?? "No Household"</td> <!-- Handle null value -->
+                                                <td>@issue.EaId ?? "No EA"</td> <!-- Handle null value -->
+                                                <td>@issue.TeamId ?? "No Team"</td> <!-- Handle null value -->
+
+                                                @if (issue.Lab != null)
+                                                {
+                                                    <td>@issue.Lab.LabName</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>No Lab</td>
+                                                }
+
+                                                @if (issue.County != null)
+                                                {
+                                                    <td>@issue.County.CountyName</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>No County</td>
+                                                }
+
+                                                <td class="@time_color">@issue.DateCreated.ToString("dd-MM-yyyy hh:mm tt")</td>
+                                                <td class="@style">@issue.Status?.Name ?? "No Status"</td> <!-- Handle null value -->
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+
+                            <!-- Custom Pagination Controls -->
+                            <div id="Paging" style="text-align:center">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+
+                                        <!-- Previous Page Link -->
+                                        @if (currentPage > 1)
+                                        {
+                                            <li class="page-item">
+                                                <a class="page-link" href="@Url.Action("Manage", new { page = currentPage - 1 })" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&laquo;</span>
+                                            </li>
+                                        }
+
+                                        <!-- Page Number Links -->
+                                        @for (var i = 1; i <= totalPages; i++)
+                                        {
+                                            if (i == currentPage)
+                                            {
+                                                <li class="page-item active">
+                                                    <span class="page-link">@i</span>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="page-item">
+                                                    <a class="page-link" href="@Url.Action("Manage", new { page = i })">@i</a>
+                                                </li>
+                                            }
+                                        }
+
+                                        <!-- Next Page Link -->
+                                        @if (currentPage < totalPages)
+                                        {
+                                            <li class="page-item">
+                                                <a class="page-link" href="@Url.Action("Manage", new { page = currentPage + 1 })" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&raquo;</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="panel panel-flat" id="div_new">
+                        <div class="panel-heading" style="padding:5px 20px">
+                            <h5 class="panel-title text-grey-400" style="font-weight:bold" id="form_title">
+                                Add New Ticket
+                            </h5>
+                            <div class="heading-elements">
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                    <form class="form-horizontal" method="post" action="@Url.Action("Post","AIssue")">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title" id="form_title">New DM Ticket</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Title -->
+                                                    <div class="form-group">
+                                                        <div class="col-lg-8">
+                                                            <input type="text" value="" required name="Title" id="title" placeholder="Title of the ticket" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- EA ID, Household ID, Team ID -->
+                                                    <div class="form-group">
+                                                        <div class="col-lg-4">
+                                                            <input type="text" value="" placeholder="EA ID" name="EaId" id="ea_id" class="form-control">
+                                                        </div>
+
+                                                        <div class="col-lg-4">
+                                                            <input type="text" value="" name="HouseholdId" id="household_id" placeholder="Household ID" class="form-control">
+                                                        </div>
+
+                                                        <div class="col-lg-4">
+                                                            <input type="text" value="" name="TeamId" id="team_id" placeholder="Team ID" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Lab and County -->
+                                                    <!-- Issue Type and Status -->
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">Type</label>
+                                                        <div class="col-lg-4">
+                                                            @Html.DropDownList("IssueTypeId", (SelectList)ViewBag.IssueTypes, "-- Select category --", new { @class = "form-control", @id = "issue_type_id", @required = "required" })
+                                                        </div>
+
+                                                        <label class="control-label col-lg-2">Status</label>
+                                                        <div class="col-lg-4">
+                                                            @Html.DropDownList("StatusId", (SelectList)ViewBag.Statuses, "-- Select Status --", new { @class = "form-control", @required = "required" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="priority_id">Priority</label>
+                                                        @if (ViewBag.Priorities != null && ((SelectList)ViewBag.Priorities).Any())
+                                                        {
+                                                            @Html.DropDownList("priority_id", (SelectList)ViewBag.Priorities, "-- Select priority --", new { @class = "form-control", @id = "priority_id" })
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>No priority options available</p>
+                                                        }
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">Lab</label>
+                                                        <div class="col-lg-4">
+                                                            @Html.DropDownList("LabId", (SelectList)ViewBag.Labs, "-- Select lab --", new { @class = "form-control", @id = "lab_id" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">County</label>
+                                                        <div class="col-lg-4">
+                                                            @Html.DropDownList("CountyId", (SelectList)ViewBag.States, "-- Select County --", new { @class = "form-control", @id = "county_id" })
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Issue Content -->
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12">
+                                                            <textarea name="IssueContent" id="issue_content" placeholder="Description of the issue" rows="3" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Impact -->
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12">
+                                                            <textarea name="Impact" id="impact" placeholder="Impact summary" rows="3" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Resolution -->
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12">
+                                                            <textarea name="Resolution" id="resolution" placeholder="Final resolution and rationale" rows="3" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Priority (hidden input for ID) -->
+                                                    <input type="hidden" name="Priority" id="priority" value="1" /> <!-- Default priority -->
+                                                    <!-- Persons (Multiple Selection) -->
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12">
+                                                            <select multiple="multiple" name="persons" class="select"></select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Is New -->
+                                                    <input type="hidden" id="is_new" name="is_new" value="1" />
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    @if (User.IsInRole("DMA") || PHIASPACE.RTDMS.Helper.HtmlHelper.IsDebug())
+                                                    {
+                                                        <button type="submit" id="btn" class="btn btn-primary">Add Query</button>
+                                                    }
+
+                                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div id="div_discussion" style="display:none">
+                        <div class="panel panel-flat timeline-content">
+                            <div class="panel-heading">
+                                <h5 class="panel-title text-grey-400" style="font-weight:bold">Discussions<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li>
+                                            <button onclick="edit_issue()" type="button" class="btn border-slate-400 text-slate-400 btn-flat btn-rounded btn-icon btn-xs"><i class="icon-database-edit2"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <ul class="media-list chat-list content-group" id="ls_discussions"></ul>
+                                <form>
+                                    <textarea name="body" id="body" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+                                    <input type="hidden" name="issue_id" id="issue_id" />
+                                    <input type="hidden" name="issue_type" id="issue_type" value="1" />
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <ul class="icons-list icons-list-extended mt-10"></ul>
+                                        </div>
+
+                                        <div class="col-xs-6 text-right">
+                                            <button type="button" onclick="post_issue_discussion()" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Send</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+<!-- /page container -->
+@section styles{
+
+    <link href="~/Content/tb_sort/excel-bootstrap-table-filter-style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <style>
+        th {
+            font-weight: bold;
+            /*border-color: #78909C !important;*/
+        }
+
+        table {
+            border: 1px;
+            /*border-color: #78909C !important;*/
+        }
+
+        td {
+            /*border-color: #78909C !important;*/
+        }
+
+        .table > tbody > tr > td, .table > thead > tr > th {
+            padding: 6px 10px;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) {
+        }
+
+        table .collapse.in {
+            display: table-row;
+        }
+
+        tr.selected {
+            background-color: #FFCF8B !important
+        }
+
+        h5.panel-title, .h5.panel-title {
+            font-size: 20px;
+        }
+    </style>
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/assets/js/plugins/pickers/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/pickers/anytime.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/pickers/pickadate/legacy.js"></script>
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />*@
+    <script src="~/Content/tb_sort/excel-bootstrap-table-filter-bundle.js"></script>
+    <script src="~/Scripts/fn/base.js"></script>
+    <script src="~/Scripts/fn/fn_issue.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/Content/assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/plugins/tables/datatables/datatables.min.js"></script>
+
+    <script>$(document).ready(function () {
+            //alert(moment('2018-08-10T19:09:32.95').fromNow());
+            //$('#tb_team').excelTableFilter();
+            $("tr").click(function () {
+                $(this).addClass("selected").siblings().removeClass("selected");
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('.daterange-basic').daterangepicker({
+                applyClass: 'bg-slate-600',
+                cancelClass: 'btn-default'
+            });
+
+            var table = $('#table').DataTable(
+                {
+                    searching: false,
+                    "columnDefs": [
+                        { "width": "15%", "targets": [2, 3, 4] }
+                    ],
+                    dom: 'Bfrtip',
+                    "paging": false,
+                    orderCellsTop: true,
+                    "bSort": false,
+                }
+            );
+
+            $("#table_info").hide();
+
+
+
+
+
+    $('.select').select2({
+        placeholder: 'Search person...',
+        ajax: {
+            url: function (params) {
+                return "/api/personapi/getsearch/" + params.term;
+            },
+            dataType: 'json',
+            delay: 250, // Delay for better UX
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return { id: obj.id, text: obj.name };
+                    })
+                };
+            }
+        }
+    });
+
+
+
+});
+
+function changePageSize() {
+        var pageSize = document.getElementById("pageSize").value;
+        var currentPage = '@Model.PageNumber';
+        var currentUrl = '@Url.Action("Manage", new { page = Model.PageNumber })';
+
+        window.location.href = currentUrl + "&pageSize=" + pageSize;
+    }
+
+
+        //function get_duration(date) {
+        //    return moment(date).fromNow();
+        //}
+        function ld_issue(id) {
+            $("#div_new").hide();
+            $("#div_discussion").show();
+
+            //get_issue(id);
+            get_discussions(id);
+            $('#issue_id').val(id);
+
+
+
+        }
+
+        function edit_issue() {
+            $("#div_new").show();
+            $("#div_discussion").hide();
+            get_issue($('#issue_id').val());
+        }
+
+        function new_issue() {
+            $("#div_new").show();
+            $("#div_discussion").hide();
+
+            $("#form_title").text("New DM Ticket");
+            $("#is_new").val("1");
+            $("#title").val('');
+            $("#id").val('');
+            $("#ea_id").val('');
+            $("#household_id").val('');
+            $("#lab_id").val(0);
+            $("#impact").val('');
+            $("#resolution").val('');
+            $("#issue_content").val('');
+            $("#btn").text("Add Ticket");
+        }
+
+        function normalize_date(date) {
+            return moment.fromNow(date);
+        }</script>
+
+
+
+
+}

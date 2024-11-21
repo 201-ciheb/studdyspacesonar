@@ -1,0 +1,88 @@
+@model ProjectModel
+@{
+    ViewData["Title"] = "Projects";
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a asp-controller="Project" asp-action="Index">Projects</a></li>
+            <li class="breadcrumb-item active">Add Project</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="search-box me-2 d-inline-block">
+                            <div class="position-relative">
+                                <h4 class="card-title">Project</h4>
+                                <p class="card-title-desc">Add a new project</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form enctype="multipart/form-data" method="post">
+                    <div class="mb-3 row">
+                        <label asp-for="Name" class="col-md-2 col-form-label">Project Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" asp-for="Name" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Abbreviation" class="col-md-2 col-form-label">Project Abbreviation</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="search" asp-for="Abbreviation">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Description" class="col-md-2 col-form-label">Project Description</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" type="email" asp-for="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="StartDate" class="col-md-2 col-form-label">Project Start Date</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="date" asp-for="StartDate" required>
+                        </div>
+                    </div>                
+                    <div class="mb-3 row">
+                        <label asp-for="Logo" class="col-md-2 col-form-label">Project Logo</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="file" asp-for="Logo">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Active" class="col-md-2 col-form-label">Status</label>
+                        <div class="col-md-10">
+                            <select asp-for="Active" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="1">Active</option>
+                                <option value="0">In-Active</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary w-md">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+@section Styles{
+    
+}
+
+@section Scripts{
+    
+}

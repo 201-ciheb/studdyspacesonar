@@ -1,0 +1,154 @@
+@{
+    ViewData["Title"] = "Search Participant";
+}
+<div class="nk-content">
+    <div class="container">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block">
+                    <div class="nk-block-head">
+                        <div class="nk-block-head-content wide-md">
+                            <h3 class="nk-block-title">Search for participant information</h3>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="card mb-2">
+                        @if (TempData["Message"] != null)
+                        {
+                            var message = (UIMessage)TempData["Message"];
+                            <div class="alert @(message.SuccessValue == 1 ? "alert-success" : (message.SuccessValue == 2 ? "alert-info" : "alert-danger"))">
+                                @Html.Raw(message.Text)
+                            </div>
+                        }
+                        <div class="card-body m-3">
+                            <form class="row g-4" enctype="multipart/form-data" method="get">
+                                <div class="col-md-12 row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Guspec" class="form-label">Enter the Temporal ID</label>
+                                            <div class="form-control-wrap">
+                                                <input class="form-control" type="text" id="TemporalId"
+                                                    name="TemporalId" required
+                                                    title="Ensure you entered the correct temporal Id">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Is Participant Previously Enrolled?</label>
+                                            <div class="form-control-wrap">
+                                                <select class="form-select" id="IsEnrolled" name="IsEnrolled" required>
+                                                    <option value="">Select</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row mt-2">
+                                    <div class="col-md-6 participant-enrolled">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Have You Enrolled the participant?</label>
+                                            <div class="form-control-wrap">
+                                                <select class="form-select" id="Enrolled" name="Enrolled" required>
+                                                    <option value="">Select</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 nupi-number">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Enter NUPI/CCC Number</label>
+                                            <div class="form-control-wrap">
+                                                <input class="form-control" type="text" id="NupiCccNumber"
+                                                    name="NupiCccNumber" required
+                                                    title="Ensure you entered the correct NUPI/CCC Number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-2 enrol-reason">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Enter reason</label>
+                                            <div class="form-control-wrap">
+                                                <textarea class="form-control" id="Reason" name="Reason"
+                                                    title="Ensure you entered a reason" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-info" style="float: right;">Search Participant</button>
+                                </div>
+                            </form>
+                        </div><!-- .card-body -->
+                        
+                    </div><!-- .card -->
+                    @if(ViewBag.ParticipantId != null){
+                        <div class="card">
+                            <div class="card-header bg-secondary">
+                                <h5 class="text-white">Participant's Result</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ParticipantId" class="form-label">Participant ID</label>
+                                            <div class="form-control-wrap">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-info" style="float: right;">Print</button>
+                                    </div>
+                                </div>
+                            </div><!-- .card-body -->
+                            
+                        </div><!-- .card -->
+                    }                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- .nk-content -->
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function toggleInputs(mainInput, inputToShow, inputToHide, alwaysHide) {
+                if ($(mainInput).val() == 1) {
+                    inputToShow.forEach(function (input) {
+                        $(input).show().find('input, select, textarea').prop('required', true);
+                    });
+                    inputToHide.forEach(function (input) {
+                        $(input).hide().find('input, select, textarea').prop('required', false);
+                    });
+                    alwaysHide.forEach(function (input) {
+                        $(input).hide().find('input, select, textarea').prop('required', false);
+                    });
+                } else {
+                    inputToShow.forEach(function (input) {
+                        $(input).hide().find('input, select, textarea').prop('required', false);
+                    });
+                    inputToHide.forEach(function (input) {
+                        $(input).show().find('input, select, textarea').prop('required', true);
+                    });
+                    alwaysHide.forEach(function (input) {
+                        $(input).hide().find('input, select, textarea').prop('required', false);
+                    });
+                }
+            }
+
+            $("#IsEnrolled").change(function() {
+                toggleInputs("#IsEnrolled", [".nupi-number"], [".participant-enrolled"], [".enrol-reason"]);
+            });
+            $("#Enrolled").change(function() {
+                toggleInputs("#Enrolled", [".nupi-number"], [".enrol-reason"], []);
+            });
+            toggleInputs("#IsEnrolled", [".participant-enrolled", ".nupi-number", ".enrol-reason"], [], []);
+        });
+    </script>
+}

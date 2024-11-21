@@ -1,0 +1,103 @@
+@page
+@model PHIASPACE.RTDMS.Views.FieldCheck.AgeDisplacementMen
+
+@{
+    Layout = null;
+}
+
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- BAISV Section -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>
+                                Number of all men age 12-18 years listed in the household schedule by single year of age and age ratio
+                                15/14, according to interviewer team, BAISV2020
+                            </strong>
+                        </div>
+                        <div style="text-align:center">
+                            <strong>Men's age (12 - 18 years)</strong>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="baisv-table">
+                                    <thead class="thead">
+                                    <tr>
+                                        <td style="vertical-align:bottom; text-align:center">&nbsp;&nbsp;Team&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td style="vertical-align:bottom; text-align:center">12</td>
+                                        <td style="vertical-align:bottom; text-align:center">13</td>
+                                        <td style="vertical-align:bottom; text-align:center">14</td>
+                                        <td style="vertical-align:bottom; text-align:center">15</td>
+                                        <td style="vertical-align:bottom; text-align:center">16</td>
+                                        <td style="vertical-align:bottom; text-align:center">17</td>
+                                        <td style="vertical-align:bottom; text-align:center">18</td>
+                                        <td style="vertical-align:bottom; text-align:center">Number of men</td>
+                                        <td style="vertical-align:bottom; text-align:center">Age ratio (men 15/ men 14)</td>
+                                        <td style="vertical-align:bottom; text-align:center">Target not met</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="even gradeC" style="text-align:center">
+                                        <td class="info" style="position: absolute; top: auto; width: 100.5px;">Team 1</td>
+                                        <td>5</td>
+                                        <td>8</td>
+                                        <td>12</td>
+                                        <td>15</td>
+                                        <td>10</td>
+                                        <td>7</td>
+                                        <td>9</td>
+                                        <td>66</td>
+                                        <td style="background-color: yellow;">1.07</td>
+                                        <td style="background-color: white;">0.9</td>
+                                    </tr>
+                                    <tr class="even gradeC" style="text-align:center">
+                                        <td class="info" style="position: absolute; top: auto; width: 100.5px;">Team 2</td>
+                                        <td>6</td>
+                                        <td>10</td>
+                                        <td>14</td>
+                                        <td>18</td>
+                                        <td>12</td>
+                                        <td>8</td>
+                                        <td>10</td>
+                                        <td>78</td>
+                                        <td style="background-color: yellow;">1.20</td>
+                                        <td style="background-color: white;">0.85</td>
+                                    </tr>
+                                    <tr class="thead" style="text-align:center">
+                                        <td class="thead" style="position: absolute; top: auto; width: 73.5px;">All teams</td>
+                                        <td>11</td>
+                                        <td>18</td>
+                                        <td>26</td>
+                                        <td>33</td>
+                                        <td>22</td>
+                                        <td>15</td>
+                                        <td>19</td>
+                                        <td>144</td>
+                                        <td>1.15</td>
+                                        <td>0.88</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                Note: The target is an age ratio of men age 15 / men age 14 > 0.8<br />
+                                * All men = de facto + de jure
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /BAISV Section -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->

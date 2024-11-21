@@ -1,0 +1,151 @@
+@{
+    Layout = "~/Views/Shared/_WallBoardLayout.cshtml";
+}
+<div class="container top-title-box">
+    <div class="row" style="display: block;">
+        <h1 class="wall-title white-text">
+            Kenya PHIA :: Day
+            <span id="days_done">0</span>
+            |
+            <span class="green-text" id="date">
+                Date
+            </span>
+            |
+            <span class="blue-text" id="time">
+                Time
+            </span>
+        </h1>
+        <hr>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="placards gray" style="min-height: 850px;" id="page-map">
+                    Map Here
+                </div>
+                <div class="row" id="page-summary">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-7 placards green">
+                        <h1 class="white-text placards-text" id="participants_done">---</h1>
+                        <p class="white-text placards-sub-text">PARTICIPANTS(<span id="participants_total"></span>)</p>
+                    </div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-12" style="padding: 5%;"></div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-7 placards purple">
+                        <h1 class="white-text placards-text" id="participant_completion">---%</h1>
+                        <p class="white-text placards-sub-text">COMPLETION (%)</p>
+                    </div>
+                </div>
+                <div class="row" id="part-summary">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-7 placards red">
+                        <h1 class="white-text placards-text" id="households_done">---</h1>
+                        <p class="white-text placards-sub-text">HOUSEHOLDS(<span id="household_total"></span>)</p>
+                    </div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-12" style="padding: 5%;"></div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-7 placards purple">
+                        <h1 class="white-text placards-text" id="households_completetion">---%</h1>
+                        <p class="white-text placards-sub-text">COMPLETION (%)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="col-lg-12 placards-1 green row">
+                    <div class="col-lg-7">
+                        <h1 class="white-text placards-text-medium" id="cluster_done">---</h1>
+                        <p class="white-text placards-sub-text">CLUSTER (0)</p>
+                    </div>
+                    <div class="col-lg-5 inner-placards white">
+                        <h1 class="black-text inner-placards-text" id="cluster_completion_1">---%</h1>
+                        <p class="black-text placards-sub-text" style="font-size: 1.5em;">COMPLETION (%)</p>
+                    </div>
+                </div>
+                <div class="col-lg-12 placards-1 blue row">
+                    <div class="col-lg-7">
+                        <h1 class="white-text placards-text-medium" id="participants_done_1">---</h1>
+                        <p class="white-text placards-sub-text">PARTICIPANTS (<span id="participants_totals"></span>)</p>
+                    </div>
+                    <div class="col-lg-5 inner-placards white">
+                        <h1 class="black-text inner-placards-text" id="participant_completion_1">---%</h1>
+                        <p class="black-text placards-sub-text" style="font-size: 1.5em;">COMPLETION (%)</p>
+                    </div>
+                </div>
+                <div class="col-lg-12 placards-1 red row">
+                    <div class="col-lg-7">
+                        <h1 class="white-text placards-text-medium" id="households_done_1">---</h1>
+                        <p class="white-text placards-sub-text">HOUSEHOLDS (<span id="household_totals"></span>)</p>
+                    </div>
+                    <div class="col-lg-5 inner-placards white">
+                        <h1 class="black-text inner-placards-text" id="households_completetion_1">---%</h1>
+                        <p class="black-text placards-sub-text" style="font-size: 1.5em;">COMPLETION (%)</p>
+                    </div>
+                </div>
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4" style="text-align: center;">
+                        <div class="placards-0 gray">
+                            <h1 class="white-text placards-text-small" id="hh_response_rate">---%</h1>
+                        </div>
+                        <b class="white-text">HOUSEHOLD RR (%)</b>
+                    </div>
+                    <div class="col-lg-4" style="text-align: center;">
+                        <div class="placards-0 gray">
+                            <h1 class="white-text placards-text-small" id="int_adult_response_rate">---%</h1>
+                        </div>
+                        <b class="white-text">INDIVIDUAL RR (%)</b>
+                    </div>
+                    <div class="col-lg-4" style="text-align: center;">
+                        <div class="placards-0 gray">
+                            <h1 class="white-text placards-text-small" id="blood_draw_response_rate">---%</h1>
+                        </div>
+                        <b class="white-text">BLOOD DRAW RR (%)</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var surveyStartDate = "2021/3/12";
+        $(document).ready(function () {
+            var ids = ["#page-summary", "#page-map", "#part-summary"];
+
+            //getDatafromAPI("https://localhost:5001/api/datapullapi/get_wallboard_summary");
+            alternatDivs(ids);
+            get_wallboard_summary_data();
+            setInterval(() => {
+                get_wallboard_summary_data();
+            }, 1000 * 60* 10); 
+        });
+
+        function get_wallboard_summary_data(){
+            $.get(base_api + "datapullapi/get_wallboard_summary", {project:"BAISV"}, function( data ) {
+                //console.log(data);
+
+                $("#participants_done").text(data.int_count);
+                $('#participant_completion').text((data.int_count* 100 /27916).toFixed(2));
+                $("#participants_done_1").text(data.int_count);
+                $('#participant_completion_1').text((data.int_count* 100 /27916).toFixed(2));
+                $('#households_done').text(data.hh_count);
+                $('#households_completetion').text((data.hh_count* 100 /13545).toFixed(2));
+                $('#households_done_1').text(data.hh_count);
+                $('#households_completetion_1').text((data.hh_count* 100 /13545).toFixed(2));
+                $("#cluster_done").text(data.open_eas);
+                $('#cluster_completion_1').text((data.open_eas* 100 /387).toFixed(2))
+                $("#hh_response_rate").text(data.hh_response_rate.toFixed(1));
+                $("#blood_draw_response_rate").text(data.blood_draw_response_rate.toFixed(1));
+                $("#int_adult_response_rate").text(data.int_adult_response_rate.toFixed(1));
+                $("#participants_total").text(data.participants);
+                $("#household_total").text(data.households);
+                $("#participants_totals").text(data.participants);
+                $("#household_totals").text(data.households);
+            });
+        }
+    </script>
+}

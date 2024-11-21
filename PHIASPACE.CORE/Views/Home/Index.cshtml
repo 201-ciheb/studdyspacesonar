@@ -1,0 +1,34 @@
+@model List<PhiaApp>
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="page-title-box d-flex align-items-center justify-content-between">
+    <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Apps</li>
+        </ol>
+    </div>
+</div>
+<div class="welcome-page">
+    <h1 class="text-center">
+        @* <img src="~/icon.jpg"> *@
+        Welcome to Study Space!!!
+    </h1>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-xl-3">
+                <!-- Simple card -->
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="@(string.IsNullOrEmpty(item.AppIconPath) ? "/public/assets/images/small/img-1.jpg" : item.AppIconPath)" style="width:100%; min-height:200px;max-height:200px;">
+                    <div class="card-body">
+                        <h4 class="card-title" style="display: -webkit-box; -webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;">@item.AppName</h4>
+                        <p class="card-text" style="display: -webkit-box; -webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;min-height:68px;">@item.AppDescription</p>
+                        <a href="@item.AppUrl" class="btn btn-primary waves-effect waves-light float-end">Open</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

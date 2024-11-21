@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] | PHIASPACE TICKETING</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/public/assets/images/favicon.ico">
+
+    @RenderSection("Styles", required: false)
+    
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" type="text/css" href="~/public/assets/css/bootstrap.min.css" id="bootstrap-style" />
+    <!-- Icons Css -->
+    <link rel="stylesheet" type="text/css" href="~/public/assets/css/icons.min.css" />
+    <!-- App Css-->
+    <link rel="stylesheet" type="text/css" href="~/public/assets/css/app.min.css" id="app-style" />
+
+</head>
+
+<body data-layout="horizontal" data-topbar="dark">
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <partial name="./Partials/Topbar" />
+        <partial name="./Partials/Sidebar" />
+        <partial name="./Partials/Horizontal" />
+
+        <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+            @RenderBody()
+
+            </div>
+        </div>
+        <partial name="./Partials/Footer" />
+        </div>
+    </div>
+
+    
+    <partial name="./Partials/Rightbar" />
+    <script src="~/public/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/public/assets/libs/metismenujs/metismenujs.min.js"></script>
+    <script src="~/public/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/public/assets/libs/feather-icons/feather.min.js"></script>
+
+    @* <%- FooterJs %> *@
+
+    <script>
+        sessionStorage.setItem("is_visited", "layout-direction-ltr");
+    </script>
+
+    <script src="~/public/assets/js/app.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+@{
+ Layout = "~/Views/Shared/_WallBoardLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row" id="all">
+        <div class="col-lg-12 row">
+            <div class="col-lg-3 placards green">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_completed">0</h1>
+                <p class="white-text placards-sub-text">COMPLETED HOUSEHOLD INTERVIEWS</p>
+            </div>
+            <div class="col-lg-3 placards orange">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_absent">0</h1>
+                <p class="white-text placards-sub-text">ABSENT FOR EXTENDED PERIOD OF TIME </p>
+            </div>
+            <div class="col-lg-3 placards blue">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_refusals">0</h1>
+                <p class="white-text placards-sub-text">HOUSEHOLD REFUSALS</p>
+            </div>
+            <div class="col-lg-3 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_vacant">0</h1>
+                <p class="white-text placards-sub-text">DWELLINGS VACANT</p>
+            </div>
+        </div>
+        <div class="col-lg-12 row">
+            <div class="col-lg-3 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_inaccessible">0</h1>
+                <p class="white-text placards-sub-text">INACCESSIBLE (FLOODING OR SECURITY) </p>
+            </div>
+            <div class="col-lg-3 placards red">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_stopped">0</h1>
+                <p class="white-text placards-sub-text">STOP SURVEY</p>
+            </div>
+            <div class="col-lg-3 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_destroyed">0</h1>
+                <p class="white-text placards-sub-text">DWELLINGS DESTROYED</p>
+            </div>
+            <div class="col-lg-3 placards blue">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_opened">0</h1>
+                <p class="white-text placards-sub-text">OPENED (PENDING)</p>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="all2">
+        <div class="col-lg-12 row">
+            <div class="col-lg-3 placards red">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_pending_5day">---</h1>
+                <p class="white-text placards-sub-text">OPENED (PENDING) > 5days</p>
+            </div>
+            <div class="col-lg-3 placards orange">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_other">---</h1>
+                <p class="white-text placards-sub-text">OTHERS</p>
+            </div>
+            <div class="col-lg-3 placards red">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_notfound">---</h1>
+                <p class="white-text placards-sub-text">DWELLINGS NOT FOUND</p>
+            </div>
+            <div class="col-lg-3 placards blue">
+                <h1 class="white-text placards-text" style="font-size: 7em;" id="hh_no_competent_hh">---</h1>
+                <p class="white-text placards-sub-text">NO HEAD OF HOUSEHOLD</p>
+            </div>
+        </div>
+        <div class="col-lg-12 row">
+            <div class="col-lg-6 placards red">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="not_at_home_more_3_visits">---</h1>
+                <p class="white-text placards-sub-text">NOT AT HOME FOR MORE THAN 3 VISIT</p>
+            </div>
+            <div class="col-lg-6 placards orange">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="team_in_isolation">---</h1>
+                <p class="white-text placards-sub-text">TEAM IN ISOLATION</p>
+            </div>
+        </div>  
+    </div>
+    <div class="row" id="success">
+        <div class="col-lg-12 row">
+            <div class="col-lg-6 placards green">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_completed_1">---</h1>
+                <p class="white-text placards-sub-text">COMPLETED HOUSEHOLD INTERVIEWS</p>
+            </div>
+            <div class="col-lg-6 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_inaccessible_1">---</h1>
+                <p class="white-text placards-sub-text">INACCESSIBLE (FLOODING OR SECURITY)</p>
+            </div>
+        </div>
+         <div class="col-lg-12 row">
+            <div class="col-lg-6 placards blue">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_opened_1">---</h1>
+                <p class="white-text placards-sub-text">OPENED (PENDING) </p>
+            </div>
+            <div class="col-lg-6 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_no_competent_hh_1">---</h1>
+                <p class="white-text placards-sub-text">NO HOUSEHOLD HEAD</p>
+            </div>
+        </div>        
+    </div>
+    <div class="row" id="success_issue">
+        <div class="col-lg-12 row">
+            <div class="col-lg-6 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_vacant_1">---</h1>
+                <p class="white-text placards-sub-text">DWELLINGS VACANT</p>
+            </div>
+            <div class="col-lg-6 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_destroyed_1">---</h1>
+                <p class="white-text placards-sub-text">DWELLINGS DESTROYED</p>
+            </div>
+        </div>
+         <div class="col-lg-12 row">
+            <div class="col-lg-6 placards red">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="not_at_home_more_3_visits_1">----</h1>
+                <p class="white-text placards-sub-text">NOT AT HOME FOR MORE THAN 3 VISIT</p>
+            </div>
+            <div class="col-lg-6 placards orange">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="team_in_isolation_1">----</h1>
+                <p class="white-text placards-sub-text">TEAM IN ISOLATION</p>
+            </div>
+        </div>        
+    </div>
+    <div class="col-lg-12" id="concerns">
+        <div class="col-lg-12 row">
+            <div class="col-lg-4 placards gray">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_refusals_1">---</h1>
+                <p class="white-text placards-sub-text">HOUSEHOLD REFUSALS</p>
+            </div>
+            <div class="col-lg-4 placards orange">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_absent_1">---</h1>
+                <p class="white-text placards-sub-text">ABSENT FOR EXTENDED PERIOD OF TIME </p>
+            </div>
+            <div class="col-lg-4 placards red">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_stopped_1">---</h1>
+                <p class="white-text placards-sub-text">STOP SURVEY</p>
+            </div>
+        </div>
+        <div class="col-lg-12 row">
+            <div class="col-lg-4 placards blue">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_notfound">---</h1>
+                <p class="white-text placards-sub-text">DWELLINGS NOT FOUND</p>
+            </div>
+            <div class="col-lg-4 placards red">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_pending_5day_1">---</h1>
+                <p class="white-text placards-sub-text">OPENED (PENDING) > 5 days</p>
+            </div>
+            <div class="col-lg-4 placards orange">
+                <h1 class="white-text placards-text" style="font-size: 9em;" id="hh_other">---</h1>
+                <p class="white-text placards-sub-text">OTHERS</p>
+            </div>
+        </div>  
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var surveyStartDate = "2021/3/12";
+        $(document).ready(function () {
+            var ids = ["#success", "#success_issue", "#concerns", "#all", "#all2"];
+
+            //getDatafromAPI("https://localhost:5001/api/datapullapi/get_wallboard_summary");
+            alternatDivs(ids);
+            get_wallboard_summary_data();
+            setInterval(() => {
+                get_wallboard_summary_data();
+            }, 1000 * 60* 10); 
+
+        });
+
+        function get_wallboard_summary_data(){
+            $.get(base_api + "datapullapi/get_wallboard_summary",{project:"BAISV"},  function( data ) {
+                //console.log(data);
+
+                $("#hh_absent").text(data.hh_absent);
+                $('#hh_absent_1').text((data.hh_absent));
+                $("#hh_completed").text(data.hh_completed);
+                $('#hh_completed_1').text(data.hh_completed);
+                $('#hh_destroyed').text(data.hh_destroyed);
+                $('#hh_destroyed_1').text(data.hh_destroyed);
+                $('#hh_inaccessible').text(data.hh_inaccessible);
+                $('#hh_inaccessible_1').text(data.hh_inaccessible);
+                $("#hh_no_competent_hh").text(data.hh_no_competent_hh);
+                $('#hh_no_competent_hh_1').text(data.hh_no_competent_hh);
+                $('#hh_notfound').text((data.hh_notfound));
+                $("#hh_notfound_1").text(data.hh_notfound);
+                $('#hh_opened').text(data.hh_opened);
+                $('#hh_opened_1').text(data.hh_opened);
+                $('#hh_other').text(data.hh_other);
+                $('#hh_other_1').text(data.hh_other);
+                $('#hh_pending_5day').text(data.hh_pending_5day);
+                $("#hh_pending_5day_1").text(data.hh_pending_5day);
+                $('#hh_refusals').text(data.hh_refusals)
+                $('#hh_refusals_1').text((data.hh_refusals));
+                $("#hh_stopped").text(data.hh_stopped);
+                $('#hh_stopped_1').text(data.hh_stopped);
+                $('#hh_vacant').text(data.hh_vacant);
+                $('#hh_vacant_1').text(data.hh_vacant);      
+                $('#not_at_home_more_3_visits').text(data.not_at_home_more_3_visits);
+                $('#team_in_isolation').text(data.team_in_isolation);      
+                $('#not_at_home_more_3_visits_1').text(data.not_at_home_more_3_visits);
+                $('#team_in_isolation_1').text(data.team_in_isolation);          
+            });
+        }
+    </script>
+}

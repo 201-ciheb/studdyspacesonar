@@ -1,0 +1,591 @@
+@using System.Data
+@using PHIASPACE.RTDMS.Utility;
+@using PHIASPACE.RTDMS.DAL.Model;
+@using PHIASPACE.RTDMS.Helpers;
+@using X.PagedList.Mvc;
+@using X.PagedList;
+@using Microsoft.AspNetCore.Html;
+@model List<PHIASPACE.RTDMS.DAL.Model.Custom.UserTeamEaDetails>
+@inject UserHelper _userHelper
+
+@{
+    ViewBag.Title = "Process Monitor";
+    var hhUtil = (HHUtil)ViewBag.hhUtil;
+    @* var team = (AimsTeam)ViewBag.team;
+    AimsEa team_ea = null;
+    if (team != null)
+    {
+        team_ea = TeamUtil.GetActiveEa(team.Id);
+    } *@
+    var table = (DataTable)ViewBag.tb;
+}
+
+@* @{
+    var statesTask = _zoneService.GetCountiesAsync();
+    var states = await statesTask;
+} *@
+
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">RTDMS</span> - Process Monitor</h4>
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">RTDMS</a></li>
+                <li class="active">Process Monitor</li>
+            </ul>
+        </div>
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+                <a href="#" class="btn btn-link btn-float has-text" data-toggle="modal" data-target="#teamModal"><i class="icon-enlarge3 text-primary"></i><span>View Team</span></a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Teams</h5>
+                            <div class="heading-elements">
+                                <form method="get" action="@Url.Action("MonitorProcess","DMDashboard")">
+                                    <ul class="icons-list">
+                                        <li>
+                                            <select class="form-control" name="team_state">
+                                                <option value="">-- Select county --</option>
+                                                <option value="Mombasa">Mombasa</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                            @* @Html.DropDownList("team_state", new SelectList(states, "id", "state_name", null), "-- Select state --", new { @class = "form-control", @id = "team_state" }) *@
+                                        </li>
+                                        <li>
+                                            <button style="margin-bottom:5px" class="btn bg-indigo-400" type="submit">  <i class="icon-reload-alt"></i></button>
+                                        </li>
+                                        @* <li>
+                                            <i class="icon-database-refresh"></i>
+                                        </li> *@
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding:0px">
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-intel table-responsive w-100 p-4"
+                                id="tb_team">
+                                <thead>
+                                    <tr>
+                                        <th class="filter">Team.Code </th>
+                                        <th class="filter">EA ID</th>
+                                        @*<th class="filter">Start Date</th>*@
+                                        @*<th class="filter">Exp.Comp</th>*@
+                                        <th class="filter">Visited</th>
+                                        <th class="filter">Completed</th>
+                                        <th class="filter">Refused</th>
+                                        <th>Duplicate PTIDs</th>
+                                        @*<th class="filter">Uploaded</th>*@
+                                        @*<th class="filter">Last Contact</th>*@
+
+                                        <th class="filter">Tickets</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var tm in Model.GroupBy(m => m.Team))
+                                        {
+                                            <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row_@tm.Key">
+                                                <td><i class="glyphicon glyphicon-plus"></i></td>
+                                                <td colspan="4">
+                                                    <a href="#">@tm.First().Team - @tm.First().Region</a>
+                                                </td>
+                                                <td>
+                                                    @if (tm.Any(t => t.DuplicatePtids > 0))
+                                                    {
+                                                        <span
+                                                            class="badge bg-danger-400 heading-text">@tm.First().DuplicatePtids</span>
+                                                    }
+                                                </td>
+                                                <td></td>
+                                            </tr>
+
+                                            @* var activeEAs = tm.AimsLnkTeamEas
+                                    .Where(e => e.Active == 1)
+                                    .ToList(); *@
+
+                                            @foreach (var ea in tm)
+                                            {
+                                                @* var ea_dup_ptids = HHUtil.GetDuplicatePtidsEA(ea.EaId); *@
+                                                <tr class="collapse row_@tm.Key" style="background-color: #F3FAB6">
+                                                    <td> @ea.Team </td>
+                                                    <td>
+                                                        <a href="#" onclick="show_team_details('@ea.Cluster', this)">
+                                                            @ea.Cluster - @ea.City
+                                                        </a>
+                                                    </td>
+                                                    <td><span>@ea.HouseHoldsVisited</span></td>
+                                                    <td><span>@ea.HouseHoldsCompleted</span></td>
+                                                    <td><span>@ea.HouseHoldsRefused</span></td>
+                                                    <td>
+                                                        @if (tm.Any(t => t.DuplicatePtids > 0))
+                                                        {
+                                                            <span class="badge bg-danger-400 heading-text">@ea.DuplicatePtids</span>
+                                                            <span>@hhUtil.ListDuplicatePtidsEA(Convert.ToInt32(ea.Cluster))</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="label bg-warning-300 heading-text" data-toggle="modal"
+                                                            data-target="#myModal">
+                                                            <i class="icon-comment"></i>
+                                                        </a>
+                                                        @* <a href="#" onclick="load_team_comments(@tm.Id, @ea.EaId)" class="label
+                                            bg-warning-300 heading-text" data-toggle="modal" data-target="#myModal">
+                                            @tm.RtdmsPmIssues.Count()
+                                            <i class="icon-comment"></i>
+                                            </a> *@
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @*<div id='Paging' style="text-align:center">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("MonitorProcess", new { page }))
+                        </div>*@
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">
+                                @* @if (team_ea != null)
+                                {
+                                    <span>@string.Format("{0} - {1}", team_ea.Id.ToString("D4"), team_ea.EaName)</span>
+                                } *@
+                            </h5>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+                                    <li>
+                                        <div class="input-group" style="width:auto !important">
+                                            <span class="input-group-addon"><i class="icon-calendar5"></i></span>
+                                            <input type="text" name="date_closed" id="date_closed"
+                                                class="form-control pickadate">
+                                        </div>
+                                    </li>
+                                    @if (true) @* _userHelper.UserInRole(new[] { "DMA" })) *@
+                                    {
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <button type="button" id="btn_field_completed" onclick="field_completed()"
+                                                    class="btn border-slate-400 text-slate-400 btn-flat btn-rounded btn-icon btn-xs">Completed
+                                                    by Field <i class="icon-lock"></i></button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <button type="button" id="btn_validate" onclick="dm_validated()"
+                                                    class="btn border-success-400 text-success-400 btn-flat btn-rounded btn-icon btn-xs">Validated
+                                                    by DM <i class="icon-check"></i></button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="input-group" style="width:auto !important">
+                                                <a href="" target="_blank" id="btn_field_report"
+                                                    class="btn border-orange-400 text-orange-400 btn-flat btn-rounded btn-icon btn-xs">Field
+                                                    Report <i class="icon-file-excel"></i></a>
+
+
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped text-size-small" id="tb_report">
+                                <thead>
+                                    <tr>
+                                        <th>HH No</th>
+                                        <th>HH Head</th>
+                                        @*<th>Status</th>*@
+                                        <th title="Individuals Roastered">Rstrd</th>
+                                        <th title="Individuals Eligible for interview">Elig</th>
+                                        <th title="Individuals consented for interview">Con.Intv
+                                        </th>
+                                        <th title="No of individual refusals">Ref.Intv</th>
+                                        <th title="No of individuals with completed interviews">
+                                            Intvd</th>
+                                        <th  title="No PTIDs assigned in this household">PTIDs</th>
+                                        <th  title="No participants consenting to blood draw">
+                                            Con.Bld</th>
+                                        <th title="No of actual blood draws">Bld.Dr</th>
+                                        <th
+                                            title="No of participants who consented to be contacted">Con.Cnt</th>
+                                        <th title="No of individuals with contact information">Cnt
+                                        </th>
+                                        <th title="No of children eligible for the survey">Ch.Elg
+                                        </th>
+                                        <th title="No of children with complete blood draw">Ch.D
+                                        </th>
+                                        <th>Opened</th>
+                                        <th>Uploaded</th>
+
+                                        @*<th>Visit (by geoloc)</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+<div id="myModal" class="modal fade" role="dialog">
+    <form class="form-horizontal" method="post" action="@Url.Action("Post","AIssue")">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="form_title">New Ticket</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive" style="max-height:300px;margin-bottom:10px">
+                        <table class="table table-bordered" id="tb">
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-lg-8">
+                            <input type="text" value="" name="title" id="title" placeholder="title of the ticket" class="form-control">
+                        </div>
+                        <div class="col-lg-4">
+
+                            @* @Html.DropDownList("priority", new SelectList(Utils.GetLookupOptions("priority"), "id", "lookup_name", null), null, new { @class = "form-control", @id = "priority" }) *@
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" id="id" />
+                    <div class="form-group">
+
+                        <div class="col-lg-4">
+                            <input type="text" value="" placeholder="EA ID" name="ea_id" id="ea_id" class="form-control">
+                        </div>
+
+                        <div class="col-lg-4">
+                            <input type="text" value="" name="household_id" id="household_id" placeholder="Household ID" class="form-control">
+                        </div>
+
+                        <div class="col-lg-4">
+                            <input type="text" value="" name="team_id" id="team_id" placeholder="Team ID" class="form-control">
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Lab</label>
+                        <div class="col-lg-4">
+
+                            @* @Html.DropDownList("lab_id", new SelectList(Utils.GetIssueTypes(), "id", "name", null), "-- Select lab --", new { @class = "form-control", @id = "lab_id" }) *@
+                        </div>
+
+                        <label class="control-label col-lg-2">State</label>
+                        <div class="col-lg-4">
+
+                            @* @Html.DropDownList("state_id", new SelectList(states, "id", "state_name", null), "-- Select County --", new { @class = "form-control", @id = "state_id" }) *@
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Type</label>
+                        <div class="col-lg-4">
+
+                            @* @Html.DropDownList("issue_type_id", new SelectList(Utils.GetIssueTypes(), "id", "name", null), null, new { @class = "form-control", @id = "issue_type_id" }) *@
+                        </div>
+
+                        <label class="control-label col-lg-2">Status</label>
+                        <div class="col-lg-4">
+                            @* @Html.DropDownList("status_id", new SelectList(Utils.GetIssueStatuses(), "Id", "Name", null), null, new { @class = "form-control", @id = "status_id" }) *@
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <div class="col-lg-12">
+                            <textarea name="issue_content" id="issue_content" placeholder="description of the issue" rows="3" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-lg-12">
+                            <textarea name="impact" id="impact" placeholder="impact summary" rows="3" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-lg-12">
+                            <textarea name="resolution" id="resolution" placeholder="final resolution and rationale" rows="3" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <select multiple="multiple" name="persons" class="select"></select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="is_new" name="is_new" value="1" />
+
+
+
+                </div>
+                <div class="modal-footer">
+                    @* @if (_userHelper.UserInRole(new[] { "DMA" })) *@
+                    @if (true)
+                    {
+                            <button type="submit" id="btn" class="btn btn-primary">Add Ticket</button>
+                    }
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<div id="teamModal" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Team Members</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="max-height:300px;margin-bottom:10px">
+                    <table class="table table-bordered table-striped" id="tb_team_members">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section styles{
+
+    <link href="~/Content/tb_sort/excel-bootstrap-table-filter-style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .dt-buttons {
+            float: right !important;
+            margin: 8px !important;
+        }
+
+        .dt-search {
+            margin: 8px !important;
+        }
+
+        th {
+            font-weight: bold;
+            border-color: #03A9F4 !important;
+        }
+
+        table {
+            border: 1px;
+            border-color: #03A9F4 !important;
+            margin: 6px !important;
+        }
+
+        td {
+            border-color: #03A9F4 !important;
+        }
+
+        .table > tbody > tr > td, .table > thead > tr > th {
+            padding: 6px 10px;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            /*background-color: #F0F8FF;*/
+        }
+
+        table .collapse.in {
+            display: table-row;
+        }
+
+        tr.selected {
+            background-color: #FFCF8B !important
+        }
+    </style>
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/assets/js/plugins/pickers/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/pickers/anytime.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/pickers/pickadate/legacy.js"></script>
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />*@
+    <script src="~/tb_sort/excel-bootstrap-table-filter-bundle.js"></script>
+    <script src="~/js/fn/base.js"></script>
+    <script src="~/js/fn/fn_team_ea.js"></script>
+    <script src="~/js/fn/fn_issue.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+    <script>
+        @* $(document).ready(function () {
+            $('#tb_team').DataTable({
+                "autoWidth": false,
+                "responsive": true,
+                dom: '<"row"<"col-sm-8"f><"col-sm-4 float-end"B>>t<"row"<"col-sm-10"i><"col-sm-12"p>>',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Team Data' // Customize the title of the exported file
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'Team Data' // Customize the title of the exported file
+                    }
+                ]
+            });
+            $('#tb_report').DataTable({
+                dom: '<"row"<"col-sm-8"f><"col-sm-4 float-end"B>>t<"row"<"col-sm-10"i><"col-sm-12"p>>',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Team Data' // Customize the title of the exported file
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'Team Data' // Customize the title of the exported file
+                    }
+                ]
+            });
+
+            $("tr").click(function () {
+                $(this).addClass("selected").siblings().removeClass("selected");
+            });
+            //$('[data-toggle="tooltip"]').tooltip();
+            $('.pickadate').pickadate();
+
+
+            $(".m_date").text(moment($(".m_date").text()).fromNow());
+
+
+            $('.select').select2({
+                placeholder: 'Search person...',
+
+                ajax: {
+                    url: function (params) {
+                        return "/api/personapi/getsearch/" + params.term;
+                    },
+                    dataType: 'json',
+                    quietMillis: 100,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (obj) {
+                                return { id: obj.id, text: obj.name };
+                            })
+                        };
+                    }
+
+                }
+            });
+        }); *@
+        $(document).ready(function () {
+            //$('#tb_team').excelTableFilter();
+            $("tr").click(function () {
+                $(this).addClass("selected").siblings().removeClass("selected");
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+            $('.pickadate').pickadate();
+
+            $(".m_date").text(moment($(".m_date").text()).fromNow());
+
+            $('.select').select2({
+                placeholder: 'Search person...',
+
+                ajax: {
+                    url: function (params) {
+                        return "/api/personapi/getsearch/" + params.term;
+                    },
+                    dataType: 'json',
+                    quietMillis: 100,
+
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (obj) {
+                                return { id: obj.id, text: obj.name };
+                            })
+                        };
+                    }
+                }
+            });
+        });
+    </script>
+}

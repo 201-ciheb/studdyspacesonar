@@ -1,0 +1,71 @@
+﻿@model IEnumerable<PHIASPACE.TRAINING.DAL.Model.Db.TblPersons>;
+
+@{
+    ViewData["Title"] = "Persons";
+}
+@* <%- contentFor('breadcrumb') %> *@
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Persons</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Person</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-xl-12">
+        <table class="table table-striped table-hover" id="persons_table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Id Code</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Other</th>
+              <th scope="col">Province</th>
+              <th scope="col">District</th>
+              <th scope="col">Facility</th>
+              <th scope="col">Profession</th>
+              <th scope="col">Email</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+                @{
+                    int count = 0;
+                    if (Model.Count() == 0)
+                    {
+                        <p>No Records Found</p>
+                    }
+                    else{
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.IdentificationCode</td>
+                                <td>@item.LastName</td>
+                                <td>@item.FirstName</td>
+                                <td>@item.OtherName</td>
+                                <td>@item.Province.ProvinceName</td>
+                                <td>@item.District.DistrictName</td>
+                                <td>@item.TblFacility.FacilityName</td>
+                                <td>@item.Profession.ProfessionName</td>
+                                <td>@item.Email</td>
+                                <td><a asp-action="Edit" class="edit" asp-route-id="@item.IdentificationCode"><i class="fa fa-edit" title="Edit"></i></a></td>
+                            </tr>
+                        }
+                    }
+                }
+          </tbody>
+        </table>
+    </div>
+</div>

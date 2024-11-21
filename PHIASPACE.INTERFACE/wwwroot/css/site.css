@@ -1,0 +1,16 @@
+.dashboard_number{
+    font-size: 5em;
+    font-weight: bolder;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    /*animation: pulse 1s infinite;*/
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    /* opacity: 0.8; */
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}

@@ -1,0 +1,148 @@
+﻿@model PHIASPACE.INCIDENCE.Models.IncidentModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="nk-content">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <h1 style="color: chocolate;text-align: center;">New Incidence Report</h1>
+        </div>
+        <div class="nk-block mt-3">
+            <form asp-action="SaveIncident" method="post">
+                <div class="row">
+                    <!-- Column 1 -->
+                        <div class="col-md-6 col-sm-12 mb-3">
+                            <label asp-for="CountyId" class="form-label">County</label>
+                            @Html.DropDownListFor(model => model.CountyId, Model.Counties, "Select County", new { @class = "form-control" })
+                            <span asp-validation-for="CountyId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-12 mb-3">
+                            <label asp-for="SubCounty" class="form-label">SubCounty</label>
+                            <input asp-for="FieldWorkArea" class="form-control" />
+                        </div>
+                        <div class="col-md-6 col-sm-12 mb-3">
+                            <label asp-for="FieldWorkArea" class="form-label">Field Work Area</label>
+                            <input asp-for="FieldWorkArea" class="form-control" />
+                            <span asp-validation-for="FieldWorkArea" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-12 mb-3">
+                            <label asp-for="SiteofIncidence" class="form-label">Site of Incidence</label>
+                            <input asp-for="SiteofIncidence" class="form-control" />
+                            <span asp-validation-for="SiteofIncidence" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 mb-3">
+                            <label asp-for="HHsAffected" class="form-label">Households Affected</label>
+                            <input asp-for="HHsAffected" class="form-control" />
+                            <span asp-validation-for="HHsAffected" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 mb-3">
+                            <label asp-for="PTIDSAffected" class="form-label">PTIDS Affected</label>
+                            <input asp-for="PTIDSAffected" class="form-control" />
+                            <span asp-validation-for="PTIDSAffected" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 mb-3">
+                            <label asp-for="PersonsInvolved" class="form-label">Persons Involved</label>
+                            <input asp-for="PersonsInvolved" class="form-control" />
+                            <span asp-validation-for="PersonsInvolved" class="text-danger"></span>
+                        </div>
+                   
+
+                    <!-- Column 2 -->
+                    <div class="col-md-6 col-sm-12">
+                            <label asp-for="SurveyPhaseId" class="form-label">Survey Phase</label>
+         <select class="form-select" id="countySelect">
+                <option selected>Select Phase</option>
+                            <option value="1"> Preparatory activitie (Pre-field)</option>
+                            <option value="2">Survey procedures (Field)</option>
+                            <option value="3">Data management (Post field)</option>
+                                         <option value="3">Sattelite Lab</option>
+                            <option value="3">Cantral Lab</option>
+                </select>
+<span asp-validation-for="SurveyPhaseId" class="text-danger"></span>
+                       
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                       
+                            <label asp-for="EventCategoryId" class="form-label">Event Category</label>
+                             <select class="form-select" id="countySelect">
+                <option selected>Select Event category</option>
+                <option value="1">Community Mobilization</option>
+                <option value="2">Informed Consent</option>
+                <option value="3">Privacy</option>
+                <option value="4"></option>
+<option value="4">Data Security</option>
+<option value="4">Adverse Event</option>
+
+<option value="4">Data loss</option>
+<option value="4">Other incidents</option>
+<option value="4">Eligibility</option>
+<option value="4">Survey procedures</option>
+<option value="4">Home Based Testing</option>
+                            <option value="4"></option>
+
+            </select>
+                            <span asp-validation-for="EventCategoryId" class="text-danger"></span>
+                        
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                      
+                            <label asp-for="ImmediateAction" class="form-label">Immediate Action</label>
+                            <input asp-for="ImmediateAction" class="form-control" />
+                            <span asp-validation-for="ImmediateAction" class="text-danger"></span>
+                       
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                       
+                            <label asp-for="OrganisationsReportedTo" class="form-label">Organisations Reported To</label>
+                            <input asp-for="OrganisationsReportedTo" class="form-control" />
+                            <span asp-validation-for="OrganisationsReportedTo" class="text-danger"></span>
+                      
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        
+                            <label asp-for="EventCause" class="form-label">Event Cause</label>
+                            <input asp-for="EventCause" class="form-control" />
+                            <span asp-validation-for="EventCause" class="text-danger"></span>
+                       
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                       
+                            <label asp-for="CorrectiveActions" class="form-label">Corrective Actions</label>
+                            <input asp-for="CorrectiveActions" class="form-control" />
+                            <span asp-validation-for="CorrectiveActions" class="text-danger"></span>
+                        
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+        <script>
+            $(window).load(function () {
+                $('#countySelect').change(function () {
+                    var countyId = $(this).val();
+                    $('#subcountySelect').empty().append('<option>Select subcounty</option>');
+
+                    if (countyId) {
+                        $.ajax({
+                            url: '@Url.Action("GetSubcounties", "Home")',
+                            type: 'GET',
+                            data: { countyId: countyId },
+                            success: function (subcounties) {
+                                $.each(subcounties, function (index, subcounty) {
+                                    $('#subcountySelect').append('<option value="' + subcounty.id + '">' + subcounty.subCountyName + '</option>');
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+}

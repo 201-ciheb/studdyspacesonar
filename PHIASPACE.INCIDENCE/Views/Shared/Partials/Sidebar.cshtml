@@ -1,0 +1,429 @@
+<div class="nk-sidebar nk-sidebar-fixed is-theme" id="sidebar">
+    <div class="nk-sidebar-element nk-sidebar-head">
+        <div class="nk-sidebar-brand">
+            <a href="/" class="logo-link">
+                <div class="logo-wrap">
+                    <img class="logo-img logo-light" src="~/assets/images/kenphia2.jpg" srcset="~/assets/images/kenphia2.jpg 2x" alt="KENPHIA Incidence Reporting" title="KENPHIA Incidence Reporting">
+                    <img class="logo-img logo-dark" src="~/assets/images/kenphia2.jpg" srcset="~/assets/images/kenphia2.jpg 2x" alt="KENPHIA Incidence Reporting" title="KENPHIA Incidence Reporting">
+                    <img class="logo-img logo-icon" src="~/assets/images/kenphia2.jpg" srcset="~/assets/images/kenphia2.jpg 2x" alt="KENPHIA Incidence Reporting" title="KENPHIA Incidence Reporting">
+                </div>
+            </a>
+            <div class="nk-compact-toggle me-n1">
+                <button class="btn btn-md btn-icon text-light btn-no-hover compact-toggle">
+                    <em class="icon off ni ni-chevrons-left"></em>
+                    <em class="icon on ni ni-chevrons-right"></em>
+                </button>
+            </div>
+            <div class="nk-sidebar-toggle me-n1">
+                <button class="btn btn-md btn-icon text-light btn-no-hover sidebar-toggle">
+                    <em class="icon ni ni-arrow-left"></em>
+                </button>
+            </div>
+        </div><!-- end nk-sidebar-brand -->
+    </div><!-- end nk-sidebar-element -->
+    <div class="nk-sidebar-element nk-sidebar-body">
+        <div class="nk-sidebar-content">
+            <div class="nk-sidebar-menu" data-simplebar>
+                @* @if(User.IsInRole("Super Admin") || User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("BBS.Stakeholder") || User.IsInRole("BBS.Partner")){ *@
+                    <ul class="nk-menu">
+                        <li class="nk-menu-item">
+                            <a asp-controller="Home" asp-action="Index" class="nk-menu-link" target="_blank">
+                                <span class="nk-menu-icon"><em class="icon ni ni-home"></em></span>
+                                <span class="nk-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon"><em class="icon ni ni-user-add"></em></span>
+                                <span class="nk-menu-text">Incidences</span>
+                            </a>
+                            <ul class="nk-menu-sub">                                    
+                                <li class="nk-menu-item">
+                                    <a asp-controller="Incidence" asp-action="Index" class="nk-menu-link">
+                                        <span class="nk-menu-text">View Incidences</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a asp-controller="Incidence" asp-action="Create" class="nk-menu-link">
+                                        <span class="nk-menu-text">Add New</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon"><em class="icon ni ni-list"></em></span>
+                                <span class="nk-menu-text">Reports</span>
+                            </a>
+                            <ul class="nk-menu-sub">
+                                @* @if(User.IsInRole("Super Admin") || User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin")){
+                                    <li class="nk-menu-item">
+                                        <a asp-action="Upload" asp-controller="Dashboard" class="nk-menu-link">
+                                            <span class="nk-menu-text">Upload</span>
+                                        </a>
+                                    </li>
+                                } *@
+                                <li class="nk-menu-item">
+                                    <a asp-action="ParticipantsLinked" asp-controller="Report" class="nk-menu-link">
+                                        <span class="nk-menu-text">View Incidences</span>
+                                    </a>
+                                </li>
+                                @*
+                                <li class="nk-menu-item">
+                                    <a asp-action="TempId" asp-controller="Report" class="nk-menu-link">
+                                        <span class="nk-menu-text">View Temp IDs</span>
+                                    </a>
+                                </li>
+                                *@
+                            </ul>
+                        </li>
+                        @*
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon"><em class="icon ni ni-bell"></em></span>
+                                <span class="nk-menu-text">Notification</span>
+                            </a>
+                            <ul class="nk-menu-sub">
+                                <li class="nk-menu-item">
+                                    <a asp-action="ParticipantsReffered" asp-controller="Notification" class="nk-menu-link">
+                                        <span class="nk-menu-text">New Participants Reffered</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                      
+                        <li class="nk-menu-item">
+                            <a asp-controller="Home" asp-action="PrimarySample" class="nk-menu-link" target="_blank">
+                                <span class="nk-menu-icon"><em class="icon ni ni-report"></em></span>
+                                <span class="nk-menu-text">Primary Sample</span>
+                            </a>
+                        </li>
+                        @if(User.IsInRole("Super Admin") || User.IsInRole("DNAS.Admin") || User.IsInRole("DNAS.Lab.User") || User.IsInRole("DNAS.Field.Admin")){
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-list"></em></span>
+                                    <span class="nk-menu-text">Tables</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    @if(User.IsInRole("Super Admin") || User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("DNAS.Lab.User")){
+                                        <li class="nk-menu-item">
+                                            <a asp-action="ArmToFreeze" asp-controller="Detail" class="nk-menu-link">
+                                                <span class="nk-menu-text">Arm To Freeze Violation</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="LabDetail" asp-controller="Detail" class="nk-menu-link">
+                                                <span class="nk-menu-text">Lab Detail</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    <li class="nk-menu-item">
+                                        <a asp-action="FieldDetail" asp-controller="Detail" class="nk-menu-link">
+                                            <span class="nk-menu-text">Field Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("DNAS.Field.Admin")){
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-list"></em></span>
+                                    <span class="nk-menu-text">Samples</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a asp-action="MergedLabData" asp-controller="Sample" class="nk-menu-link">
+                                            <span class="nk-menu-text">Merged Lab Data</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="FieldData" asp-controller="Sample" class="nk-menu-link">
+                                            <span class="nk-menu-text">Field Data</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="LdmsData" asp-controller="Sample" class="nk-menu-link">
+                                            <span class="nk-menu-text">Ldms Data</span>
+                                        </a>
+                                    </li>
+                                    @if (User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin"))
+                                    {
+                                        <li class="nk-menu-item">
+                                            <a asp-action="LdmsRaw" asp-controller="Sample" class="nk-menu-link">
+                                                <span class="nk-menu-text">Ldms Raw</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("DNAS.Lab.Admin") || User.IsInRole("DNAS.Field.Admin"))
+                        {
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-list"></em></span>
+                                    <span class="nk-menu-text">Results</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a asp-action="Merged" asp-controller="Result" class="nk-menu-link">
+                                            <span class="nk-menu-text">Merged Result</span>
+                                        </a>
+                                    </li>
+                                    @if (User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin"))// || User.IsInRole("DNAS.Lab.Admin")
+                                    {
+                                        <li class="nk-menu-item">
+                                            <a asp-action="ResultGonorrhea" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">Gonorrhea Results</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="Abbot" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">Abbot Results</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="Cobas" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">Cobas Result</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="ResultBreakingProtocol" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">Results Breaking Protocol</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="VLRaw" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">VL Results Run</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="CTRaw" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">CT-NG Results</span>
+                                            </a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a asp-action="HPVRaw" asp-controller="Result" class="nk-menu-link">
+                                                <span class="nk-menu-text">HPV Results</span>
+                                            </a>
+                                        </li>                                        
+                                        <li class="nk-menu-item">
+                                            <a asp-controller="Result" asp-action="PrintRoRFile" class="nk-menu-link">
+                                                <span class="nk-menu-text">Print Result File</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        <li class="nk-menu-heading">
+                            <h6 class="overline-title">Modules</h6>
+                        </li>
+                        @foreach (var _item in menu.Where(m => m.Section == "Modules"))
+                        {
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-dashboard"></em></span>
+                                    <span class="nk-menu-text">@_item.Name</span>
+                                </a>
+                                @foreach (var _ in _item.ChildMenu)
+                                {
+                                    <ul class="nk-menu-sub">
+                                        <li class="nk-menu-item">
+                                            <a href="#" class="nk-menu-link">
+                                                <span class="nk-menu-text">@_.Name</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                }
+                            </li>
+                        }
+                        @if(User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin")){
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-upload-cloud"></em></span>
+                                    <span class="nk-menu-text">Data Import</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a asp-action="LDMS" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">LDMS Backup Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="Abbot" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">Abbot File Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="Cobas" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">Cobas Pdf Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="Field" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">Field Data Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="TREM" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">TREM Backup Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="MyUploads" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">All My Uploads</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a asp-action="AllUploads" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">All Uploads</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="HPV" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">HPV Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="VL" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">VL Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-action="CT" asp-controller="Upload" class="nk-menu-link">
+                                            <span class="nk-menu-text">CT/NG Upload</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if(User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("DNAS.Lab.Admin")  || User.IsInRole("DNAS.Lab.User")){
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-file"></em></span>
+                                    <span class="nk-menu-text">Result Data Entry</span>
+                                </a>
+                                <ul class="nk-menu-sub">                                    
+                                    <li class="nk-menu-item">
+                                        <a asp-controller="Result" asp-action="Gonorrhea" class="nk-menu-link">
+                                            <span class="nk-menu-text">Gonorrhea Result Entry</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a asp-controller="Result" asp-action="PrintGonorrheaLogFile" class="nk-menu-link">
+                                            <span class="nk-menu-text">Print Gonorrhea Log File</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if(User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin") || User.IsInRole("DNAS.Lab.Admin")){
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-file"></em></span>
+                                    <span class="nk-menu-text">Test Order</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a asp-controller="TestOrder" asp-action="TestOrderSummary" class="nk-menu-link">
+                                            <span class="nk-menu-text">Test Order Summary</span>
+                                        </a>
+                                    </li>
+                                    @if(User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("DNAS.Admin")){
+                                        <li class="nk-menu-item">
+                                            <a asp-controller="TestOrder" asp-action="GenerateTestOrder" class="nk-menu-link">
+                                                <span class="nk-menu-text">Generate Test Order</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    <li class="nk-menu-item">
+                                        <a asp-controller="TestOrder" asp-action="TestOrders" class="nk-menu-link">
+                                            <span class="nk-menu-text">Test Orders</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if(User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("Super Admin")){
+                            <li class="nk-menu-heading">
+                                <h6 class="overline-title">Core Configuration</h6>
+                            </li>
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span>
+                                    <span class="nk-menu-text">Audit</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a asp-action="Index" asp-controller="Audit" class="nk-menu-link">
+                                            <span class="nk-menu-text">Audit Trail</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-help"></em></span>
+                                    <span class="nk-menu-text">Help & Support</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="#" class="nk-menu-link">
+                                            <span class="nk-menu-text">Help</span>
+                                        </a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="#" class="nk-menu-link">
+                                            <span class="nk-menu-text">Support</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if(User.IsInRole("DNAS.SuperAdmin") || User.IsInRole("Super Admin")){
+                            <li class="nk-menu-heading">
+                                <h6 class="overline-title">System Administration</h6>
+                            </li>                    
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
+                                    <span class="nk-menu-text">User Management</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="#" class="nk-menu-link">
+                                            <span class="nk-menu-text">Users List</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nk-menu-item has-sub">
+                                <a href="#" class="nk-menu-link nk-menu-toggle">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-grid-box-alt"></em></span>
+                                    <span class="nk-menu-text">Modules</span>
+                                </a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="#" class="nk-menu-link" target="_blank">
+                                            <span class="nk-menu-text">All Modules</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="#" class="nk-menu-link" target="_blank">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-setting"></em></span>
+                                    <span class="nk-menu-text">Configuration</span>
+                                </a>
+                            </li>
+                        } *@
+                    </ul><!-- .nk-menu -->
+                @* } *@
+            </div><!-- .nk-sidebar-menu -->
+        </div><!-- .nk-sidebar-content -->
+    </div><!-- .nk-sidebar-element -->
+</div><!-- .nki-sidebar -->
+<!-- sidebar e -->

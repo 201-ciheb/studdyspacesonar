@@ -1,0 +1,25 @@
+<div class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <a asp-controller="Account" asp-action="RedirectToCore" class="btn btn-light" style="float: left; margin-top:5px; margin-left: 5px; color: #fffbfb; background-color: #f5f6f804; border-color: #f5f6f814;">PHIASpace</a>
+        <a class="navbar-brand" href="~/"><img src="~/assets/images/kenphia2.jpg" style="margin-top:-5px; height:180%; border-radius: 5px;" ; alt="KENPHIA Logo"></a>
+        <ul class="nav navbar-nav pull-right visible-xs-block">
+            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav"></ul>
+        @*<p class="navbar-text"><span class="label bg-success-400">Online</span></p>*@
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown dropdown-user">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="~/assets/images/placeholder.jpg" alt="">
+                    <span>@User.Identity.Name</span>
+                    <i class="caret"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="@Url.Action("LogOut","Account")"><i class="icon-switch2"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="nk-content">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <h1 style="color: chocolate;text-align: center;">Incidence Reporting Summary</h1>
+        </div>
+        <div class="nk-block mt-3">
+            <table class="table table-bordered table-hover" id="incidentsTable" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Field Work Area</th>
+                        <th>County</th>
+                        <th>SubCounty</th>
+                        <th>Site of Incidence</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>HHs Affected</th>
+                        <th>PTIDs Affected</th>
+                        <th>Persons Involved</th>
+                        <th>Survey Phase Id</th>
+                        <th>Event Category Id</th>
+                        <th>Immediate Action</th>
+                        <th>Organisations Reported To</th>
+                        <th>Event Cause</th>
+                        <th>Corrective Actions</th>
+                    
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            alert("hhs");
+            $('#incidentsTable').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("GetIncidents", "Incidence")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "id" },
+                    { "data": "fieldWorkArea" },
+                    { "data": "countyId" },
+                    { "data": "subCounty" },
+                    { "data": "siteofIncidence" },
+                    { "data": "createdOn" },
+                    { "data": "updatedOn" },
+                    { "data": "description" },
+                    { "data": "hhsAffected" },
+                    { "data": "ptidsAffected" },
+                    { "data": "personsInvolved" },
+                    { "data": "surveyPhaseId" },
+                    { "data": "eventCategoryId" },
+                    { "data": "immediateAction" },
+                    { "data": "organisationsReportedTo" },
+                    { "data": "eventCause" },
+                    { "data": "correctiveActions" },
+                    { "data": "deleted" }
+                ]
+            });
+        });
+    </script>
+}

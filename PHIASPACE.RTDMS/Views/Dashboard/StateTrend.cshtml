@@ -1,0 +1,106 @@
+@{
+    ViewBag.Title = "Manage";
+}
+
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Dashboard</span> - Household coverage Trend</h4>
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="/">Home</a></li>
+                <li class="active">Household coverage Trend</li>
+            </ul>
+        </div>
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Form horizontal -->
+
+            <div class="row">
+                <div id="container" style="min-width: 500px; height: 600px; margin: 0 auto"></div>
+            </div>
+
+            <!-- /form horizontal -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+@section styles{
+
+}
+
+@section scripts{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("GetStateTrend", function (data) {
+
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'spline',
+                        zoomType: 'x'
+                    },
+                    title: {
+                        text: 'Households coverage Trend'
+                    },
+                    subtitle: {
+                        text: 'Trend Number of households completed by state'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: { // don't display the dummy year
+                            month: '%e. %b',
+                            year: '%b'
+                        },
+                        title: {
+                            text: 'Date'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'No of Households'
+                        },
+                        min: 0
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{series.name}</b><br>',
+                        pointFormat: '{point.x:%e. %b}: {point.y:.0f} Households'
+                    },
+
+                    plotOptions: {
+                        spline: {
+                            marker: {
+                                enabled: true
+                            }
+                        }
+                    },
+
+                    colors: ['#deaf69', '#ff9a66', '#e3ac9a', '#c2b7b4','#cfb7b9'],
+
+                    // Define the data points. All series have a dummy year
+                    // of 1970/71 in order to be compared on the same x axis. Note
+                    // that in JavaScript, months start at 0 for January, 1 for February etc.
+                    series: data
+                });
+            });
+        });
+    </script>
+}
