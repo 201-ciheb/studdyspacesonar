@@ -87,6 +87,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          dotnet sonarscanner begin /k:"201-ciheb" /o:"201-ciheb" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.skipJreProvisioning=true /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-          dotnet build ${{ matrix.package }}
+          dotnet sonarscanner begin /k:"studdyspacesonar" /o:"201-ciheb" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.skipJreProvisioning=true /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          dotnet build
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
