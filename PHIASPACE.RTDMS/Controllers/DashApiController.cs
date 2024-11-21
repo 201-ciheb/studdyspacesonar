@@ -422,7 +422,6 @@ namespace PHIASPACE.RTDMS.Controllers
                 { "table_content", table_content }
             };
 
-            //var issues = _aissueService.GetIssues().Where(e => e.HouseholdId == hh_id && e.EaId == ea_id);
             var issues = await _aissueService.GetIssue(ea_id, hh_id);
             var pm_issues = issues.Select(issue => new Issue(issue)).ToList();
 
