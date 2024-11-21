@@ -61,7 +61,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      ################### BUILD THE APPLICATION ##########################
+      ###################  BUILD THE APPLICATION  ##########################
       - name: Build Application
         run: dotnet build --configuration Release --no-restore
 
