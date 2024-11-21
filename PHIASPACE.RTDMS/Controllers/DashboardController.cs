@@ -45,63 +45,81 @@ public class DashboardController: RtdmsBaseController{
     }
 
     public async Task<ActionResult> ResponseRate()
+{
+    var dt = await _dashboardService.GetHhResponseRate();
+
+    // Add columns to DataTable with simplified and consistent names
+    AddResponseRateColumns(dt);
+
+    foreach (DataRow row in dt.Rows)
     {
-        var dt = await _dashboardService.GetHhResponseRate();
+        // Helper function for safe conversion
+        double SafeConvertToDouble(object value) => value == DBNull.Value ? 0 : Convert.ToDouble(value);
 
-        // Add columns to DataTable with simplified and consistent names
-        dt.Columns.Add("Habitable", typeof(Double));
-        dt.Columns.Add("NotHabitable", typeof(Double));
-        dt.Columns.Add("RefusalRate", typeof(Double));
-        dt.Columns.Add("AcceptanceRate", typeof(Double));
-        dt.Columns.Add("PHIAResponseRate", typeof(Double));
-        dt.Columns.Add("SampleMethodResponseRate", typeof(Double));
-        dt.Columns.Add("PartialOrWithdrawn", typeof(Double));
-        dt.Columns.Add("IncompleteBloodDraw", typeof(Double));
-        dt.Columns.Add("InterviewResponseRate", typeof(Double));  // Target 87.9%
-        dt.Columns.Add("DrawResponseRate", typeof(Double));  // Target 77.3%
-        dt.Columns.Add("TotalAdultResponseRate", typeof(Double));  // Target 63%
+        // Helper to calculate percentage safely
+        double CalculatePercentage(double numerator, double denominator) => 
+            Math.Abs(denominator) < double.Epsilon ? 0 : (numerator * 100) / denominator;
 
-        foreach (DataRow row in dt.Rows)
-        {
-            // Helper function for safe conversion
-            double SafeConvertToDouble(object value) => value == DBNull.Value ? 0 : Convert.ToDouble(value);
-
-            // Calculate values for each row and assign directly
-            row["Habitable"] = SafeConvertToDouble(row["Households_Consented"]) +
-                               SafeConvertToDouble(row["Households_Refused"]) +
-                               SafeConvertToDouble(row["Households_Not_At_Home"]) +
-                               SafeConvertToDouble(row["Households_Absent_For_Long"]) +
-                               SafeConvertToDouble(row["Households_Postponed"]) +
-                               SafeConvertToDouble(row["Households_Not_Found"]) +
-                               SafeConvertToDouble(row["Households_Others"]);
-
-            row["NotHabitable"] = SafeConvertToDouble(row["Households_Destroyed"]) +
-                                  SafeConvertToDouble(row["Households_Vacant"]);
-
-            double householdsVisited = SafeConvertToDouble(row["Households_Visited"]);
-            row["RefusalRate"] = householdsVisited == 0 ? 0 : SafeConvertToDouble(row["Households_Refused"]) * 100 / householdsVisited;
-            row["AcceptanceRate"] = householdsVisited == 0 ? 0 : (SafeConvertToDouble(row["Households_Consented"]) + SafeConvertToDouble(row["Households_Refused"])) * 100 / householdsVisited;
-            row["PHIAResponseRate"] = householdsVisited == 0 ? 0 : SafeConvertToDouble(row["Habitable"]) * 100 / householdsVisited;
-            row["SampleMethodResponseRate"] = householdsVisited == 0 ? 0 : SafeConvertToDouble(row["Households_Consented"]) * 100 / householdsVisited;
-
-            row["PartialOrWithdrawn"] = SafeConvertToDouble(row["Consented_15_Above"]) - SafeConvertToDouble(row["Completed_Intv_15_Above"]);
-            row["IncompleteBloodDraw"] = SafeConvertToDouble(row["Consented_For_Draw_15_Above"]) - SafeConvertToDouble(row["Draws_15_Above"]);
-
-            double eligible15Above = SafeConvertToDouble(row["Eligible_15_Above"]);
-            row["InterviewResponseRate"] = eligible15Above == 0 ? 0 : SafeConvertToDouble(row["Completed_Intv_15_Above"]) * 100 / eligible15Above;
-
-            double completedIntv15Above = SafeConvertToDouble(row["Completed_Intv_15_Above"]);
-            row["DrawResponseRate"] = completedIntv15Above == 0 ? 0 : SafeConvertToDouble(row["Draws_15_Above"]) * 100 / completedIntv15Above;
-
-            row["TotalAdultResponseRate"] =
-                eligible15Above == 0 || completedIntv15Above == 0
-                    ? 0
-                    : (completedIntv15Above / eligible15Above) * (SafeConvertToDouble(row["Draws_15_Above"]) / completedIntv15Above) * 100;
-        }
-
-        ViewBag.dt = dt;
-        return View();
+        // Populate calculated columns
+        PopulateHabitableColumns(row, SafeConvertToDouble);
+        PopulateResponseRates(row, SafeConvertToDouble, CalculatePercentage);
     }
+
+    ViewBag.dt = dt;
+    return View();
+}
+
+private static void AddResponseRateColumns(DataTable dt)
+{
+    var columns = new[]
+    {
+        "Habitable", "NotHabitable", "RefusalRate", "AcceptanceRate", "PHIAResponseRate",
+        "SampleMethodResponseRate", "PartialOrWithdrawn", "IncompleteBloodDraw",
+        "InterviewResponseRate", "DrawResponseRate", "TotalAdultResponseRate"
+    };
+
+    foreach (var column in columns)
+    {
+        dt.Columns.Add(column, typeof(double));
+    }
+}
+
+private static void PopulateHabitableColumns(DataRow row, Func<object, double> safeConvert)
+{
+    row["Habitable"] = safeConvert(row["Households_Consented"]) +
+                       safeConvert(row["Households_Refused"]) +
+                       safeConvert(row["Households_Not_At_Home"]) +
+                       safeConvert(row["Households_Absent_For_Long"]) +
+                       safeConvert(row["Households_Postponed"]) +
+                       safeConvert(row["Households_Not_Found"]) +
+                       safeConvert(row["Households_Others"]);
+
+    row["NotHabitable"] = safeConvert(row["Households_Destroyed"]) +
+                          safeConvert(row["Households_Vacant"]);
+}
+
+private static void PopulateResponseRates(DataRow row, Func<object, double> safeConvert, Func<double, double, double> calculatePercentage)
+{
+    double householdsVisited = safeConvert(row["Households_Visited"]);
+    double eligible15Above = safeConvert(row["Eligible_15_Above"]);
+    double completedIntv15Above = safeConvert(row["Completed_Intv_15_Above"]);
+
+    row["RefusalRate"] = calculatePercentage(safeConvert(row["Households_Refused"]), householdsVisited);
+    row["AcceptanceRate"] = calculatePercentage(safeConvert(row["Households_Consented"]) + safeConvert(row["Households_Refused"]), householdsVisited);
+    row["PHIAResponseRate"] = calculatePercentage(safeConvert(row["Habitable"]), householdsVisited);
+    row["SampleMethodResponseRate"] = calculatePercentage(safeConvert(row["Households_Consented"]), householdsVisited);
+
+    row["PartialOrWithdrawn"] = safeConvert(row["Consented_15_Above"]) - completedIntv15Above;
+    row["IncompleteBloodDraw"] = safeConvert(row["Consented_For_Draw_15_Above"]) - safeConvert(row["Draws_15_Above"]);
+
+    row["InterviewResponseRate"] = calculatePercentage(completedIntv15Above, eligible15Above);
+    row["DrawResponseRate"] = calculatePercentage(safeConvert(row["Draws_15_Above"]), completedIntv15Above);
+
+    row["TotalAdultResponseRate"] =
+        (eligible15Above <= 0 || completedIntv15Above <= 0) ? 0 :
+        calculatePercentage(completedIntv15Above, eligible15Above) *
+        calculatePercentage(safeConvert(row["Draws_15_Above"]), completedIntv15Above) / 100;
+}
 
     public async Task<ActionResult> Linkage()
     {
@@ -125,45 +143,84 @@ public class DashboardController: RtdmsBaseController{
     public async Task<List<Trend>> GetStateTrend()
     {
         var ds = await _dashboardService.GetRegionTrend();
-        var result = new List<Trend>();
+        var state = "State";
 
-        if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-        {
-            var states = ds.Tables[0].DefaultView.ToTable(true, "State");
-            foreach (DataRow st in states.Rows)
+        if (ds == null || ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0)
+            return new List<Trend>();
+
+        // Use helper method to create the epoch DateTime
+        var epoch = CreateUtcDateTime(1970, 1, 1);
+
+        var states = ds.Tables[0].DefaultView.ToTable(true, state).AsEnumerable();
+
+        var result = states
+            .Select(st => new Trend
             {
-                var dict = new Dictionary<string, List<double[]>>();
-                var rs = new List<double[]>();
-                foreach (DataRow row in ds.Tables[0].Select(string.Format("State = '{0}'", st.ItemArray[0])))
-                {
-                    //result.Add(new double[] { training.start_date.Value.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds, training.tdb_training_attendance.Count() });
-                    var item = row.ItemArray;
-                    rs.Add(new double[] { Convert.ToDateTime(item[1]).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds, Convert.ToDouble(item[0]) });
-                }
-                //dict.Add(st.ItemArray[0].ToString(), rs);
-                result.Add(new Trend { name = st.ItemArray[0].ToString(), data = rs });
-            }
-
-        }
+                name = st.Field<string>(state),
+                data = ds.Tables[0]
+                    .AsEnumerable()
+                    .Where(row => row.Field<string>("State") == st.Field<string>(state))
+                    .Select(row => new[]
+                    {
+                        row.Field<DateTime>(1).ToUniversalTime().Subtract(epoch).TotalMilliseconds, // Ensure DateTimeKind is handled
+                        Convert.ToDouble(row[0])
+                    })
+                    .ToList()
+            })
+            .ToList();
 
         return result;
     }
 
-    public async Task<IActionResult> IndAnalytic(int id = 1)
+// Helper method to create a DateTime with specified DateTimeKind
+    private static DateTime CreateUtcDateTime(int year, int month, int day)
     {
+        return DateTime.SpecifyKind(new DateTime(year, month, day), DateTimeKind.Utc);
+    }
+
+    public async Task<IActionResult> IndAnalytic([FromQuery] int id = 1)
+    {
+        if (!ModelState.IsValid)
+        {
+            // Handle invalid model state
+            return BadRequest(ModelState);
+        }
+
+        // Fetch the record set
         var recordSet = await _recordService.GetAimsRecordSetAsync();
         ViewBag.recordSet = recordSet;
 
+        // Validate that the ID exists in the record set
+        var defaultRecord = recordSet.Find(m => m.Id == id);
+        if (defaultRecord == null)
+        {
+            // Handle case where no matching record is found
+            return NotFound($"Record with ID {id} not found.");
+        }
+
+        // Fetch value sets and filter by table name
         var valueSets = await _recordService.GetAimsValueSetAsync();
-        var default_record = recordSet.First(m => m.Id == id);
-        ViewBag.values = valueSets.Where(m => m.TableName == default_record.Name.ToLower()).ToList();
+        ViewBag.values = valueSets.Where(m => m.TableName == defaultRecord.Name.ToLower()).ToList();
+
         return View();
     }
 
-    public async Task<string> GetIndAnalyticDynamic(int id)
+    public async Task<IActionResult> GetIndAnalyticDynamic(int id)
     {
-        return await _dashboardService.GetIndAnalyticDynamic(id);
+        if (id <= 0)
+        {
+            // Add a validation error to ModelState
+            ModelState.AddModelError("id", "The ID must be a positive integer.");
+
+            // Return a BadRequest with validation details
+            return BadRequest(ModelState);
+        }
+
+        // If validation passes, fetch the data
+        var result = await _dashboardService.GetIndAnalyticDynamic(id);
+        return Ok(result); // Return the result in a proper HTTP response
     }
+
 
     public async Task<List<Step>> GetValueSets(string id)
     {
