@@ -48,7 +48,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      ################### .NET CORE SETUP ##########################
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
         with:
@@ -64,7 +63,12 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      ################### SONAR SCAN ##########################
+      - name: Install dotnet-sonarscanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Add dotnet tools to PATH
+        run: echo "::add-path::${HOME}/.dotnet/tools"
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -74,11 +78,9 @@ jobs:
 
       - name: Run Sonar Analysis
         env:
-          GITHUB_TOKEN: ${{ secrets.G201ITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          dotnet build ${{ matrix.package }} --configuration Release
-          dotnet test ${{ matrix.package }} --no-build --configuration Release
-          dotnet sonarscanner begin /k:"your_sonar_project_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          dotnet sonarscanner begin /k:"your_project_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
           dotnet build ${{ matrix.package }}
           dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
